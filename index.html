@@ -1,0 +1,2303 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Epileptic seizure types</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Carlito:wght@400;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#FFFFFF; font-family:Calibri, Carlito, Lato, 'Segoe UI', Arial, sans-serif; color:#000000; font-size:12pt; line-height:1.45; }
+  a { color:#000000; }
+  .wrap { max-width:1180px; margin:0 auto; padding:28px 18px 40px; }
+  .doc-title { font-size:48pt; font-weight:bold; color:#0070C0; text-align:center; line-height:1.1; margin-bottom:6px; }
+  .author { font-size:16pt; font-weight:bold; color:#000000; text-align:center; margin-bottom:22px; }
+  h1 { font-size:16pt; font-weight:bold; color:#0070C0; margin:22px 0 10px; }
+  h2 { font-size:14pt; font-weight:bold; color:#009999; margin:20px 0 8px; }
+  h3 { font-size:13pt; font-weight:bold; color:#590079; margin:14px 0 6px; }
+  h4 { font-size:12pt; font-weight:bold; color:#3A7D22; margin:0 0 4px; }
+  p { margin:6px 0; }
+  ul.bul, ol.bul { margin:6px 0; padding-left:1.35em; }
+  .refs a, ul.bul a { color:#000000; text-decoration-color:#4A86C8; }
+  ul.bul li { margin:5px 0; }
+  ul.bul ul { margin:4px 0 2px; padding-left:1.6em; list-style:none; }
+  ul.bul ul > li { position:relative; }
+  ul.bul ul > li::before { content:"\2192"; position:absolute; left:-1.35em; top:0; color:#E2582B; font-weight:bold; }
+  .view { display:none; }
+  .view.on { display:block; }
+
+  /* Classification tree */
+  .tree-root { display:flex; justify-content:center; }
+  .node-root { position:relative; border:3px solid #590079; border-radius:14px; padding:10px 34px 12px; text-align:center;
+    background:linear-gradient(180deg,#FFFFFF 0%,#F1E5F3 55%,#E4CDEB 100%);
+    box-shadow:0 10px 22px rgba(89,0,121,0.18),0 2px 4px rgba(0,0,0,0.10),inset 0 2px 0 rgba(255,255,255,0.95),inset 0 -4px 0 rgba(89,0,121,0.14); }
+  .node-root b { font-size:15pt; display:block; }
+  .play .node-root { animation:popIn .6s ease-out backwards, breathe 3.6s ease-in-out 1s infinite; }
+  .root-stem { width:0; height:22px; border-left:2px solid #8C8C8C; margin:0 auto; transform-origin:top; }
+  .play .root-stem { animation:growY .35s .35s ease-out backwards; }
+  .branches { display:grid; grid-template-columns:1fr 1.45fr 1.05fr 0.85fr; }
+  .branch { position:relative; padding:22px 7px 0; }
+  .branch::before { content:""; position:absolute; top:0; left:0; right:50%; border-top:2px solid #8C8C8C; transform-origin:right; }
+  .branch::after { content:""; position:absolute; top:0; left:50%; right:0; height:22px; border-top:2px solid #8C8C8C; border-left:2px solid #8C8C8C; transform-origin:left; }
+  .play .branch::before, .play .branch::after { animation:growX .45s .55s ease-out backwards; }
+  .branch:first-child::before { border:none; }
+  .branch:last-child::after { border-top:none; }
+  .class-box { position:relative; border:3px solid var(--c); border-radius:14px; padding:10px 12px 12px; text-align:center;
+    background:linear-gradient(180deg,#FFFFFF 0%,var(--f) 55%,var(--f2) 100%);
+    box-shadow:0 8px 18px rgba(0,0,0,0.13),0 2px 4px rgba(0,0,0,0.08),inset 0 2px 0 rgba(255,255,255,0.95),inset 0 -4px 0 rgba(0,0,0,0.07);
+    transition:transform .2s ease, box-shadow .2s ease; }
+  .class-box:hover { transform:translateY(-3px); box-shadow:0 14px 26px rgba(0,0,0,0.17),0 3px 6px rgba(0,0,0,0.10),inset 0 2px 0 rgba(255,255,255,0.95),inset 0 -4px 0 rgba(0,0,0,0.07); }
+  .class-box b { font-size:13pt; display:block; margin-bottom:2px; }
+  .class-box span { font-size:10.5pt; display:block; }
+  a.class-box { display:block; text-decoration:none; color:#000000; }
+  ul.types { list-style:none; margin:10px 0 0 14px; position:relative; }
+  ul.types > li { position:relative; padding-left:15px; margin:8px 0; }
+  ul.types > li::before { content:""; position:absolute; left:0; top:-9px; bottom:0; border-left:2px solid #B0B0B0; transform-origin:top; }
+  ul.types > li:last-child::before { bottom:auto; height:calc(9px + 1.15em); }
+  ul.types > li::after { content:""; position:absolute; left:0; top:calc(1.15em - 1px); width:14px; border-top:2px solid #B0B0B0; transform-origin:left; }
+  .play ul.types > li::before { animation:growY .4s .7s ease-out backwards; }
+  .play ul.types > li::after { animation:growX .3s .9s ease-out backwards; }
+  a.t-link { position:relative; display:block; border:2.5px solid var(--c); border-radius:9px; padding:6px 24px 6px 9px; color:#000000; text-decoration:none; font-size:11pt; line-height:1.25;
+    background:linear-gradient(180deg,#FFFFFF 0%,#FFFFFF 45%,var(--f) 100%);
+    box-shadow:0 3px 7px rgba(0,0,0,0.09),0 1px 2px rgba(0,0,0,0.06),inset 0 1px 0 #FFFFFF,inset 0 -2px 0 rgba(0,0,0,0.05);
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease; }
+  a.t-link .nm { display:block; }
+  a.t-link .kc { display:block; font-size:9.5pt; font-weight:normal; line-height:1.3; margin-top:3px; padding-top:3px; border-top:1px dashed var(--c); }
+  a.t-link.grp .kc { font-weight:normal; }
+  a.t-link::after { content:"\203A"; position:absolute; right:9px; top:50%; transform:translate(-6px,-52%); opacity:0; font-size:15pt; font-weight:bold; color:var(--c); transition:all .18s ease; }
+  a.t-link:hover, a.t-link:focus-visible { transform:translateY(-2px) translateX(2px); background:linear-gradient(180deg,#FFFFFF 0%,var(--f) 60%,var(--f2) 100%);
+    box-shadow:0 8px 16px rgba(0,0,0,0.14),0 2px 4px rgba(0,0,0,0.08),inset 0 1px 0 #FFFFFF,inset 0 -2px 0 rgba(0,0,0,0.06); outline:none; }
+  a.t-link:hover::after, a.t-link:focus-visible::after { opacity:1; transform:translate(0,-52%); }
+  a.t-link:active { transform:translateY(0); box-shadow:inset 0 2px 5px rgba(0,0,0,0.16); }
+  .group-box { border:2.5px dashed #590079; border-radius:9px; padding:6px 9px; font-weight:bold; font-size:11pt; line-height:1.25;
+    background:repeating-linear-gradient(135deg,#FFFFFF 0 8px,#FAF5FB 8px 16px); box-shadow:0 2px 6px rgba(89,0,121,0.10); }
+  .group-box small { display:block; font-weight:normal; font-size:10pt; }
+  a.t-link.grp { font-weight:bold; border-width:3px; }
+  .play .class-box, .play .group-box, .play a.t-link { animation:popIn .5s ease-out backwards; animation-delay:var(--d,0s); }
+  .legend { display:flex; flex-wrap:wrap; gap:18px; justify-content:center; margin:20px 0 4px; font-size:10.5pt; }
+  .legend i { display:inline-block; width:16px; height:16px; border-radius:4px; vertical-align:-3px; margin-right:6px; border:1.5px solid; box-shadow:0 2px 4px rgba(0,0,0,0.12),inset 0 1px 0 #FFFFFF; }
+  @keyframes popIn { from { opacity:0; transform:translateY(12px) scale(0.96); } to { opacity:1; transform:none; } }
+  @keyframes growX { from { transform:scaleX(0); } to { transform:scaleX(1); } }
+  @keyframes growY { from { transform:scaleY(0); } to { transform:scaleY(1); } }
+  @keyframes breathe { 0%,100% { box-shadow:0 10px 22px rgba(89,0,121,0.18),0 2px 4px rgba(0,0,0,0.10),inset 0 2px 0 rgba(255,255,255,0.95),inset 0 -4px 0 rgba(89,0,121,0.14); }
+    50% { box-shadow:0 10px 26px rgba(89,0,121,0.26),0 0 0 7px rgba(89,0,121,0.07),inset 0 2px 0 rgba(255,255,255,0.95),inset 0 -4px 0 rgba(89,0,121,0.14); } }
+  @media (prefers-reduced-motion: reduce) { .play *, .play *::before, .play *::after { animation:none !important; } a.t-link, .class-box { transition:none; } }
+
+  /* Demonstration view */
+  .nav { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
+  .btn { display:inline-block; padding:7px 14px; border-radius:8px; border:1.5px solid #0070C0; background:#FFFFFF; color:#000000; font-size:11pt; font-family:inherit; cursor:pointer; text-decoration:none; }
+  .btn:hover { background:#E3EFF9; }
+  .btn:disabled { opacity:0.4; cursor:default; background:#FFFFFF; }
+  .pills { display:grid; grid-template-columns:max-content 1fr; column-gap:12px; row-gap:8px; align-items:center; margin-bottom:22px; border:1px solid #D0D0D0; border-radius:10px; padding:12px; }
+  .cat-group { display:flex; flex-wrap:wrap; gap:5px; align-items:center; }
+  .cat-label { justify-self:stretch; text-align:left; font-size:10.5pt; font-weight:bold; padding:3px 10px; border-radius:8px; box-shadow:0 2px 4px rgba(0,0,0,0.08),inset 0 1px 0 rgba(255,255,255,0.9); margin-right:0; white-space:nowrap; color:#000000; border:1.5px solid; }
+  .sub-label { font-size:10pt; font-style:italic; margin:0 2px 0 8px; white-space:nowrap; }
+  .pill { padding:4px 11px; border-radius:20px; border:1.5px solid #C8C8C8; background:linear-gradient(180deg,#FFFFFF,#F3F3F3); box-shadow:0 2px 4px rgba(0,0,0,0.08),inset 0 1px 0 #FFFFFF; transition:transform .15s ease, box-shadow .15s ease; color:#000000; font-size:10.5pt; cursor:pointer; font-family:inherit; }
+  .pill:hover { border-color:#7F7F7F; transform:translateY(-1px); box-shadow:0 4px 8px rgba(0,0,0,0.12),inset 0 1px 0 #FFFFFF; }
+  .pill.on { font-weight:bold; }
+  .main { display:flex; gap:24px; align-items:flex-start; flex-wrap:wrap; }
+  .fig-box { flex:0 0 320px; background:#FFFFFF; border-radius:16px; border:1px solid #D0D0D0; padding:28px 14px 16px; position:relative; overflow:hidden; }
+  .info { flex:1; min-width:280px; display:flex; flex-direction:column; gap:10px; }
+  .info h1 { margin:0; }
+  .cat-badge { align-self:flex-start; padding:3px 12px; border-radius:12px; font-size:10.5pt; font-weight:bold; border:1.5px solid; color:#000000; }
+  .cons { border:1.5px solid #0070C0; padding:6px 12px; background:#FFFFFF; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+  .shown { font-size:11pt; }
+  .ctrl-box { border-radius:12px; padding:14px; border:1px solid #D0D0D0; }
+  .prog-bar { width:100%; height:5px; background:#E6E6E6; border-radius:3px; overflow:hidden; }
+  .prog-fill { height:100%; border-radius:3px; }
+  .btns { display:flex; gap:10px; margin-top:12px; }
+  .play-btn { flex:1; padding:9px 0; border-radius:10px; border:none; color:#FFFFFF; font-size:12pt; font-weight:bold; cursor:pointer; font-family:inherit; }
+  .play-btn:disabled { opacity:0.45; cursor:default; }
+  .replay-btn { padding:9px 16px; border-radius:10px; border:1px solid #C8C8C8; background:#FFFFFF; color:#000000; font-size:12pt; cursor:pointer; font-family:inherit; }
+  .time-label { margin-top:6px; font-size:10.5pt; text-align:center; }
+  .speed-row { display:flex; align-items:center; gap:8px; margin-top:8px; justify-content:center; font-size:10.5pt; }
+  .spd-btn { padding:3px 9px; border-radius:8px; border:1.5px solid #C8C8C8; background:#FFFFFF; color:#000000; font-size:10.5pt; font-weight:bold; cursor:pointer; font-family:inherit; }
+  .spd-btn.active { background:#0070C0; color:#FFFFFF; border-color:#0070C0; }
+  .eeg-box { border-radius:12px; padding:12px; border:1px solid #D0D0D0; }
+  .eeg-desc { font-size:11pt; margin-bottom:8px; }
+  .tip-box { background:#FFF8E1; border-radius:12px; padding:12px; border:1px solid #F2D27A; font-size:11pt; }
+  .src { font-size:10.5pt; }
+  .hl-label { margin-top:8px; text-align:center; background:#F4F4F4; border-radius:10px; padding:7px 12px; font-size:10.5pt; font-weight:bold; display:none; }
+  .phase-tag { position:absolute; top:8px; left:50%; transform:translateX(-50%); z-index:20; color:#FFFFFF; padding:3px 16px; border-radius:20px; font-size:10.5pt; font-weight:bold; white-space:nowrap; display:none; }
+  .prevnext { display:flex; justify-content:space-between; gap:10px; margin-top:4px; }
+  .refs-end { margin-top:30px; }
+  ol.kcf > li { margin:10px 0; }
+  ol.kcf ul { margin:4px 0 6px; padding-left:1.4em; list-style:disc; }
+  ol.kcf ul li { margin:3px 0; }
+  .footer { text-align:center; margin-top:30px; font-size:10.5pt; }
+  .refs li { margin:6px 0; }
+  ul.refs { list-style:none; padding-left:0; }
+  ul.refs li { padding-left:1.6em; text-indent:-1.6em; }
+  .cite, a.card span.cite, .panel > header small .cite, .map-root span.cite { display:inline !important; font-size:0.85em; color:#000000; margin:0; }
+  details.demo-refs { margin-top:6px; font-size:10.5pt; }
+  details.demo-refs summary { cursor:pointer; font-weight:bold; }
+  details.demo-refs ol { margin:6px 0 0; padding-left:1.6em; }
+  details.demo-refs li { margin:4px 0; }
+
+
+  /* Tables on the classification page */
+  .cap { font-weight:bold; margin:18px 0 6px; }
+  .tbl { border-radius:12px; overflow:hidden; border:1.5px solid #0070C0; box-shadow:0 6px 16px rgba(0,0,0,0.10),0 1px 3px rgba(0,0,0,0.06); margin-bottom:8px; }
+  .tbl table { width:100%; border-collapse:collapse; }
+  .tbl th { text-align:left; padding:8px 12px; background:linear-gradient(180deg,#FFFFFF,#E3EFF9 60%,#CFE3F5); border-bottom:1.5px solid #0070C0; font-weight:bold; }
+  .tbl th:first-child { width:34%; }
+  .tbl td { padding:8px 12px; vertical-align:top; border-top:1px solid #D9D9D9; }
+  .tbl tbody tr:first-child td { border-top:none; }
+  .tbl tbody tr:nth-child(even) td { background:#F8FBFE; }
+  .tbl a, .bul a { color:#000000; text-decoration:underline; text-decoration-color:#0070C0; text-decoration-thickness:1.5px; text-underline-offset:2px; }
+  .tbl a:hover, .bul a:hover { background:#E3EFF9; border-radius:3px; }
+  ul.tl { list-style:none; margin:0; }
+  ul.tl li { margin:2px 0; }
+  ul.tl li::before { content:"\203A"; color:#0070C0; font-weight:bold; margin-right:6px; }
+  @media (max-width:640px) {
+    .tbl thead { display:none; }
+    .tbl tr { display:block; padding:6px 0; border-top:1px solid #D9D9D9; }
+    .tbl tbody tr:first-child { border-top:none; }
+    .tbl td { display:block; border:none; padding:3px 12px; background:none !important; }
+    .tbl td::before { content:attr(data-l); display:block; font-size:10pt; font-weight:bold; color:#0070C0; }
+  }
+
+
+  /* ---------- Figure 1: classification map ---------- */
+  .map { margin:6px 0 10px; }
+  .map-root { max-width:420px; margin:0 auto 16px; text-align:center; color:#FFFFFF; border-radius:14px; padding:10px 16px;
+    background:linear-gradient(180deg,#37474F,#263238); box-shadow:0 10px 22px rgba(38,50,56,0.28),inset 0 1px 0 rgba(255,255,255,0.25),inset 0 -3px 0 rgba(0,0,0,0.25); }
+  .map-root b { display:block; font-size:15pt; }
+  .map-root span { font-size:11pt; }
+  .play .map-root { animation:popIn .5s ease-out backwards; }
+  .map-grid { display:grid; gap:16px; grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,0.8fr); grid-template-areas:"focal unk uncl" "gen gen gen"; align-items:start; }
+  .p-focal { grid-area:focal; } .p-unk { grid-area:unk; } .p-uncl { grid-area:uncl; } .p-gen { grid-area:gen; }
+  .panel { background:var(--t); border:2px solid var(--c); border-radius:16px; overflow:hidden;
+    box-shadow:0 10px 22px rgba(0,0,0,0.10),0 2px 5px rgba(0,0,0,0.06),inset 0 1px 0 #FFFFFF; }
+  .panel > header { position:relative; background:var(--c); background:linear-gradient(180deg,color-mix(in srgb,var(--c) 82%,#FFFFFF),var(--c)); color:#FFFFFF; padding:9px 14px 10px;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.35),inset 0 -2px 0 rgba(0,0,0,0.18); }
+  .panel > header b { font-size:13pt; display:block; padding-right:64px; }
+  .panel > header small { display:block; font-size:10pt; margin-top:1px; }
+  .panel > header em, .sub h5 em { position:absolute; top:9px; right:12px; font-style:normal; font-size:9.5pt; font-weight:bold; background:#FFFFFF; color:#000000; border-radius:20px; padding:1px 9px; box-shadow:0 1px 3px rgba(0,0,0,0.2); }
+  .cards { display:flex; flex-direction:column; gap:8px; padding:12px; }
+  a.card { display:block; position:relative; background:linear-gradient(180deg,#FFFFFF 60%,var(--t)); border:2px solid var(--c); border-radius:11px; padding:7px 26px 8px 11px;
+    color:#000000; text-decoration:none; line-height:1.3;
+    box-shadow:0 3px 8px rgba(0,0,0,0.09),inset 0 1px 0 #FFFFFF,inset 0 -2px 0 rgba(0,0,0,0.05);
+    transition:transform .18s ease, box-shadow .18s ease; }
+  a.card b { display:block; font-size:11pt; }
+  a.card span { display:block; font-size:10pt; margin-top:2px; }
+  a.card::after { content:"\203A"; position:absolute; right:9px; top:50%; transform:translateY(-52%); font-size:16pt; font-weight:bold; color:var(--c); }
+  a.card:active { transform:translateY(1px); box-shadow:inset 0 2px 5px rgba(0,0,0,0.15); }
+  .subgrid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; padding:14px; }
+  .sub { position:relative; background:var(--t); border:2px solid var(--c); border-radius:13px; overflow:hidden; box-shadow:0 4px 10px rgba(0,0,0,0.08); }
+  .sub h5 { position:relative; margin:0; font-size:11.5pt; color:#FFFFFF; padding:8px 52px 8px 12px; background:var(--c); background:linear-gradient(180deg,color-mix(in srgb,var(--c) 82%,#FFFFFF),var(--c)); box-shadow:inset 0 1px 0 rgba(255,255,255,0.35); }
+  .sub h5 em { top:7px; }
+  .sub .cards { padding:10px; }
+  .play .panel, .play .sub, .play a.card { animation:popIn .45s ease-out backwards; animation-delay:var(--d,0s); }
+  @media (hover:hover) {
+    a.card:hover { transform:translateY(-2px); box-shadow:0 9px 18px rgba(0,0,0,0.15),inset 0 1px 0 #FFFFFF; background:linear-gradient(180deg,#FFFFFF 20%,var(--t)); }
+  }
+  @media (max-width:1000px) {
+    .map-grid { grid-template-columns:minmax(0,1fr) minmax(0,1fr); grid-template-areas:"focal unk" "uncl uncl" "gen gen"; }
+    .subgrid { grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); }
+  }
+  @media (max-width:640px) {
+    .map-grid { grid-template-columns:minmax(0,1fr); grid-template-areas:"focal" "unk" "gen" "uncl"; }
+    .subgrid { grid-template-columns:minmax(0,1fr); padding:10px; }
+    .cards { padding:10px; }
+  }
+
+
+  /* ---------- Figure 1, softer palette ---------- */
+  figure.map { margin:8px 0 14px; }
+  .map-root { background:#FFFFFF; color:#000000; border:2px solid #5F6B73; box-shadow:0 8px 18px rgba(0,0,0,0.10),inset 0 -3px 0 rgba(0,0,0,0.06); }
+  .rule { max-width:860px; margin:0 auto 18px; background:#FFFDF2; border:1.5px solid #E2CF7A; border-radius:12px; padding:8px 14px; font-size:11pt; text-align:center; box-shadow:0 3px 8px rgba(0,0,0,0.06); }
+  .map-grid { grid-template-columns:minmax(0,1fr) minmax(0,1fr); grid-template-areas:"focal unk" "gen gen" "uncl uncl"; }
+  .panel { background:var(--t); border:1.5px solid var(--c); box-shadow:0 6px 16px rgba(0,0,0,0.07),inset 0 1px 0 #FFFFFF; }
+  .panel > header, .sub h5 { background:var(--h) !important; color:#000000; border-bottom:1.5px solid var(--c); box-shadow:inset 0 1px 0 rgba(255,255,255,0.7); }
+  .panel > header small { font-size:10.5pt; }
+  .panel > header em, .sub h5 em { border:1.5px solid var(--c); box-shadow:none; }
+  .sub { background:var(--t); border:1.5px solid var(--c); box-shadow:0 3px 8px rgba(0,0,0,0.06); }
+  .sub h5 { font-size:12pt; }
+  a.card { background:#FFFFFF; border:1.5px solid var(--c); box-shadow:0 2px 6px rgba(0,0,0,0.07); }
+  a.card b { font-size:11.5pt; }
+  a.card span { font-size:10.5pt; line-height:1.35; }
+  .pnote { margin:0 12px 12px; padding:7px 10px; background:#FFFFFF; border:1px dashed var(--c); border-radius:9px; font-size:10.5pt; }
+  figcaption { margin-top:12px; font-size:11pt; font-weight:normal; color:#000000; line-height:normal; }
+  figcaption b { font-weight:bold; color:#0070C0; }
+  @media (hover:hover) { a.card:hover { background:var(--t); box-shadow:0 8px 16px rgba(0,0,0,0.12); } }
+  @media (max-width:640px) {
+    .map-grid { grid-template-columns:minmax(0,1fr); grid-template-areas:"focal" "unk" "gen" "uncl"; }
+    .rule { text-align:left; }
+  }
+
+  .desc ul, .tip-box ul { margin:2px 0 0; padding-left:1.35em; }
+  .desc li { margin:4px 0; }
+  .tip-box li { margin:3px 0; }
+  .former { font-size:11.5pt; }
+  .former ul { margin:2px 0 0; padding-left:1.35em; }
+  .former li { margin:2px 0; }
+  a.card.flash { animation:flash 2.4s ease-out 1; }
+  @keyframes flash { 0%,30% { box-shadow:0 0 0 5px #FFD54F, 0 8px 18px rgba(0,0,0,0.18); background:#FFF8D6; } 100% { box-shadow:0 2px 6px rgba(0,0,0,0.07); } }
+  /* ---------- Responsive: tablets, iPad and phones ---------- */
+  html { -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+  a, button { -webkit-tap-highlight-color:rgba(0,112,192,0.15); touch-action:manipulation; }
+  a.t-link, .class-box span, .info p { overflow-wrap:anywhere; }
+  @media (hover:none) {
+    a.t-link:hover, .class-box:hover, .pill:hover { transform:none; }
+    a.t-link::after { opacity:1; transform:translate(0,-52%); }
+  }
+  @media (pointer:coarse) {
+    .pill, .spd-btn, .btn { min-height:40px; }
+    .replay-btn, .play-btn { min-height:44px; }
+    a.t-link { padding-top:9px; padding-bottom:9px; }
+  }
+  /* Tablet and iPad portrait: generalised column on the left, the other classes stacked on the right */
+  @media (max-width:1000px) {
+    .wrap { padding:22px 16px 34px; }
+    .branches { grid-template-columns:1fr 1fr; grid-template-areas:"gen focal" "gen unk" "gen uncl"; column-gap:14px; align-items:start; }
+    .branch:nth-child(1) { grid-area:focal; } .branch:nth-child(2) { grid-area:gen; }
+    .branch:nth-child(3) { grid-area:unk; } .branch:nth-child(4) { grid-area:uncl; }
+    .branch { padding:14px 0 0; }
+    .branch::before, .branch::after { display:none; }
+    .fig-box { flex:0 0 280px; }
+  }
+  /* Phones */
+  @media (max-width:640px) {
+    body { font-size:11.5pt; }
+    .wrap { padding:16px 12px 28px; }
+    .doc-title { font-size:34pt; }
+    .author { font-size:14pt; margin-bottom:14px; }
+    .branches { grid-template-columns:1fr; grid-template-areas:"focal" "gen" "unk" "uncl"; }
+    .node-root { padding:8px 18px 10px; }
+    .legend { gap:10px; justify-content:flex-start; }
+    .nav span { display:none; }
+    .pills { padding:10px; }
+    .cat-group { gap:6px; }
+    .pills { grid-template-columns:1fr; row-gap:6px; }
+    .cat-label { justify-self:start; margin:6px 0 0; text-align:left; white-space:normal; }
+    .main { gap:14px; }
+    .fig-box { flex:1 1 100%; padding:24px 8px 12px; }
+    #figure { max-width:340px !important; }
+    .info { min-width:0; flex:1 1 100%; }
+    .prevnext .btn { flex:1; text-align:center; }
+    .speed-row { flex-wrap:wrap; }
+  }
+  /* ---------- Slightly larger text ---------- */
+  body { font-size:13pt; }
+  .map-root b { font-size:16.5pt; }
+  .panel > header b { font-size:14.5pt; }
+  .panel > header small { font-size:12pt; }
+  .panel > header em, .sub h5 em { font-size:10.5pt; }
+  .sub h5 { font-size:13.5pt; }
+  a.card b { font-size:13pt; }
+  a.card span { font-size:12pt; }
+  .pnote { font-size:12pt; }
+  .src { font-size:12pt; }
+  @media (max-width:640px) { body { font-size:12.5pt; } }
+  /* Phones and tablets (including iPad in landscape, matched by touch input as in the script): seizure type page fills the screen, content first, type buttons below */
+  @media (max-width:1024px), (pointer:coarse) {
+    #view-demo.on { display:flex; flex-direction:column; min-height:100vh; }
+    #view-demo .nav { order:1; }
+    #view-demo .main { order:2; }
+    #view-demo .pills { order:3; margin:22px 0 0; }
+    #view-demo .btn#backBtn { padding:10px 14px; }
+  }
+  /* Video hyperlinks on words and sentences */
+  a.vid { color:#000000; text-decoration:underline; text-decoration-color:#0070C0; text-decoration-thickness:1.5px; text-underline-offset:2px; }
+  a.vid:hover, a.vid:focus { color:#0070C0; }
+  /* Tables: plain grid, pink header row (all screens) */
+  .tbl { border:none !important; border-radius:0 !important; box-shadow:none !important; overflow:visible; margin:4px 0 8px; }
+  .tbl table { width:100%; border-collapse:collapse; table-layout:fixed; }
+  .tbl th, .tbl td { border:1px solid #7F7F7F !important; padding:4px 8px !important; text-align:left; vertical-align:top; color:#000000;
+    background:#FFFFFF !important; line-height:1.35; }
+  .tbl th { background:#F9D5F3 !important; font-weight:bold; }
+  .tbl th:first-child { width:34%; }
+  @media (max-width:640px) {
+    .tbl thead { display:table-header-group !important; }
+    .tbl tr { display:table-row !important; padding:0 !important; border:none !important; }
+    .tbl td { display:table-cell !important; }
+    .tbl td::before { content:none !important; }
+  }
+  /* Electroencephalogram: on computers it stays in the text column beside the figure;
+     on phones and tablets the script moves it (with its text) above the figure, so the tracing can be followed with the movement */
+  .fig-box { padding-top:8px; }
+  .fig-stage { position:relative; padding-top:20px; }
+  .fig-stage .phase-tag { top:0; }
+  #eegCanvas { display:block; width:100%; border-radius:6px; background:#FFFFFF; border:1px solid #E6E6E6; }
+  .fig-box.with-eeg { padding-top:12px; }
+  .fig-box.with-eeg .fig-stage { padding-top:28px; }
+  .eeg-top { margin:0 0 6px; }
+  .eeg-top h4 { margin:0 0 4px; }
+  .eeg-top .eeg-desc { font-size:11pt; line-height:1.4; margin:0 0 6px; }
+  .eeg-top #eegCanvas { height:auto; }
+  /* Type description: inside the text column on computers; on phones and tablets the script moves it above the figure */
+  .info-head { display:flex; flex-direction:column; gap:10px; min-width:0; }
+  .info-head h1 { margin:0; }
+  .info-head p { overflow-wrap:anywhere; }
+  .main.stacked { flex-direction:column; flex-wrap:nowrap; align-items:stretch; gap:14px; }
+  .main.stacked > .info-head, .main.stacked > .fig-box, .main.stacked > .info { flex:none; width:100%; min-width:0; }
+  /* Compact animation controls directly under the figure (all screens) */
+  .fig-box { padding-bottom:10px; }
+  @media (min-width:1025px) { .fig-box { flex:0 0 390px; } }
+  /* Computers: the figure stays in view while the electroencephalogram beside it is read */
+  .main:not(.stacked) > .fig-box { position:sticky; top:8px; }
+  .fig-box .ctrl-box { margin-top:8px; padding:8px 4px 0; border:none; border-top:1px solid #E6E6E6; border-radius:0; }
+  .fig-box .btns { margin-top:8px; gap:6px; }
+  .fig-box .play-btn { padding:5px 0; font-size:11pt; border-radius:8px; min-height:0; }
+  .fig-box .replay-btn { padding:5px 12px; font-size:11pt; border-radius:8px; min-height:0; }
+  .fig-box .time-label { margin-top:4px; font-size:9.5pt; }
+  .fig-box .speed-row { margin-top:5px; gap:5px; font-size:9.5pt; flex-wrap:nowrap; }
+  .fig-box .spd-btn { padding:2px 7px; font-size:9.5pt; min-height:0; }
+  .fig-box #speedBtns { display:inline-flex; gap:4px; }
+  @media (pointer:coarse) {
+    .fig-box .play-btn, .fig-box .replay-btn { min-height:36px; }
+    .fig-box .spd-btn { min-height:30px; }
+  }
+  @media (min-width:641px) and (max-width:1024px) {
+    .main { flex-wrap:nowrap; }
+    .fig-box { flex:0 0 340px; }
+    .info { min-width:0; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="doc-title">Epileptic seizure types</div>
+  <div class="author">Dr Hanadi Al Shaker</div>
+
+  <!-- ===================== VIEW 1: CLASSIFICATION ===================== -->
+  <section class="view" id="view-class">
+    <h1>4. Classification of seizures (2025 International League Against Epilepsy)</h1>
+    <ul class="bul">
+      <li>The 2025 classification keeps four main classes and defines 21 seizure types.</li>
+      <li>Focal seizures, and seizures unknown whether focal or generalised, are subdivided by the state of consciousness (preserved or impaired), judged from both awareness (the patient can recall the event) and responsiveness.</li>
+      <li>If consciousness cannot be judged, the parent term is used (for example, focal seizure). Focal seizures and seizures unknown whether focal or generalised can be described as with or without observable manifestations.</li>
+    </ul>
+
+    <figure class="map">
+      <div class="map-root"><b>Epileptic seizure</b></div>
+      <div class="map-grid">
+        <section class="panel p-focal" style="--c:#4A86C8;--h:#D9E8F7;--t:#F4F8FD">
+          <header><b>Focal</b><em>3</em><small>Starts in networks limited to one hemisphere.</small></header>
+          <div class="cards">
+            <a class="card" data-id="fpc" href="#seizure-fpc"><b>Focal preserved consciousness seizure</b><span>Preserved consciousness.</span></a>
+            <a class="card" data-id="fic" href="#seizure-fic"><b>Focal impaired consciousness seizure</b><span>Impaired consciousness; automatisms may occur.</span></a>
+            <a class="card" data-id="fbtc" href="#seizure-fbtc"><b>Focal-to-bilateral tonic-clonic seizure</b><span>Starts focally, then spreads to both hemispheres as a tonic-clonic seizure.</span></a>
+          </div>
+          <p class="pnote">Focal seizures may be described as with or without observable manifestations.</p>
+        </section>
+        <section class="panel p-gen" style="--c:#8A5BA8;--h:#EADDF3;--t:#FBF7FD">
+          <header><b>Generalised</b><small>Rapidly engages networks in both hemispheres. Consciousness is not used to subclassify generalised seizures.</small></header>
+          <div class="subgrid">
+            <div class="sub" style="--c:#3E9E93;--h:#D5EFEC;--t:#F3FAF9">
+              <h5>Absence seizures <em>4</em></h5>
+              <div class="cards">
+                <a class="card" data-id="ta" href="#seizure-ta"><b>Typical absence seizure</b><span>Sudden behavioural arrest and blank stare for seconds (median 7 seconds), with immediate recovery.</span></a>
+                <a class="card" data-id="aa" href="#seizure-aa"><b>Atypical absence seizure</b><span>Gradual onset or end; tone changes, when present, are more marked (head drop).</span></a>
+                <a class="card" data-id="ma" href="#seizure-ma"><b>Myoclonic absence seizure</b><span>Absence with rhythmic jerks of the upper limbs (ratcheting).</span></a>
+                <a class="card" data-id="ema" href="#seizure-ema"><b>Eyelid myoclonia with/without absence</b><span>Repetitive eyelid jerks, with/without absence; typically induced by slow eye closure or bright sunlight.</span></a>
+              </div>
+            </div>
+            <div class="sub" style="--c:#C9605A;--h:#F7DCDA;--t:#FDF5F4">
+              <h5>Generalised tonic-clonic seizures <em>3</em></h5>
+              <div class="cards">
+                <a class="card" data-id="gtc" href="#seizure-gtc"><b>Generalised tonic-clonic seizure</b><span>Typically loss of consciousness, tonic stiffening, then clonic jerking (median 80 seconds).</span></a>
+                <a class="card" data-id="mtc" href="#seizure-mtc"><b>Myoclonic tonic-clonic seizure</b><span>A few myoclonic jerks, then a tonic-clonic seizure.</span></a>
+                <a class="card" data-id="atc" href="#seizure-atc"><b>Absence-to-tonic-clonic seizure</b><span>An absence seizure, then a tonic-clonic seizure.</span></a>
+              </div>
+            </div>
+            <div class="sub" style="--c:#B65C8C;--h:#F5DDEA;--t:#FDF5F9">
+              <h5>Other generalised seizures <em>7</em></h5>
+              <div class="cards">
+                <a class="card" data-id="gm" href="#seizure-gm"><b>Generalised myoclonic seizure</b><span>Sudden, brief, lightning-like muscle jerks.</span></a>
+                <a class="card" data-id="gc" href="#seizure-gc"><b>Generalised clonic seizure</b><span>Regular, repetitive rhythmic jerking.</span></a>
+                <a class="card" data-id="gnm" href="#seizure-gnm"><b>Generalised negative myoclonic seizure</b><span>Brief loss of muscle tone causing a sudden lapse in movement.</span></a>
+                <a class="card" data-id="ges" href="#seizure-ges"><b>Generalised epileptic spasms</b><span>Brief axial contractions, usually in clusters; often linked to infantile epileptic spasms syndrome.</span></a>
+                <a class="card" data-id="gt" href="#seizure-gt"><b>Generalised tonic seizure</b><span>Sustained stiffening without a clonic phase.</span></a>
+                <a class="card" data-id="ga" href="#seizure-ga"><b>Generalised atonic seizure</b><span>Sudden loss of tone causing a head drop or fall (“drop attacks”).</span></a>
+                <a class="card" data-id="gma" href="#seizure-gma"><b>Generalised myoclonic-atonic seizure</b><span>A myoclonic jerk, then brief loss of tone (head nod or fall).</span></a>
+              </div>
+            </div>
+          </div>
+          <p class="pnote"><b>Key points:</b> Consciousness is not used to subclassify generalised seizures. Negative myoclonus (brief loss of tone) is now a recognised seizure type.</p>
+        </section>
+        <section class="panel p-unk" style="--c:#6B8E23;--h:#E4EFCF;--t:#F8FBF1">
+          <header><b>Unknown whether focal or generalised</b><em>3</em><small>Not enough information to classify the seizure as focal or generalised; may be reclassified later.</small></header>
+          <div class="cards">
+            <a class="card" data-id="upc" href="#seizure-upc"><b>Unknown whether focal or generalised - preserved consciousness seizure</b><span>Focal or generalised unclear; consciousness preserved.</span></a>
+            <a class="card" data-id="uic" href="#seizure-uic"><b>Unknown whether focal or generalised - impaired consciousness seizure</b><span>Focal or generalised unclear; consciousness impaired.</span></a>
+            <a class="card" data-id="ubtc" href="#seizure-ubtc"><b>Unknown whether focal or generalised - bilateral tonic-clonic seizure</b><span>Focal or generalised unclear; bilateral tonic-clonic.</span></a>
+          </div>
+        </section>
+        <section class="panel p-uncl" style="--c:#7D8F99;--h:#E3E9EC;--t:#F7F9FA">
+          <header><b>Unclassified</b><small>No information is available to characterise the seizure, although the clinician is confident the event is an epileptic seizure.</small></header>
+          <div class="cards">
+            <a class="card" data-id="uncl" href="#seizure-uncl"><b>Unclassified</b><span>No information available, but the clinician is confident the event is an epileptic seizure.</span></a>
+          </div>
+        </section>
+      </div>
+      <figcaption><b>Figure 1:</b> Classification of epileptic seizures (2025 International League Against Epilepsy): the four main seizure classes and the 21 seizure types. The numbers show how many seizure types are listed under each class or group; “Absence seizures” is itself also a seizure type, which brings the total to 21. Select a card to open the page for that seizure type. Based on Beniczky et al., 2025a (Figures 1 and 2, Table 1 and Data S5); card descriptions also draw on American College of Clinical Pharmacy, 2026, and Nguyen, Dergalust and Chang, 2025.</figcaption>
+    </figure>
+
+    <h2>4.1 Clinical significance</h2>
+    <p>Correct classification matters, for example because:</p>
+    <ul class="bul">
+      <li>Drug choice differs between focal and generalised seizures.</li>
+      <li>Some medicines worsen generalised seizures.</li>
+    </ul>
+    <p class="src">Source: Beniczky et al., 2025b, page 1088.</p>
+
+    <h2>4.2 Key clinical features</h2>
+
+    <h3>Epilepsy syndromes</h3>
+    <p>Each epilepsy syndrome is characterised by a typical combination of:</p>
+    <ul class="bul">
+      <li>Seizure types</li>
+      <li>Electroencephalogram findings</li>
+      <li>Age of onset</li>
+      <li>Comorbidities</li>
+    </ul>
+    <p class="cap">Examples</p>
+    <ul class="bul">
+      <li><b>Childhood absence epilepsy</b></li>
+      <li><b>Juvenile myoclonic epilepsy</b></li>
+      <li><b>Lennox-Gastaut syndrome:</b> atonic seizures are often observed.</li>
+      <li><b><a class="vid" href="https://www.facebook.com/reel/1064248303001488" target="_blank" rel="noopener noreferrer">Dravet syndrome</a>:</b> genetic; linked to SCN1A sodium channel mutations.</li>
+      <li><b>Infantile epileptic spasms syndrome</b></li>
+    </ul>
+    <p class="src">Sources: Beniczky et al., 2025a; Nguyen, Dergalust and Chang, 2025.</p>
+
+    <h3>Status epilepticus</h3>
+    <ul class="bul">
+      <li><b>Traditional definition:</b> more than 30 minutes of either
+        <ul>
+          <li>Continuous seizure activity, or</li>
+          <li>Two or more sequential seizures without full recovery of consciousness between them (Glauser et al., 2016).</li>
+        </ul>
+      </li>
+      <li><b>Severity:</b> a critical care emergency (Glauser et al., 2016). Mortality is up to 15.5% (American College of Clinical Pharmacy, 2026).</li>
+    </ul>
+    <p class="cap">Time points</p>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Time point</th><th>What it means</th></tr></thead>
+        <tbody>
+          <tr><td>5 minutes</td><td>Treatment should start once a seizure has lasted 5 minutes; treatment protocols use this point because a seizure lasting more than 5 minutes is likely to be prolonged.</td></tr>
+          <tr><td>30 minutes</td><td>Convulsive status epilepticus of this duration may by itself cause permanent neuronal injury; after 30 minutes, status epilepticus can have long-term consequences, including neuronal death, neuronal injury and alteration of neuronal networks, depending on the type and duration of seizures.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="src">Sources: American College of Clinical Pharmacy, 2026; Glauser et al., 2016.</p>
+  </section>
+
+  <!-- ===================== VIEW 2: DEMONSTRATION ===================== -->
+  <section class="view" id="view-demo">
+    <div class="nav">
+      <a class="btn" id="backBtn" href="#classification">&#8592; Back to this seizure in Figure 1</a>
+      <span style="font-size:10.5pt">Interactive demonstration of 20 of the 21 seizure types (all except the parent term “Absence seizures”) and the Unclassified main class</span>
+    </div>
+    <div class="pills" id="pills"></div>
+    <div class="main">
+      <div class="fig-box">
+        <div class="fig-stage">
+          <div class="phase-tag" id="phaseTag"></div>
+          <svg id="figure" viewBox="-80 0 420 530" style="width:100%;max-width:370px;display:block;margin:0 auto;"></svg>
+        </div>
+        <div class="hl-label" id="hlLabel"></div>
+        <div class="ctrl-box">
+          <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
+          <div class="btns">
+            <button class="play-btn" id="playBtn" onclick="toggle()">&#9654;  Play</button>
+            <button class="replay-btn" id="replayBtn" onclick="doReplay()" aria-label="Replay">&#8634;</button>
+          </div>
+          <div class="time-label" id="timeLabel">Animation time: 0.0 s / 0.0 s (not real seizure duration)</div>
+          <div class="speed-row">
+            <span>Speed</span>
+            <span id="speedBtns">
+              <button class="spd-btn" data-spd="0.5">0.5×</button>
+              <button class="spd-btn active" data-spd="1">1×</button>
+              <button class="spd-btn" data-spd="1.5">1.5×</button>
+              <button class="spd-btn" data-spd="2">2×</button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="info">
+        <div class="info-head" id="infoHead">
+          <div class="cat-badge" id="catBadge"></div>
+          <h1 id="szTitle"></h1>
+          <div class="cons" id="consBox"></div>
+          <div class="desc" id="szDesc"></div>
+          <div class="former" id="szFormer"></div>
+          <p class="shown" id="szShown"></p>
+        </div>
+        <div class="eeg-box" id="eegWrap">
+          <h4>Electroencephalogram</h4>
+          <div class="eeg-desc" id="eegDesc"></div>
+          <canvas id="eegCanvas" width="600" height="80"></canvas>
+        </div>
+        <div class="tip-box" id="tipBox"></div>
+        <p class="src" id="srcLine"></p>
+        <div class="prevnext">
+          <button class="btn" id="prevBtn">&#8592; Previous type</button>
+          <button class="btn" id="nextBtn">Next type &#8594;</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="refs-end">
+    <h2>References</h2>
+    <ul class="refs">
+      <li>Beniczky, S., Trinka, E., Wirrell, E., et al. <b>(2025a)</b> ‘Updated classification of epileptic seizures: position paper of the International League Against Epilepsy’, <i>Epilepsia</i>, 66(6), pages 1804–1823. <a href="https://doi.org/10.1111/epi.18338" target="_blank" rel="noopener">https://doi.org/10.1111/epi.18338</a>. Page numbers cited in the text refer to the online version, <i>Epilepsia</i>, 2025;00:1–20. Supporting information cited: Data S5, ‘Definitions of generalized epileptic seizure types’; Data S7, PowerPoint file of the updated seizure classification.</li>
+      <li>Beniczky, S., Trinka, E., Wirrell, E., et al. <b>(2025b)</b> ‘A practical guide to the updated seizure classification 2025’, <i>Epileptic Disorders</i>, 27, pages 1087–1104. <a href="https://doi.org/10.1002/epd2.70110" target="_blank" rel="noopener">https://doi.org/10.1002/epd2.70110</a></li>
+      <li>American College of Clinical Pharmacy (2026) ‘Neurology’, in <i>ACCP Updates in Therapeutics® 2026: The Pharmacotherapy Preparatory Review and Recertification Course</i>. Lenexa, Kansas: American College of Clinical Pharmacy. Pages consulted: 1-478 to 1-495.</li>
+      <li>Glauser, T., Shinnar, S., Gloss, D., et al. (2016) ‘Evidence-based guideline: treatment of convulsive status epilepticus in children and adults: report of the Guideline Committee of the American Epilepsy Society’, <i>Epilepsy Currents</i>, 16(1), pages 48–61. <a href="https://doi.org/10.5698/1535-7597-16.1.48" target="_blank" rel="noopener">https://doi.org/10.5698/1535-7597-16.1.48</a></li>
+      <li>Kanner, A.M., Ashman, E., Gloss, D., et al. (2018) ‘Practice guideline update summary: efficacy and tolerability of the new antiepileptic drugs I: treatment of new-onset epilepsy: report of the American Epilepsy Society and the Guideline Development, Dissemination, and Implementation Subcommittee of the American Academy of Neurology’, <i>Epilepsy Currents</i>, 18(4), pages 260–268. <a href="https://doi.org/10.5698/1535-7597.18.4.260" target="_blank" rel="noopener">https://doi.org/10.5698/1535-7597.18.4.260</a></li>
+      <li>Nguyen, V.H.V., Dergalust, S. and Chang, E. (2025) ‘Epilepsy’, in Haines, S.T., Nolin, T.D., Ellingrod, V.L., Cocohoba, J., Holle, L.M. and Posey, L.M. (editors) <i>DiPiro’s Pharmacotherapy: A Pathophysiologic Approach</i>. 13th edition, chapter 79. New York: McGraw Hill. Online edition (AccessPharmacy), ©2025. Page numbers cited in the text refer to the pages of the online chapter.</li>
+    </ul>
+  </section>
+</div>
+
+<script>
+const PAGE_SRC = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+let curHash = window.__START || "";
+function go(h) { curHash = h; try { if (location.hash.slice(1) !== h) location.hash = h; } catch (e) {} route(); }
+/* Visible citations: [reference number, page / section / slide]; reference 2 (Data S5) is cited by section */
+function VL(id, t) { return '<a class="vid" href="https://www.facebook.com/reel/' + id + '" target="_blank" rel="noopener noreferrer">' + t + '</a>'; }
+function c(t) {
+  /* Restore the original statement-level source references. The numbers here are
+     the source identifiers used in the teaching data, not bibliography ordinals. */
+  const names = {
+    "1": "Beniczky et al., 2025a",
+    "2": "Beniczky et al., 2025a, Data S5",
+    "3": "Beniczky et al., 2025a, Data S7",
+    "4": "American College of Clinical Pharmacy, 2026",
+    "5": "Nguyen, Dergalust and Chang, 2025",
+    "6": "Glauser et al., 2016",
+    "7": "Kanner et al., 2018"
+  };
+  const parts = t.split(";").map(part => {
+    const m = part.trim().match(/^(\d+)\s*,?\s*(.*)$/);
+    if (!m || !names[m[1]]) return part.trim();
+    return names[m[1]] + (m[2] ? ", " + m[2] : "");
+  });
+  return ' <span class="cite">(' + parts.join('; ') + ')</span>';
+}
+
+const SRC = {
+  ilae: "Beniczky et al., 2025a (International League Against Epilepsy position paper)",
+  s5: "Beniczky et al., 2025a, Data S5: definitions of generalised epileptic seizure types",
+  s7: "Beniczky et al., 2025a, Data S7: PowerPoint file of the updated seizure classification",
+  accp: "American College of Clinical Pharmacy, 2026",
+  dipiro: "Nguyen, Dergalust and Chang, 2025",
+  glauser: "Glauser et al., 2016",
+  kanner: "Kanner et al., 2018 (part I)",
+  guide: "Beniczky et al., 2025b (practical guide)"
+};
+
+const CLASSES = {
+  focal: { name:"Focal", color:"#4A86C8", fill:"#E6F0FA" },
+  gen:   { name:"Generalised", color:"#8A5BA8", fill:"#F1E8F7" },
+  unk:   { name:"Unknown whether focal or generalised", color:"#6B8E23", fill:"#E8F0D6" },
+  uncl:  { name:"Unclassified", color:"#6F828C", fill:"#E8EDF0" }
+};
+const GCOL = { abs:{ color:"#3E9E93", fill:"#DDF2EF" }, gtc:{ color:"#C9605A", fill:"#F9E2E0" }, oth:{ color:"#B65C8C", fill:"#F8E3EE" } };
+function colOf(s) { return s.grp ? GCOL[s.grp] : CLASSES[s.cls]; }
+const GROUPS = { abs:"Absence seizures", gtc:"Generalised tonic-clonic seizures", oth:"Other generalised seizures" };
+
+const CONS = {
+  preserved: "<b>Consciousness: preserved.</b> The patient responds appropriately and normally and can recall the event." + c("1, page 6"),
+  impaired: "<b>Consciousness: impaired.</b> Recall, responsiveness, or both, are impaired in any way." + c("1, page 6"),
+  fbtc: "<b>Consciousness:</b> may be preserved or impaired during the focal onset" + c("1, page 13; Beniczky et al., 2025b, case vignettes") + "; as the seizure evolves, consciousness becomes impaired and is eventually completely lost, with bilateral tonic muscle activation." + c("1, page 6"),
+  lost: "<b>Consciousness</b> is not used to subclassify this type: Table 1 lists it beside, not under, the preserved and impaired consciousness types." + c("1, Table 1; 3, slide 1"),
+  gen: "<b>Consciousness</b> is not used to subclassify generalised seizures." + c("1, pages 2 and 6, and Table 1"),
+  none: "<b>Consciousness:</b> no information is available." + c("1, page 6")
+};
+
+const SZ = [
+  { id:"fpc", cls:"focal", short:"Preserved consciousness", label:"Focal preserved consciousness seizure", cons:"preserved", dur:4000,
+    desc:["Starts in networks limited to one hemisphere." + c("1, page 6"),
+          VL("1172322935245696", "Consciousness is preserved: the patient responds appropriately and normally throughout.") + c("1, page 6"),
+          "The patient can recall the event afterwards." + c("1, page 6"),
+          "May occur with or without observable manifestations." + c("1, Table 1")],
+    former:["Simple partial seizure (historical term)" + c("Beniczky et al., 2025b, page 1091"), "Focal aware seizure (2017 classification)" + c("5, page 8; 1, page 5")],
+    shown:"Rhythmic clonic jerking of one arm while the patient stays alert and responsive." + c("5, page 9"),
+    eeg:"In an example given by Beniczky et al. (2025b), interictal and ictal electroencephalograms showed epileptiform activity in the right centro-temporal region; in another example, the findings were unremarkable (Beniczky et al., 2025b, case vignettes). Schematic: one channel over the involved region.",
+    tip:["Symptoms reflect the brain region involved:" + c("5, page 9"),
+         "Jerking of the arm, shoulder, face or leg may indicate motor pathways." + c("5, page 9"),
+         "Numbness or tingling may indicate the parietal lobe." + c("5, page 9"),
+         "Fear, déjà vu or jamais vu may indicate the temporal lobe." + c("5, page 9"),
+         "Visual disturbances or hallucinations may indicate the occipital lobe." + c("5, page 9"),
+         "A seizure whose only features are sensory phenomena or an indescribable aura is described as without observable manifestations; cognitive, affective and autonomic phenomena are possibly observable." + c("1, Table 2")],
+    src:["ilae","guide","dipiro"] },
+  { id:"fic", cls:"focal", short:"Impaired consciousness", label:"Focal impaired consciousness seizure", cons:"impaired", dur:5500,
+    desc:["Starts in networks limited to one hemisphere." + c("1, page 6"),
+          "Consciousness is impaired: recall, responsiveness, or both, are impaired in any way." + c("1, page 6"),
+          "An inadequate response, or a significantly longer response time than the patient’s baseline, counts as impaired, even if the eyes are open." + c("1, page 6"),
+          "Always has observable manifestations." + c("1, page 6; 3, slide 1"),
+          "May include behavioural arrest, staring, and automatisms (lip smacking, chewing, picking at clothing)." + c("5, page 9")],
+    former:["Complex partial seizure (historical term)" + c("Beniczky et al., 2025b, page 1091"), "Focal impaired awareness seizure (2017 classification)" + c("5, page 8; 1, page 14")],
+    shown:"Vacant stare with oral automatisms (lip smacking) and fumbling hand movements." + c("1, page 13; 5, page 9"),
+    eeg:"In two examples given by Beniczky et al. (2025b), the electroencephalogram showed an evolving ictal rhythm in one temporal region (right in one, left in the other) (Beniczky et al., 2025b, case vignettes). Schematic: one channel over the involved region.",
+    tip:["Afterwards the patient may be confused or drowsy, may fall into a deep sleep and may not recall their actions." + c("5, page 9"),
+         "Typical absence seizures are much briefer than these staring spells and have minimal postictal features." + c("5, page 10")],
+    src:["ilae","guide","s7","dipiro"] },
+  { id:"fbtc", cls:"focal", short:"Focal-to-bilateral tonic-clonic", label:"Focal-to-bilateral tonic-clonic seizure", cons:"fbtc", dur:8000,
+    desc:["Starts focally, in one hemisphere." + c("1, page 6"),
+          "The seizure activity then spreads to both hemispheres." + c("1, page 6"),
+          "As the seizure evolves, consciousness becomes impaired and is eventually completely lost." + c("1, page 6"),
+          "Bilateral phase: tonic stiffening, then a clonic phase in which the jerks become less frequent as the pauses between them lengthen." + c("1, page 6"),
+          "The words “to bilateral” distinguish this focal seizure from a generalised seizure." + c("5, page 9")],
+    former:["Secondarily generalised tonic-clonic seizure" + c("Beniczky et al., 2025b, page 1091"), "Partial onset with secondary generalisation" + c("5, page 9")],
+    shown:"Illustrative example: jerking of one arm as the focal onset (the sources do not give this example), then spread, then bilateral tonic and bilateral clonic phases." + c("1, page 6") + " Illustrative fall: the figure is standing at onset, so it falls to the ground as consciousness is lost and the bilateral tonic phase begins, and the rest of the seizure is shown lying down. This follows the example given by Beniczky et al. (2025b), in which the patient falls to the ground with bilateral stiffening of all limbs, followed by clonic jerks.",
+    eeg:"Focal onset: in an example given by Beniczky et al. (2025b), the captured seizure showed an evolving ictal rhythm beginning in the right temporal region. Bilateral phase: the ictal activity propagates to both hemispheres (Beniczky et al., 2025a). The sources do not give the waveform of the bilateral phase for this seizure type; because its tonic and clonic phases are described in the same terms as those of a generalised tonic-clonic seizure (Beniczky et al., 2025a), the schematic borrows that pattern: fast rhythmic activity in the tonic phase, then a spike and slow wave with each clonic jerk (Beniczky et al., 2025a, Data S5). Schematic: two channels, one over the involved region and one over the opposite hemisphere.",
+    tip:["Distinguish it from a generalised tonic-clonic seizure: onset affects medicine choice and eligibility for epilepsy surgery." + c("Beniczky et al., 2025b, page 1088"),
+         "Clues to a focal onset: very early focal signs (for example a visual aura) and the electroencephalogram." + c("5, page 10; 1, page 13"),
+         "Bilateral tonic-clonic seizures carry the highest morbidity and mortality, and are the major risk factor for sudden unexpected death in epilepsy." + c("1, page 8")],
+    src:["ilae","guide","s5","dipiro"] },
+
+  { id:"upc", cls:"unk", short:"Preserved consciousness", label:"Unknown whether focal or generalised - preserved consciousness seizure", cons:"preserved", dur:4500,
+    desc:["Some features are known, but not enough to say whether the seizure is focal or generalised." + c("1, page 6"),
+          "Consciousness is preserved: the patient responds normally and recalls the event." + c("1, page 6; 4, page 1-479"),
+          "May occur with or without observable manifestations." + c("1, Table 1"),
+          "Can be reclassified as focal or generalised when more information becomes available." + c("1, pages 6 and 11")],
+    shown:"Illustrative example, not given in the sources: ictal tachycardia (a fast heartbeat), an autonomic descriptor listed by Beniczky et al. (2025a)" + c("1, Table 2") + ", while the patient stays alert.",
+    eeg:"Focal or generalised not determined: the available information is insufficient to classify the seizure as focal or generalised." + c("1, page 6"),
+    tip:["Ask about recall (awareness) and responsiveness, rather than asking the patient or caregiver to label consciousness." + c("1, page 6"),
+         "If either is impaired in any way, the seizure is classed as impaired consciousness." + c("1, page 6")],
+    src:["ilae","accp"] },
+  { id:"uic", cls:"unk", short:"Impaired consciousness", label:"Unknown whether focal or generalised - impaired consciousness seizure", cons:"impaired", dur:4000,
+    desc:["With the information available, the seizure cannot be classified as focal or generalised." + c("1, page 6"),
+          "Consciousness is impaired: the patient does not respond normally, does not recall the event, or both." + c("1, page 6; 4, page 1-479"),
+          "Always has observable manifestations." + c("1, page 6; 3, slide 1")],
+    shown:"Illustrative example, not given in the sources: sudden behavioural arrest with an unresponsive stare.",
+    eeg:"Focal or generalised not determined: the available information is insufficient to classify the seizure as focal or generalised." + c("1, page 6"),
+    tip:["Before calling consciousness impaired, consider ictal paresis or ictal receptive aphasia as causes of unresponsiveness." + c("1, page 6"),
+         "Consider isolated epileptic amnesia as a cause of lost recall." + c("1, page 6")],
+    src:["ilae","s7","accp"] },
+  { id:"ubtc", cls:"unk", short:"Bilateral tonic-clonic", label:"Unknown whether focal or generalised - bilateral tonic-clonic seizure", cons:"lost", dur:6000,
+    desc:["Bilateral stiffening followed by bilateral jerking." + c("1, page 12"),
+          "When the origin of a bilateral tonic-clonic seizure is unknown, it is classified here rather than as generalised." + c("2, 3.2"),
+          "In the example given by Beniczky et al. (2025a), the onset was not witnessed." + c("1, page 12"),
+          "So it is unknown whether it began focally or was generalised." + c("1, Table 1; 4, page 1-479")],
+    shown:"Bilateral tonic phase then bilateral clonic phase; the onset is not known." + c("1, page 12") + " The figure is shown lying down throughout, as in the example given by Beniczky et al. (2025a), in which the seizure occurred in bed and the onset was not witnessed.",
+    eeg:"Focal or generalised not determined. In the example given by Beniczky et al. (2025a), the electroencephalogram and magnetic resonance imaging were normal." + c("1, page 12"),
+    tip:["Example from Beniczky et al. (2025a): a partner wakes to find bilateral stiffening followed by shaking; the onset was not witnessed." + c("1, page 12"),
+         "The seizure is reclassified if more information becomes available." + c("1, page 11")],
+    src:["ilae","s5","s7","accp"] },
+
+  { id:"ta", cls:"gen", grp:"abs", short:"Typical absence", label:"Typical absence seizure", cons:"gen", dur:4000,
+    desc:["Sudden onset and interruption of ongoing activities." + c("2, 3.1.1"),
+          "Blank stare (loss of facial expression), possibly a brief upward deviation of the eyes." + c("2, 3.1.1"),
+          "Usually unresponsive; in most cases awareness is impaired too (occasionally patients later recall events)." + c("2, 3.1.1"),
+          VL("1744056369808300", "Oral or manual automatisms in 86% of patients; eye involvement (blinking, eye opening, subtle eyelid or perioral myoclonus) in 76.5%.") + c("2, 3.1.1"),
+          "Immediate return to normal activity; children may be briefly confused as they reorient." + c("2, 3.1.1"),
+          "Lasts a few seconds to half a minute (median 7 seconds; range 2 to 26 seconds, after excluding outliers); rarely longer than 30 seconds." + c("2, 3.1.1")],
+    shown:"Behavioural arrest, blank stare with brief upward eye deviation and subtle eyelid movement." + c("2, 3.1.1"),
+    eeg:"Regular, generalised (bilateral-synchronous) spike-waves at around 3 Hz in the first seconds: 2.5 to 4 Hz in childhood absence epilepsy and 3 to 5.5 Hz in juvenile absence epilepsy." + c("2, 3.1.1"),
+    tip:["Typically provoked by " + VL("1149986527530447", "hyperventilation") + " in most untreated patients with childhood absence epilepsy; sometimes by photic stimulation." + c("2, 3.1.1"),
+         "In childhood absence epilepsy they typically occur multiple times a day but are often under-recognised; in juvenile absence epilepsy they occur less than daily when untreated." + c("2, 3.1.1"),
+         "Unless there are compelling concerns about adverse effects, ethosuximide or valproic acid should be considered before lamotrigine for absence seizures in childhood absence epilepsy (Level B)" + c("7, pages 260 and 264") + "; ethosuximide use is limited to childhood absence epilepsy without associated generalised tonic-clonic seizures." + c("7, page 264"),
+         "First-line agents for absence seizures: ethosuximide and valproic acid; second-line: lamotrigine, clonazepam, phenobarbital and primidone." + c("4, pages 1-484 and 1-485"),
+         "Carbamazepine and phenytoin may worsen childhood absence epilepsy." + c("5, pages 8 and 12")],
+    src:["ilae","s5","accp","dipiro","kanner"] },
+  { id:"aa", cls:"gen", grp:"abs", short:"Atypical absence", label:"Atypical absence seizure", cons:"gen", dur:5000,
+    desc:["Episodes of impaired consciousness (awareness, responsiveness, or both)." + c("2, 3.1.2"),
+          "Changes in tone, when present, are more pronounced than in typical absence (for example a head drop rather than mild head retropulsion)." + c("2, 3.1.2"),
+          "Onset, end, or both, are gradual rather than abrupt." + c("2, 3.1.2"),
+          "Usually longer than typical absence seizures, with considerable overlap." + c("2, 3.1.2")],
+    shown:"Gradual onset of unresponsiveness with loss of tone: the head drops." + c("2, 3.1.2; 1, page 4"),
+    eeg:"Irregular, bilateral synchronous and asynchronous or asymmetric spike-waves, slower than in typical absence (under 2.5 Hz); the ictal activity may be fragmented or include fast activity." + c("2, 3.1.2"),
+    tip:["May occur in Lennox-Gastaut syndrome." + c("2, 3.1.2"),
+         "Carbamazepine and phenytoin may exacerbate generalised seizures other than tonic-clonic seizures, and should be used with caution in generalised epilepsy, especially generalised atypical absence." + c("5, page 42")],
+    src:["s5","ilae","dipiro"] },
+  { id:"ma", cls:"gen", grp:"abs", short:"Myoclonic absence", label:"Myoclonic absence seizure", cons:"gen", dur:5000,
+    desc:["Absence seizure with abrupt onset and offset." + c("2, 3.1.3"),
+          "Rhythmic 3 Hz jerks of the upper limbs on tonic abduction of the arms (ratcheting appearance)." + c("2, 3.1.3"),
+          "If standing, the patient typically bends forward; falls are uncommon." + c("2, 3.1.3"),
+          "Jerks are usually bilateral and symmetric, but can be unilateral or asymmetric; perioral myoclonia and jerks of the head and legs may occur." + c("2, 3.1.3"),
+          "Consciousness varies from completely lost to retained." + c("2, 3.1.3"),
+          "Lasts typically 7 to 12 seconds (occasionally up to 60 seconds); may occur multiple times a day." + c("2, 3.1.3")],
+    shown:"Absence with rhythmic jerks of both arms superimposed on tonic abduction of the arms (ratcheting appearance); the patient bends forward but does not fall; responsiveness varies." + c("2, 3.1.3"),
+    eeg:"Regular 3 Hz generalised (bilateral-synchronous) spike-waves, time-locked to the myoclonic jerks." + c("2, 3.1.3"),
+    tip:["Mandatory for the diagnosis of epilepsy with myoclonic absence syndrome; seen in a variety of genetic conditions." + c("2, 3.1.3"),
+         "Recording electromyography together with the electroencephalogram is recommended." + c("2, 3.1.3"),
+         "Its motor features are one reason the 2025 classification removed “non-motor” from absence seizures." + c("1, pages 4 and 14")],
+    src:["s5","ilae"] },
+  { id:"ema", cls:"gen", grp:"abs", short:"Eyelid myoclonia with/without absence", label:"Eyelid myoclonia with/without absence", cons:"gen", dur:4000,
+    desc:["Brief, repetitive, often rhythmic 3 to 6 Hz myoclonic jerks of the eyelids." + c("2, 3.1.4"),
+          "Often with upward deviation of the eyes and extension of the head." + c("2, 3.1.4"),
+          "May occur with an absence or without one." + c("2, 3.1.4"),
+          "Typically induced by slow eye closure (voluntary or involuntary) or bright sunlight." + c("2, 3.1.4"),
+          "Very brief (median 1.5 seconds) and frequent: multiple times a day, even many times an hour." + c("2, 3.1.4")],
+    shown:"Rhythmic jerks of the eyelids with upward deviation of the eyes and extension of the head." + c("2, 3.1.4"),
+    eeg:"Generalised (bilateral-synchronous) fast spike activity or 3 to 6 Hz polyspike-and-wave discharges, typically elicited by eye closure and intermittent photic stimulation, especially in untreated patients." + c("2, 3.1.4"),
+    tip:["Mandatory for the diagnosis of epilepsy with eyelid myoclonia (formerly called Jeavons syndrome)." + c("2, 3.1.4"),
+         "In general (not specific to eyelid myoclonia): vigabatrin may aggravate absence and myoclonic seizures in generalised epilepsies." + c("5, page 47")],
+    src:["ilae","s5","dipiro"] },
+
+  { id:"gtc", cls:"gen", grp:"gtc", short:"Generalised tonic-clonic", label:"Generalised tonic-clonic seizure", titleLink:"1085342214495576", cons:"gen", dur:7000,
+    desc:["Tonic phase: sustained muscle activity." + c("2, 3.2"),
+          "Clonic phase: jerks slow progressively until the seizure ends." + c("2, 3.2"),
+          VL("1094687335856445", "Bilateral, but not always symmetric; focal features (such as forced head turning) may be seen.") + c("2, 3.2"),
+          "Consciousness is typically lost during the seizure and the postictal period." + c("2, 3.2"),
+          "The patient may cry out, bite the tongue or be incontinent." + c("5, pages 9 and 10"),
+          "Afterwards: confusion, drowsiness, soreness throughout the body and amnesia for the event." + c("5, page 10"),
+          "Median duration 80 seconds (range 57 to 102 seconds, after excluding outliers)." + c("2, 3.2"),
+          "If no myoclonic jerks or absence are seen at onset, this parent term is used." + c("1, page 8")],
+    former:[VL("1378978387040262", "Grand mal") + " seizure" + c("5, page 9")],
+    shown:"Tonic phase (sustained stiffening), then clonic jerking that slows." + c("2, 3.2") + " The brief transition between them is shown as a fine tremor, matching the tremor phase between tonic rigidity and the clonic state described by the American College of Clinical Pharmacy (2026) in its section on generalised tonic-clonic seizures. Illustrative fall: the figure is standing at onset, so it falls to the ground as consciousness is lost and the tonic phase begins, and the rest of the seizure is shown lying down. The definitions do not mention the fall; the animation follows the example of a focal-to-bilateral tonic-clonic seizure given by Beniczky et al. (2025b), in which the patient falls to the ground with bilateral stiffening of all limbs, followed by clonic jerks.",
+    eeg:"Often obscured by movement artefact. Generalised fast rhythmic spikes may be seen in the tonic stage, followed by bursts of spikes and slow waves synchronous with the clonic jerks, then postictal generalised suppression or irregular diffuse slowing." + c("2, 3.2"),
+    tip:["The American College of Clinical Pharmacy (2026), in its section on generalised tonic-clonic seizures (under the subheading “myoclonic tonic-clonic seizures”), notes that a prodrome, but not an aura, may precede the seizure, and that the patient may cry out as air is forced from the lungs; elsewhere it describes a prodrome as headache, insomnia, irritability or a feeling of impending doom." + c("4, pages 1-478 and 1-479"),
+         "In idiopathic generalised epilepsies, often occurs on awakening or with sleep deprivation." + c("2, 3.2"),
+         "Tonic-clonic seizures carry the highest morbidity and mortality, and are the major risk factor for sudden unexpected death in epilepsy." + c("2, 3.2; 1, page 8"),
+         "Ethosuximide used alone may worsen generalised tonic-clonic seizures in mixed epilepsy." + c("5, page 26")],
+    src:["s5","ilae","guide","dipiro","accp"] },
+  { id:"mtc", cls:"gen", grp:"gtc", short:"Myoclonic tonic-clonic", label:"Myoclonic tonic-clonic seizure", cons:"gen", dur:9000,
+    desc:["A generalised tonic-clonic seizure preceded by sporadic or irregular myoclonic jerks." + c("2, 3.2"),
+          "Sequence: a few jerks, then stiffening of all limbs, then rhythmic jerking of all limbs." + c("1, page 12")],
+    shown:"A few myoclonic jerks, then the tonic phase, then the clonic phase." + c("1, page 12") + " Illustrative fall: the figure is standing at onset, so it falls to the ground as consciousness is lost and the tonic phase begins, and the rest of the seizure is shown lying down. The definitions do not mention the fall; the animation follows the example of a focal-to-bilateral tonic-clonic seizure given by Beniczky et al. (2025b), in which the patient falls to the ground with bilateral stiffening of all limbs, followed by clonic jerks.",
+    eeg:"Schematic, inferred from the myoclonic" + c("2, 3.3.1") + " and tonic-clonic" + c("2, 3.2") + " definitions (not described for this type): generalised polyspike-and-wave discharges with the myoclonic jerks, then the tonic and clonic pattern of a generalised tonic-clonic seizure.",
+    tip:["Often seen in juvenile myoclonic epilepsy" + c("2, 3.2") + "; Beniczky et al. (2025a) give the example of a 13-year-old." + c("1, page 12")],
+    src:["s5","ilae","guide"] },
+  { id:"atc", cls:"gen", grp:"gtc", short:"Absence-to-tonic-clonic", label:"Absence-to-tonic-clonic seizure", cons:"gen", dur:9000,
+    desc:["A generalised tonic-clonic seizure preceded by an absence seizure." + c("2, 3.2; 4, page 1-478"),
+          "Sequence: an absence seizure, then tonic stiffening, then clonic jerking." + c("2, 3.2")],
+    shown:"Absence (illustrative: arrest and stare), then the tonic phase, then the clonic phase." + c("2, sections 3.1.1 and 3.2") + " Illustrative fall: the figure is standing at onset, so it falls to the ground as consciousness is lost and the tonic phase begins, and the rest of the seizure is shown lying down. The definitions do not mention the fall; the animation follows the example of a focal-to-bilateral tonic-clonic seizure given by Beniczky et al. (2025b), in which the patient falls to the ground with bilateral stiffening of all limbs, followed by clonic jerks.",
+    eeg:"Schematic, inferred from the absence" + c("2, 3.1.1") + " and tonic-clonic" + c("2, 3.2") + " definitions (not described for this type): generalised spike-and-wave discharges during the absence, then the tonic and clonic pattern of a generalised tonic-clonic seizure.",
+    tip:["Accurate identification of the seizure type matters: the medicine chosen must be effective for the specific seizure type and epilepsy." + c("5, page 12"),
+         "In general (not specific to this seizure type): some medicines, for example carbamazepine or phenytoin, can worsen childhood absence epilepsy." + c("5, pages 8 and 12")],
+    src:["s5","ilae","guide","accp","dipiro"] },
+
+  { id:"gm", cls:"gen", grp:"oth", short:"Myoclonic", label:"Generalised myoclonic seizure", cons:"gen", dur:3500,
+    desc:["Sudden, brief (lightning-like, under 100 milliseconds; median 80 milliseconds on surface electromyography) involuntary contractions of muscles or muscle groups." + c("2, 3.3.1"),
+          "Single or multiple; irregular or arrhythmic." + c("2, 3.3.1"),
+          "Bilateral, but may predominate on one side; frequently the arms." + c("2, 3.3.1"),
+          "Can involve the legs and cause falls." + c("2, 3.3.1"),
+          "Can be reflex seizures, triggered by photic stimulation or praxis." + c("2, 3.3.1")],
+    shown:"Irregular, lightning-fast jerks of both arms and shoulders, sometimes stronger on one side." + c("2, 3.3.1; 5, page 8"),
+    eeg:"Generalised (bilateral-synchronous) polyspike-and-wave, or spike-and-wave, discharges time-locked to the myoclonus." + c("2, 3.3.1"),
+    tip:["Mandatory for the diagnosis of juvenile myoclonic epilepsy; may occur in other generalised epilepsies." + c("2, 3.3.1"),
+         "First-line agents for myoclonic seizures: topiramate and valproic acid." + c("4, pages 1-484 and 1-485"),
+         "Unilateral myoclonic jerks within a focal seizure: classified as a focal seizure, with myoclonus as a descriptor." + c("2, 3.3.1")],
+    src:["ilae","s5","accp","dipiro"] },
+  { id:"gc", cls:"gen", grp:"oth", short:"Clonic", label:"Generalised clonic seizure", cons:"gen", dur:4500,
+    desc:["Regular, repetitive myoclonic jerks at a relatively low frequency (typically 0.2 to 5 Hz)." + c("2, 3.3.2"),
+          "Involve the same muscle groups." + c("2, 3.3.2"),
+          "Bilateral, but not always synchronous or symmetric." + c("2, 3.3.2"),
+          "Duration 4 seconds (range 1 to 24 seconds, after excluding outliers)." + c("2, 3.3.2")],
+    shown:"Regular, repetitive, bilateral jerking of the same muscle groups." + c("2, 3.3.2"),
+    eeg:"Generalised spike-and-wave or polyspike-and-wave discharges, time-locked to the clonic jerks." + c("2, 3.3.2"),
+    tip:["Distinguish from myoclonic absence seizures, which have a distinct movement pattern." + c("2, 3.3.2"),
+         "Unilateral or asymmetric clonic jerking within a focal seizure: classified as a focal seizure, with clonic as a descriptor." + c("2, 3.3.2")],
+    src:["ilae","s5"] },
+  { id:"gnm", cls:"gen", grp:"oth", short:"Negative myoclonic", label:"Generalised negative myoclonic seizure", cons:"gen", dur:6500,
+    desc:["A brief interruption of muscle tone (under 500 milliseconds)." + c("2, 3.3.3"),
+          "Causes a sudden, brief lapse in movement that may look like a myoclonic jerk." + c("2, 3.3.3"),
+          "Bilateral, but not always synchronous or symmetric." + c("2, 3.3.3"),
+          "To document it, the patient is often asked to activate muscles, for example by lifting the arms." + c("2, 3.3.3")],
+    shown:"As used in practice to reveal it, the arms are held up; each brief lapse of tone (under half a second) lets the raised arms drop before the posture recovers." + c("2, 3.3.3"),
+    eeg:"A spike-wave or a low-amplitude sharp transient; the onset of the electromyographic silent period is related to the negative component of the spike, before the slow wave." + c("2, 3.3.3"),
+    tip:["Newly recognised as a seizure type in 2025." + c("1, page 8 and Table 3"),
+         "Differs from asterixis in toxic-metabolic encephalopathies" + c("1, page 4") + "; subcortical negative myoclonus may occur in metabolic encephalopathies." + c("2, 3.3.3"),
+         "Unilateral or asymmetric negative myoclonus within a focal seizure is a descriptor of a focal seizure." + c("2, 3.3.3")],
+    src:["s5","ilae"] },
+  { id:"ges", cls:"gen", grp:"oth", short:"Epileptic spasms", label:"Generalised epileptic spasms", cons:"gen", dur:8000,
+    desc:["Brief contractions of axial (mainly trunk and proximal) muscles." + c("2, 3.3.4"),
+          "Each typically lasts 2 seconds or less (median 1 second)." + c("2, 3.3.4"),
+          "Causes abduction and extension of both arms, hip flexion and nodding." + c("2, 3.3.4"),
+          "Subtle forms: head nodding, grimacing, smiling or chin movement." + c("2, 3.3.4"),
+          "Usually in clusters, often on awakening, becoming more prominent through the cluster." + c("2, 3.3.4")],
+    former:["Infantile spasms (renamed epileptic spasms because they also occur at older ages)" + c("1, page 11")],
+    shown:"Illustrative cluster: subtle forms first (head nodding, grimacing, smiling or chin movement), then spasms that become more prominent: the head nods and both arms abduct and extend." + c("2, 3.3.4"),
+    eeg:"A high-amplitude generalised sharp or slow wave, followed by low-amplitude fast activity or a brief diffuse electrodecrement." + c("2, 3.3.4"),
+    tip:["Mandatory for the diagnosis of infantile epileptic spasms syndrome." + c("2, 3.3.4"),
+         "Prompt spasms-specific treatment is essential: delay can worsen developmental outcome." + c("1, page 11"),
+         "Bilateral symmetric spasms do not rule out a focal origin" + c("2, 3.3.4") + "; in a focal condition, epileptic spasm is a descriptor of a focal seizure, and early surgical treatment should be considered, particularly if spasms-specific therapies have failed." + c("1, page 11; 3, slide 4")],
+    src:["s5","ilae","s7"] },
+  { id:"gt", cls:"gen", grp:"oth", short:"Tonic", label:"Generalised tonic seizure", cons:"gen", dur:9000,
+    desc:["Sustained muscle contraction causing stiffness or a tense posture." + c("2, 3.3.5"),
+          "Usually in extension, sometimes affecting flexor muscles; bilateral, not necessarily symmetric." + c("2, 3.3.5"),
+          "No clonic phase." + c("4, page 1-479"),
+          "Median duration 8 seconds." + c("2, 3.3.5"),
+          "Subtle forms: slow upward eye deviation, grimacing, flexion of the head or trunk." + c("2, 3.3.5"),
+          "Obvious forms: brief cry, apnoea, abduction and elevation of the limbs with a vibratory component, clenched fists." + c("2, 3.3.5"),
+          "If standing, the patient may be forcefully thrown off balance, leading to a fall, often with injury." + c("2, 3.3.5")],
+    shown:"Two separate illustrative seizures, because the sources describe the subtle and the obvious forms as alternative presentations, not as stages of one seizure. Example 1, subtle form: slow upward eye deviation, grimacing, flexion of the head. Example 2, obvious form: brief cry, apnoea, abduction and elevation of the limbs with a vibratory component, clenched fists; the figure is standing at onset, and if standing the patient may be forcefully thrown off balance, leading to a fall, so the figure falls and the stiffening continues on the ground (the timing of the fall is illustrative)." + c("2, 3.3.5") + " Sound (synthesised and illustrative, because the definition in Data S5 (Beniczky et al., 2025a) names the brief cry but does not describe it): a loud, strained, harsh cry, ‘aah’, lasting under a second at 1× speed (its length follows the animation speed) and cut off abruptly as apnoea begins. It is modelled on the ictal cry of the tonic phase of a tonic-clonic seizure, in which air is forced from the lungs through the activated muscles of the larynx (American College of Clinical Pharmacy, 2026; Nguyen, Dergalust and Chang, 2025).",
+    eeg:"A burst of bilateral fast activity at 10 Hz or more with a recruiting rhythm: an initial diffuse decrement, then a gradual increase in amplitude." + c("2, 3.3.5") + " Schematic: one burst for each of the two example seizures.",
+    tip:["Mandatory for the diagnosis of Lennox-Gastaut syndrome." + c("2, 3.3.5"),
+         "Can be precipitated by startle." + c("2, 3.3.5"),
+         "During sleep it may be very subtle and missed by family members; polygraphic sleep recording is needed." + c("2, 3.3.5"),
+         "May be preceded or followed by spasms or a myoclonic jerk." + c("2, 3.3.5")],
+    src:["ilae","s5","accp","dipiro"] },
+  { id:"ga", cls:"gen", grp:"oth", short:"Atonic", label:"Generalised atonic seizure", titleLink:"1686451133023564", cons:"gen", dur:3500,
+    desc:["A sudden loss or decrease in muscle tone." + c("2, 3.3.6"),
+          "No apparent preceding myoclonic or tonic event." + c("2, 3.3.6"),
+          "Involves the head, trunk, jaw and limbs." + c("2, 3.3.6"),
+          "Frequently causes falls and injury" + c("2, 3.3.6") + " (“drop attacks”)." + c("4, page 1-479"),
+          "Median duration 1 second." + c("2, 3.3.6")],
+    shown:"Sudden loss of tone: the head drops and the body slumps to the ground (a limb drop is another form)." + c("5, page 10"),
+    eeg:"Ictal electroencephalograms typically show generalised electrodecrement or slow waves (Beniczky et al., 2025b, Box 2, page 1097). Polygraphic recording, including surface electromyography of antagonist muscles, helps document this seizure type." + c("2, 3.3.6"),
+    tip:["Often observed in Lennox-Gastaut syndrome" + c("2, 3.3.6") + "; patients often wear protective headwear." + c("5, page 10"),
+         "In focal epilepsies, atonia is described as part of a focal seizure." + c("2, 3.3.6")],
+    src:["ilae","guide","s5","dipiro","accp"] },
+  { id:"gma", cls:"gen", grp:"oth", short:"Myoclonic-atonic", label:"Generalised myoclonic-atonic seizure", cons:"gen", dur:4500,
+    desc:["A brief myoclonic jerk of the proximal muscles, often with a slight vocalisation." + c("2, 3.3.7"),
+          "Followed by a very brief atonic component: subtle (a head nod) or prominent (an abrupt fall)." + c("2, 3.3.7; 4, page 1-479"),
+          "Median duration 1.25 seconds." + c("2, 3.3.7")],
+    shown:"One brief myoclonic jerk of the proximal muscles (shoulders and upper arms) with a slight vocalisation, immediately followed by loss of tone and an abrupt fall." + c("2, 3.3.7; 4, page 1-479") + " Sound (synthesised and illustrative, because the sources do not describe the sound itself): a short, involuntary grunt, ‘uh!’, timed with the jerk, with an abrupt start and falling pitch, fading into a soft exhalation as tone is lost.",
+    eeg:"Generalised polyspike or spike discharges with the myoclonus, followed by a high-voltage slow wave with the atonic component." + c("2, 3.3.7"),
+    tip:["Mandatory for the diagnosis of epilepsy with myoclonic-atonic seizures (Doose syndrome)." + c("2, 3.3.7"),
+         "Distinguish it from an atonic seizure, which has no preceding myoclonic jerk." + c("2, 3.3.6; 5, page 10")],
+    src:["ilae","s5","accp","dipiro"] },
+
+  { id:"uncl", cls:"uncl", short:"Unclassified", label:"Unclassified", cons:"none", dur:0,
+    desc:["The clinician is confident the event was an epileptic seizure." + c("1, page 6"),
+          "No information is available to characterise it." + c("1, page 6"),
+          "A temporary class: reclassified as more information becomes available." + c("1, pages 6 and 13")],
+    shown:"Nothing is animated, because by definition there is no description of the event.",
+    eeg:"No information available." + c("1, page 6"),
+    tip:["This should be a rare occurrence." + c("5, page 10"),
+         "Classify seizures using all available information: semiology, electroencephalogram, neuroimaging, laboratory results and genetics." + c("1, page 12")],
+    src:["ilae","dipiro"] }
+];
+const IDX = {}; SZ.forEach((s,i)=>IDX[s.id]=i);
+
+const skin="#EDCBA8", skinL="#F7E2CC", skinH="#FAECD8", skinM="#E0B890", skinS="#C9976A", skinD="#B8845C";
+const hair="#1A1209", hairH="#2D2010";
+const shortsC="#5B6370", shortsB="#7E8694", shortsD="#3F4550", shortsH="#8D95A3";
+
+let sel=0, playing=false, elapsed=0, afId=null, startT=null, speed=1;
+/* the figure and the electroencephalogram stay on the current frame while paused, so a moment can be studied */
+function live() { return playing || (elapsed > 0 && elapsed < SZ[sel].dur); }
+
+/* ---------- Pills ---------- */
+const pillsEl = document.getElementById("pills");
+function addRow(label, color, fill, items, subLabels) {
+  const row = document.createElement("div");
+  row.className = "cat-group";
+  const lbl = document.createElement("span");
+  lbl.className = "cat-label"; lbl.textContent = label;
+  lbl.style.cssText = `border-color:${color};background:${fill};`;
+  pillsEl.appendChild(lbl);
+  let lastGrp = null;
+  items.forEach(s => {
+    if (subLabels && s.grp !== lastGrp) {
+      const sl = document.createElement("span"); sl.className="sub-label"; sl.textContent = GROUPS[s.grp]+":"; row.appendChild(sl); lastGrp = s.grp;
+    }
+    const b = document.createElement("button");
+    b.className = "pill"; b.textContent = s.short; b.dataset.idx = IDX[s.id];
+    b.onclick = () => { go("seizure-"+s.id); };
+    row.appendChild(b);
+  });
+  pillsEl.appendChild(row);
+}
+["focal","gen","unk","uncl"].forEach(k => {
+  const C = CLASSES[k];
+  if (k === "gen") ["abs","gtc","oth"].forEach(g => addRow(C.name+" \u203A "+GROUPS[g], GCOL[g].color, GCOL[g].fill, SZ.filter(s=>s.grp===g), false));
+  else addRow(C.name, C.color, C.fill, SZ.filter(s=>s.cls===k), false);
+});
+
+document.getElementById("speedBtns").addEventListener("click", (e) => {
+  const btn = e.target.closest(".spd-btn"); if (!btn) return;
+  speed = parseFloat(btn.dataset.spd);
+  document.querySelectorAll(".spd-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  if (playing) { startT = performance.now() - elapsed / speed; }
+});
+document.getElementById("prevBtn").onclick = () => { go("seizure-"+SZ[(sel-1+SZ.length)%SZ.length].id); };
+document.getElementById("nextBtn").onclick = () => { go("seizure-"+SZ[(sel+1)%SZ.length].id); };
+
+/* ---------- Table cell labels for phone layout ---------- */
+document.querySelectorAll(".tbl table").forEach(t => {
+  const heads = [...t.querySelectorAll("thead th")].map(th => th.textContent);
+  t.querySelectorAll("tbody tr").forEach(tr => [...tr.children].forEach((td, i) => td.setAttribute("data-l", heads[i] || "")));
+});
+
+/* ---------- Staggered entrance of the tree ---------- */
+document.querySelectorAll("#view-class .panel, #view-class .sub").forEach((el, i) => el.style.setProperty("--d", (0.15 + i*0.08).toFixed(2) + "s"));
+document.querySelectorAll("#view-class .cards").forEach(box => {
+  box.querySelectorAll("a.card").forEach((el, i) => el.style.setProperty("--d", (0.45 + i*0.06).toFixed(2) + "s"));
+});
+
+/* ---------- Seizure-card navigation ----------
+   Use the existing in-page router on every screen size. The former desktop
+   document.write popup did not initialise its seizure-page script reliably. */
+(function () {
+  document.querySelectorAll('#view-class a.card').forEach(a => {
+    a.addEventListener("click", ev => {
+      ev.preventDefault();
+      go(a.getAttribute("href").slice(1));
+    });
+  });
+  document.getElementById("backBtn").addEventListener("click", ev => {
+    ev.preventDefault();
+    go(document.getElementById("backBtn").getAttribute("href").slice(1));
+  });
+})();
+
+/* ---------- Routing ---------- */
+function route() {
+  const h = location.hash.replace("#","") || curHash;
+  const vc = document.getElementById("view-class"), vd = document.getElementById("view-demo");
+  if (h.startsWith("type-") && IDX[h.slice(5)] !== undefined) {
+    stopAnim();
+    vd.classList.remove("on"); vc.classList.add("on");
+    const card = document.querySelector('#view-class a.card[data-id="' + h.slice(5) + '"]');
+    if (card) {
+      card.scrollIntoView({ block:"center" });
+      card.classList.remove("flash"); void card.offsetWidth; card.classList.add("flash");
+    }
+    return;
+  }
+  if (h.startsWith("seizure-") && IDX[h.slice(8)] !== undefined) {
+    vc.classList.remove("on"); vd.classList.add("on");
+    pick(IDX[h.slice(8)]);
+    window.scrollTo(0, 0);
+  } else {
+    stopAnim();
+    vd.classList.remove("on"); vc.classList.add("on");
+    vc.classList.remove("play"); void vc.offsetWidth; vc.classList.add("play");
+  }
+}
+window.addEventListener("hashchange", () => { const h = location.hash.slice(1); if (h !== curHash) { curHash = h; route(); } });
+
+/* Phones and tablets (touch screen or narrow window): electroencephalogram above the figure; computers: beside it */
+const MQ_EEG = window.matchMedia ? window.matchMedia("(pointer: coarse), (max-width: 1024px)") : null;
+function eegOnTop() { return !!(MQ_EEG && MQ_EEG.matches); }
+/* Phones and tablets: type description first, then the electroencephalogram, the figure, then key points and sources.
+   Computers: the original side-by-side layout. */
+function placeEEG() {
+  const w = document.getElementById("eegWrap"), fb = document.querySelector(".fig-box"), info = document.querySelector(".info"),
+        tip = document.getElementById("tipBox"), head = document.getElementById("infoHead"), main = document.querySelector("#view-demo .main");
+  if (eegOnTop()) {
+    if (w.parentNode !== fb) fb.insertBefore(w, fb.firstChild); w.className = "eeg-top"; fb.classList.add("with-eeg");
+    if (head.parentNode !== main || head.nextElementSibling !== fb) main.insertBefore(head, fb); main.classList.add("stacked");
+  } else {
+    if (w.parentNode !== info) info.insertBefore(w, tip); w.className = "eeg-box"; fb.classList.remove("with-eeg");
+    if (head.parentNode !== info) info.insertBefore(head, info.firstChild); main.classList.remove("stacked");
+  }
+}
+if (MQ_EEG) { const f = () => { placeEEG(); updateUI(); }; MQ_EEG.addEventListener ? MQ_EEG.addEventListener("change", f) : MQ_EEG.addListener(f); }
+let replayT = null;   /* pending replay start; cancelled whenever playback stops, is toggled or the seizure type changes */
+function stopAnim() { playing=false; clearTimeout(replayT); replayT=null; if(afId) cancelAnimationFrame(afId); stopVoice(); }
+function pick(i) { stopAnim(); elapsed=0; sel=i; updateUI(); render(); }
+let AC = null, VSRC = null;
+const VCACHE = {};
+function unlockAudio() { try { if (navigator.audioSession) navigator.audioSession.type = "playback"; } catch (e) {} try { AC = AC || new (window.AudioContext || window.webkitAudioContext)(); if (AC.state === "suspended") AC.resume();
+    /* older iPhones and iPads: play a silent sample inside the tap so that later sounds are allowed */
+    const sb = AC.createBufferSource(); sb.buffer = AC.createBuffer(1, 1, 22050); sb.connect(AC.destination); sb.start(0);
+    /* prepare the sound before the animation reaches it, so it is not delayed on slower phones */
+    const id = SZ[sel].id; if (id === "gt" || id === "gma") prepVoice(id === "gt" ? "cry" : "grunt"); } catch (e) {} }
+/* Human vocal sound synthesiser (source-filter model).
+   Source: Rosenberg glottal pulse with per-cycle jitter and shimmer, optional diplophonia (roughness)
+   and vocal fry, plus aspiration noise. Filter: cascade of five vocal-tract formant resonators.
+   Voice and breath have separate envelopes, so a sound can end in a breathy exhalation. */
+function synthVoice(sr, S) {
+  const N = Math.max(1, Math.round(S.dur * sr)), out = new Float32Array(N);
+  const lerp = (pts, x) => { if (x <= pts[0][0]) return pts[0][1];
+    for (let i = 1; i < pts.length; i++) if (x <= pts[i][0]) { const [x0, y0] = pts[i-1], [x1, y1] = pts[i]; return y0 + (y1 - y0) * (x - x0) / (x1 - x0); }
+    return pts[pts.length-1][1]; };
+  let seed = S.seed || 12345; const rnd = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
+  const nF = 5, y1 = new Float64Array(nF), y2 = new Float64Array(nF), cA = new Float64Array(nF), cB = new Float64Array(nF), cC = new Float64Array(nF);
+  const BW = S.bw || [70, 100, 140, 200, 280];
+  let ph = 0, jit = 1, shim = 1, odd = false, gPrev = 0, lp = 0, hpX = 0, hpY = 0;
+  for (let n = 0; n < N; n++) {
+    const u = n / N, t = n / sr;
+    if (n % 16 === 0) {
+      for (let k = 0; k < nF; k++) {
+        const F = lerp(S.formants.map(([x, f]) => [x, f[k]]), u), B = BW[k];
+        cC[k] = -Math.exp(-2*Math.PI*B/sr); cB[k] = 2*Math.exp(-Math.PI*B/sr)*Math.cos(2*Math.PI*F/sr); cA[k] = 1 - cB[k] - cC[k];
+      }
+    }
+    const trem = S.tremor ? 1 + S.tremor.depth * Math.sin(2*Math.PI*S.tremor.rate*t) : 1;
+    const fry = S.fry ? Math.max(0, Math.min((u - S.fry[0]) / (S.fry[1] - S.fry[0]), 1)) : 0;
+    const f0 = lerp(S.f0, u) * (1 - fry) + (S.fryF0 || 62) * fry;
+    ph += f0 * jit * trem / sr;
+    if (ph >= 1) { ph -= 1; odd = !odd;
+      jit = 1 + (rnd()*2 - 1) * ((S.jitter || 0) + fry * 0.06);
+      shim = 1 + (rnd()*2 - 1) * ((S.shimmer || 0) + fry * 0.08); }
+    const oq = (S.oq || 0.6) * (1 - 0.35*fry), tp = oq * 0.68, tn = oq * 0.32;
+    const g = ph < tp ? 0.5*(1 - Math.cos(Math.PI*ph/tp)) : ph < tp + tn ? Math.cos(0.5*Math.PI*(ph - tp)/tn) : 0;
+    const rough = (S.rough || 0) + fry * 0.15;
+    const va = lerp(S.amp, u), na = S.breathAmp ? lerp(S.breathAmp, u) : va * (S.breath || 0);
+    let src = (g - gPrev) * f0 / 120 * shim * (odd ? 1 - rough : 1) * va; gPrev = g;
+    const noise = rnd()*2 - 1; lp = lp*0.5 + noise*0.5;
+    src += lp * na * (0.35 + 0.65*g) * 0.5;
+    let x = src;
+    for (let k = 0; k < nF; k++) { const y = cA[k]*x + cB[k]*y1[k] + cC[k]*y2[k]; y2[k] = y1[k]; y1[k] = y; x = y; }
+    /* gentle high-pass (removes rumble so the sound stays clear on small speakers) */
+    const hp = x - hpX + 0.985*hpY; hpX = x; hpY = hp;
+    out[n] = hp;
+  }
+  /* level: scale to the 99th percentile of the waveform, then a soft limiter (tanh), so that the sound is loud and clear
+     and no single pulse clicks */
+  const mag = Array.from(out, Math.abs).sort((a, b) => a - b), ref = mag[Math.floor(0.99*(N - 1))] || 1;
+  const drive = S.drive || 1.6;
+  for (let n = 0; n < N; n++) out[n] = (S.peak || 0.9) * Math.tanh(drive * out[n] / ref);
+  return out;
+}
+/* Generalised tonic seizure, obvious form: brief ictal cry. Tonic contraction of the chest and abdominal muscles forces air
+   from the lungs through the activated muscles of the larynx: a loud, strained, harsh "aah" (pressed voice, raised pitch,
+   slight pitch tremor; illustrative), lasting under a second and cut off abruptly as apnoea begins. */
+const VOICE_CRY = { dur:0.85, seed:7,
+  f0:[[0,200],[0.05,255],[0.2,262],[0.8,232],[0.95,214],[1,190]], tremor:{rate:6.5, depth:0.012},
+  oq:0.34, jitter:0.022, shimmer:0.09, rough:0.3, breath:0.09,
+  bw:[80, 110, 150, 210, 300],
+  formants:[[0,[700,1180,2550,3450,4450]],[0.08,[860,1300,2650,3550,4550]],[0.9,[840,1280,2630,3550,4550]],[1,[760,1220,2580,3500,4500]]],
+  amp:[[0,0],[0.025,1],[0.4,0.95],[0.85,0.85],[0.95,0.6],[0.985,0.08],[1,0]], peak:0.95 };
+/* Generalised myoclonic-atonic seizure: slight vocalisation with the jerk of the proximal muscles. The sources do not
+   describe the sound itself, so it is illustrative: a short, clearly voiced grunt "uh!" with an abrupt (glottal) onset and falling pitch, ending
+   in a brief creak and a soft exhalation as muscle tone is lost. */
+const VOICE_GRUNT = { dur:0.42, seed:3,
+  f0:[[0,150],[0.08,142],[0.45,122],[0.62,104],[1,90]], fry:[0.55,0.72], fryF0:64,
+  oq:0.48, jitter:0.012, shimmer:0.05, rough:0.08,
+  bw:[75, 100, 140, 200, 280],
+  formants:[[0,[600,1150,2400,3350,4300]],[0.15,[660,1200,2450,3400,4300]],[0.6,[620,1170,2420,3380,4300]],[1,[520,1120,2380,3350,4300]]],
+  amp:[[0,0],[0.01,1],[0.35,0.9],[0.58,0.45],[0.72,0.08],[0.78,0]],
+  breathAmp:[[0,0.02],[0.55,0.03],[0.68,0.12],[0.82,0.08],[1,0]], peak:0.92, drive:1.1 };
+/* Plays a voice sound through a short room echo and a compressor, so it sounds like a person in a room rather than a
+   bare electronic tone. Its length follows the animation speed at every speed setting (0.5× to 2×), so it lasts as long
+   as the mouth movement on screen; the pitch never changes. */
+let VOUT = null;
+function voiceOut() {
+  if (VOUT) return VOUT;
+  const comp = AC.createDynamicsCompressor(); comp.threshold.value = -18; comp.knee.value = 12; comp.ratio.value = 4;
+  comp.attack.value = 0.003; comp.release.value = 0.15;
+  const dry = AC.createGain(); dry.gain.value = 0.9;
+  const wet = AC.createGain(); wet.gain.value = 0.14;
+  const rv = AC.createConvolver(), L = Math.round(AC.sampleRate * 0.35), ir = AC.createBuffer(2, L, AC.sampleRate);
+  for (let ch = 0; ch < 2; ch++) { const d = ir.getChannelData(ch); let s = 99 + ch*17;
+    for (let i = 0; i < L; i++) { s = (s * 1664525 + 1013904223) >>> 0; d[i] = (s / 4294967296 * 2 - 1) * Math.pow(1 - i / L, 3); } }
+  rv.buffer = ir;
+  dry.connect(comp); wet.connect(rv); rv.connect(comp); comp.connect(AC.destination);
+  VOUT = { dry, wet }; return VOUT;
+}
+function prepVoice(name) {
+  const S = name === "cry" ? VOICE_CRY : VOICE_GRUNT, f = Math.min(Math.max(1 / speed, 0.5), 2), key = name + "@" + f;
+  if (!VCACHE[key]) { const d = synthVoice(AC.sampleRate, Object.assign({}, S, { dur: S.dur * f }));
+    const b = AC.createBuffer(1, d.length, AC.sampleRate); b.getChannelData(0).set(d); VCACHE[key] = b; }
+  return VCACHE[key];
+}
+function playVoice(name) {
+  try { if (!AC) return; stopVoice(); if (AC.state === "suspended") AC.resume();
+    const buf = prepVoice(name), o = voiceOut(), src = AC.createBufferSource();
+    src.buffer = buf; src.connect(o.dry); src.connect(o.wet); src.start(0); VSRC = src;
+  } catch (e) {}
+}
+function stopVoice() { try { if (VSRC) VSRC.stop(); } catch (e) {} VSRC = null; }
+function toggle() {
+  unlockAudio();
+  if (SZ[sel].dur === 0) return;
+  if (elapsed >= SZ[sel].dur) { elapsed=0; startT=null; }
+  clearTimeout(replayT); replayT=null;
+  playing = !playing;
+  if (playing) startAnim(); else { if(afId) cancelAnimationFrame(afId); stopVoice(); }
+  updateUI();
+}
+function doReplay() { unlockAudio(); if (SZ[sel].dur === 0) return; stopAnim(); elapsed=0; replayT = setTimeout(()=>{ replayT=null; playing=true; startAnim(); updateUI(); },50); updateUI(); }
+function startAnim() {
+  startT = performance.now() - elapsed / speed;
+  function tick(now) {
+    const prev = elapsed;
+    elapsed = (now - startT) * speed;
+    const sid = SZ[sel].id, dd = SZ[sel].dur;
+    if (sid === "gma" && prev < dd*GMA_J0 && elapsed >= dd*GMA_J0) playVoice("grunt");   /* slight vocalisation with the myoclonic jerk */
+    if (sid === "gt" && prev < dd*GT_CRY0 && elapsed >= dd*GT_CRY0) playVoice("cry");     /* brief cry at the start of the obvious form */
+    if (elapsed >= SZ[sel].dur) { elapsed = SZ[sel].dur; playing = false; updateUI(); render(); return; }
+    render(); updateUI();
+    afId = requestAnimationFrame(tick);
+  }
+  afId = requestAnimationFrame(tick);
+}
+
+function updateUI() {
+  const sz = SZ[sel], C = colOf(sz), cc = C.color, prog = sz.dur>0?Math.min(elapsed/sz.dur,1):0;
+  document.querySelectorAll(".pill").forEach((p) => {
+    const i = parseInt(p.dataset.idx), on = i===sel, c = colOf(SZ[i]);
+    p.className = "pill" + (on?" on":"");
+    p.style.borderColor = on?c.color:"#C8C8C8";
+    p.style.background = on?c.fill:"#FFFFFF";
+  });
+  const badge = document.getElementById("catBadge");
+  const crumb = CLASSES[sz.cls].name + (sz.grp ? " › " + GROUPS[sz.grp] : "");
+  badge.innerHTML = sz.grp === "gtc" ? VL("1104891592106807", crumb)
+    : sz.cls === "focal" ? VL("1068194482673682", CLASSES[sz.cls].name) + (sz.grp ? " › " + GROUPS[sz.grp] : "")
+    : crumb;
+  badge.style.borderColor = cc; badge.style.background = C.fill;
+  document.getElementById("szTitle").innerHTML = sz.titleLink ? VL(sz.titleLink, sz.label) : sz.label;
+  const cb = document.getElementById("consBox"); cb.innerHTML = CONS[sz.cons]; cb.style.borderColor = cc; cb.style.background = C.fill;
+  document.getElementById("szDesc").innerHTML = "<ul>" + sz.desc.map(x => "<li>" + x + "</li>").join("") + "</ul>";
+  const fm = document.getElementById("szFormer");
+  if (sz.former) { fm.style.display = "block"; fm.innerHTML = "<b>Former names:</b><ul>" + sz.former.map(f => "<li>" + f + "</li>").join("") + "</ul>"; }
+  else { fm.style.display = "none"; fm.innerHTML = ""; }
+  const bb = document.getElementById("backBtn");
+  bb.setAttribute("href", "#type-" + sz.id);
+  document.getElementById("szShown").innerHTML = "<b>Animation:</b> " + sz.shown;
+  document.getElementById("progFill").style.width = (prog*100)+"%";
+  document.getElementById("progFill").style.background = cc;
+  const pb = document.getElementById("playBtn");
+  pb.style.background = cc;
+  pb.disabled = sz.dur === 0; document.getElementById("replayBtn").disabled = sz.dur === 0;
+  pb.innerHTML = sz.dur===0 ? "No animation" : playing?"&#10074;&#10074;  Pause":elapsed>=sz.dur?"&#9654;  Replay":"&#9654;  Play";
+  document.getElementById("timeLabel").textContent = sz.dur===0 ? "No animation" : "Animation time: "+(elapsed/1000).toFixed(1)+" s / "+(sz.dur/1000).toFixed(1)+" s (not real seizure duration)";
+  document.getElementById("eegDesc").innerHTML = sz.eeg;
+  document.getElementById("tipBox").innerHTML = "<b>Key points:</b><ul>" + sz.tip.map(x => "<li>" + x + "</li>").join("") + "</ul>";
+  document.getElementById("srcLine").innerHTML = "<b>Sources:</b> " + ["ilae","s5","s7","guide","accp","glauser","kanner","dipiro"].filter(k=>sz.src.includes(k)).map(k=>SRC[k]).join("; ") + ".";
+  const hl = live() ? getHL(sz.id, prog) : null;
+  const pt = document.getElementById("phaseTag"), ll = document.getElementById("hlLabel");
+  if (hl && hl.ph) { pt.style.display="block"; pt.style.background=hl.pc; pt.textContent=hl.ph; } else { pt.style.display="none"; }
+  if (hl && hl.l) { ll.style.display="block"; ll.textContent=hl.l; } else { ll.style.display="none"; }
+  drawEEG(sz.id, live(), elapsed, prog, cc);
+}
+
+/* ---------- Highlight labels and phase tags ---------- */
+const ALL = ["head","torso","lArm","rArm","lLeg","rLeg"];
+function tcHL(p, onsetUnknown, post) {
+  const sfx = onsetUnknown ? " (unknown whether focal or generalised)" : "";
+  if (!onsetUnknown && p < TC_FALL) return {p:ALL,c:"#C00000",l:"Consciousness lost: falls to the ground as the tonic phase begins (illustrative)",ph:"Fall",pc:"#C00000"};
+  if (p < 0.35) return {p:ALL,c:"#C00000",l:"Tonic phase: sustained stiffening; red marks show the muscles staying contracted (illustrative)"+sfx,ph:"Tonic phase",pc:"#C00000"};
+  if (p < 0.42) return {p:ALL,c:"#C55A11",l:"Transition (illustrative): stiffening gives way to clonic jerking",ph:"Transition (illustrative)",pc:"#C55A11"};
+  if (p < 0.92 || !post) return {p:ALL,c:"#BF8F00",l:"Clonic phase: rhythmic jerking of all limbs, slowing over time"+sfx,ph:"Clonic phase",pc:"#7F6000"};
+  return {p:["head"],c:"#7F7F7F",l:"Postictal period: confusion and drowsiness",ph:"Postictal",pc:"#595959"};
+}
+function gnmLapse(p) {
+  const L=[0.22,0.33,0.45,0.56,0.68,0.79,0.9], w=0.028;
+  for (let i=0;i<L.length;i++) { if (p>=L[i] && p<L[i]+w) { const loc=(p-L[i])/w; return {d: loc<0.3 ? loc/0.3 : 1-(loc-0.3)/0.7, i}; } }
+  return {d:0, i:-1};
+}
+function getHL(id, p) {
+  switch(id) {
+    case "fpc": return {p:["rArm"],c:"#0070C0",l:"One arm only: rhythmic clonic jerking; patient alert and responsive"};
+    case "fic": return {p:["head","lArm","rArm"],c:"#0070C0",l:"Unresponsive stare with automatisms: lip smacking and fumbling",ph:"Automatisms",pc:"#0070C0"};
+    case "fbtc":
+      if (p<0.3) return {p:["rArm"],c:"#0070C0",l:"Focal onset (illustrative): jerking of one arm",ph:"Focal onset",pc:"#0070C0"};
+      if (p<0.45) return {p:["rArm","torso","head"],c:"#C55A11",l:"Spreading to both hemispheres; consciousness becoming impaired",ph:"Spreading",pc:"#C55A11"};
+      { const q = (p - 0.45)/0.55;
+        if (q < TC_FALL) return {p:ALL,c:"#C00000",l:"Consciousness lost: falls to the ground as the bilateral tonic phase begins (illustrative)",ph:"Fall",pc:"#C00000"};
+        if (q < TC_TON) return {p:ALL,c:"#C00000",l:"Bilateral tonic phase: sustained stiffening; red marks show the muscles staying contracted (illustrative)",ph:"Bilateral tonic",pc:"#C00000"};
+        if (q < TC_TR) return {p:ALL,c:"#C55A11",l:"Transition (illustrative): stiffening gives way to clonic jerking",ph:"Transition (illustrative)",pc:"#C55A11"};
+        return {p:ALL,c:"#BF8F00",l:"Bilateral clonic phase: jerks become less frequent",ph:"Bilateral clonic",pc:"#7F6000"}; }
+    case "ta": return {p:["head"],c:"#590079",l: p < 0.3 ? "Behavioural arrest, blank stare, brief upward eye rotation" : "Behavioural arrest, blank stare"};
+    case "aa": return {p:["head"],c:"#590079",l:"Gradual onset; unresponsive, with loss of tone: head drop",ph:"Atonic phenomena",pc:"#590079"};
+    case "ma": return {p:["head","lArm","rArm"],c:"#590079",l:"Absence with rhythmic myoclonic jerks of the upper limbs",ph:"Myoclonic jerks",pc:"#590079"};
+    case "ema": return {p:["head"],c:"#590079",l:"Eyelid myoclonia: repeated jerks of the eyelids",ph:"Eyelid jerks",pc:"#590079"};
+    case "gtc": return tcHL(p,false,true);
+    case "mtc": return p<0.28 ? {p:["lArm","rArm","torso","head"],c:"#590079",l:"A few myoclonic jerks herald the seizure",ph:"Myoclonic jerks",pc:"#590079"} : tcHL((p-0.28)/0.72,false);
+    case "atc": return p<0.3 ? {p:["head"],c:"#590079",l:"Absence: behavioural arrest and blank stare",ph:"Absence",pc:"#590079"} : tcHL((p-0.3)/0.7,false);
+    case "gm": return {p:["lArm","rArm","torso","head"],c:"#590079",l:"Sudden, lightning-fast jerks of the shoulders and arms"};
+    case "gc": return {p:ALL,c:"#BF8F00",l:"Regular, repetitive bilateral jerking"};
+    case "gnm": {
+      if (p<0.15) return {p:["lArm","rArm"],c:"#0070C0",l:"Arms held out to show the posture",ph:"Posture held",pc:"#0070C0"};
+      const lp = gnmLapse(p);
+      return lp.d>0 ? {p:["lArm","rArm"],c:"#C00000",l:"Brief lapse of tone: the raised arms drop",ph:"Negative myoclonus",pc:"#C00000"}
+                    : {p:["lArm","rArm"],c:"#0070C0",l:"Posture recovers between lapses",ph:"Posture held",pc:"#0070C0"};
+    }
+    case "ges": { const k = Math.min(Math.floor(p*4), 3);
+      return k===0 ? {p:["head"],c:"#590079",l:"Subtle form: head nodding, grimacing",ph:"Subtle form",pc:"#590079"}
+           : k===1 ? {p:["head"],c:"#590079",l:"Subtle form: smiling, chin movement",ph:"Subtle form",pc:"#590079"}
+           : {p:ALL,c:"#590079",l:"Spasm: head nods, arms abduct and extend; becoming more prominent through the cluster",ph:"Cluster",pc:"#590079"}; }
+    case "gt": return p<0.38 ? {p:["head"],c:"#C00000",l:"Example 1, subtle form: slow upward eye deviation, grimacing, flexion of the head",ph:"Example 1: subtle form",pc:"#C00000"}
+      : p<0.42 ? {p:[],c:"",l:"Between the two examples: a separate seizure follows",ph:"Next example",pc:"#595959"}
+      : p<GT_FALL0 ? {p:ALL,c:"#C00000",l:"Example 2, obvious form: brief cry; abduction and elevation of the limbs",ph:"Example 2: obvious form",pc:"#C00000"}
+      : p<GT_FALL1 + 0.03 ? {p:ALL,c:"#C00000",l:"Forcefully thrown off balance: falls to the ground, often with injury",ph:"Example 2: fall",pc:"#C00000"}
+      : {p:ALL,c:"#C00000",l:"On the ground: apnoea; abduction and elevation of the limbs with a vibratory component, clenched fists",ph:"Example 2: obvious form",pc:"#C00000"};
+    case "ga": return p<0.1?{p:ALL,c:"#590079",l:"Loss or decrease of tone: the head drops",ph:"Drop attack",pc:"#590079"}:{p:ALL,c:"#590079",l:"The body slumps to the ground",ph:"Collapse",pc:"#590079"};
+    case "gma":
+      if (p<GMA_J0) return null;
+      if (p<GMA_J1) return {p:["lArm","rArm","head","torso"],c:"#C55A11",l:"Brief myoclonic jerk of the proximal muscles with a slight vocalisation",ph:"Myoclonic jerk",pc:"#C55A11"};
+      if (p<0.31) return {p:ALL,c:"#590079",l:"Brief myoclonic jerk with a slight vocalisation, then immediate loss of tone",ph:"Atonic drop",pc:"#590079"};
+      return {p:ALL,c:"#590079",l:"Very brief atonic component: abrupt fall",ph:"Atonic drop",pc:"#590079"};
+    case "upc": return {p:["torso"],c:"#009999",l:"Ictal tachycardia; patient alert and responsive"};
+    case "uic": return {p:["head"],c:"#009999",l:"Behavioural arrest; unresponsive stare (unknown whether focal or generalised)"};
+    case "ubtc": return tcHL(p,true);
+    default: return null;
+  }
+}
+
+/* ---------- Animations ---------- */
+const MAP = { fpc:"focal", fic:"focal-impaired", fbtc:"focal-btc", upc:"focal-nonmotor", uic:"unknown-arrest", ubtc:"unknown-tc",
+  ta:"absence", aa:"atypical-absence", ma:"myoclonic-absence", ema:"eyelid-myoclonia", gtc:"tonic-clonic",
+  gc:"clonic", gt:"tonic", ga:"atonic" };
+const FACE = { fic:"stare", uic:"stare", ta:"absence", aa:"stare", ma:"stare", ema:"eyelid" };
+function blank() { return {head:{},torso:{},lArm:{},rArm:{},lLeg:{},rLeg:{},jawClench:0}; }
+function jerkShape(c) {
+  if (c < 0.08) return Math.sin(c / 0.08 * Math.PI * 0.5);
+  if (c < 0.15) return Math.cos((c - 0.08) / 0.07 * Math.PI * 0.5);
+  if (c < 0.22) return -Math.sin((c - 0.15) / 0.07 * Math.PI) * 0.15;
+  return 0;
+}
+/* Atonic collapse: nod = head drop (0–1), fall = body drop (0–1, gravity-eased), rec = head tone returning (0–1) */
+/* Atonic collapse. nod: head drops forward (0–1); fall: gravity-eased drop (0–1);
+   rec: head tone returning (0–1); imp: time since landing (0–1) for a small rebound and loose arm swing.
+   Knees buckle and splay (legs foreshorten from the hips, feet keep their shape), trunk bends forward. */
+function slumpPose(nod, fall, rec, imp) {
+  imp = imp || 0;
+  const bounce = imp > 0 && imp < 1 ? Math.sin(imp*Math.PI) * (1 - imp) * 0.07 : 0;
+  const F = Math.max(0, fall - bounce), D = 120*F, k = (214 - D)/214, hn = nod*(1 - rec);
+  const flex = F*0.06, tT = D + 150*flex, tS = D + 188*flex;
+  const swing = imp > 0 && imp < 1 ? Math.sin(imp*Math.PI*2) * (1 - imp) * 9 : 0;
+  return { head:{ty:tS + hn*20, r:hn*10, sy:1 - hn*0.14}, torso:{ty:tT, sy:1 - flex},
+           lArm:{ty:tS, r:F*8 + swing}, rArm:{ty:tS, r:-(F*8 + swing)},
+           lLeg:{ty:D, r:F*11, sy:k}, rLeg:{ty:D, r:-F*11, sy:k}, jawClench:0, whole:F*3 };
+}
+/* Tonic-clonic (shared): q = 0–1 through the seizure; durMs = its real length in the animation.
+   Tonic: limbs stiff and extended, arms adducted. Transition (illustrative). Clonic: jerks slowing from about 4 Hz to about 1.2 Hz.
+   post = true adds a postictal period (generalised tonic-clonic page only). */
+const TC_TON = 0.35, TC_TR = 0.42, TC_FALL = 0.1;   /* fall to the ground: first 10% of the tonic-clonic part */
+function tcEnd(post) { return post ? 0.92 : 1; }
+function tcPhase(q, durMs, post) {
+  const ce = tcEnd(post), cp = Math.max(0, Math.min((q - TC_TR)/(ce - TC_TR), 1)), Tc = (ce - TC_TR)*durMs/1000, f0 = 4, f1 = 1.2;
+  return Tc*(f0*cp + (f1 - f0)*cp*cp/2);
+}
+function tcJerk(q, durMs, post) { const c = tcPhase(q, durMs, post) % 1; return c < 0.1 ? Math.sin(c/0.1*Math.PI/2) : c < 0.3 ? Math.cos((c-0.1)/0.2*Math.PI/2) : 0; }
+/* tonic-clonic pose plus the fall: standing at onset, the patient falls to the ground (gravity-eased) as the tonic phase begins */
+function tcPose(q, t, durMs, post) { const a = tcPoseBase(q, t, durMs, post), s = seg(q, 0, TC_FALL); a.fall = s*s; return a; }
+function tcPoseBase(q, t, durMs, post) {
+  /* tonic (extension) phase: neck extended, limbs stiff and extended, arms held in against the body (adduction),
+     as described by the American College of Clinical Pharmacy (2026); the 2025 definitions do not specify limb position */
+  /* sudden contraction at onset, then the stiffening is held and pressed further for the rest of the tonic phase
+     (sustained muscle activity, Data S5); "strain" drives the red strain marks, which show that the muscles stay contracted */
+  if (q < TC_TON) { const e = 1 - Math.pow(1 - Math.min(q/TC_TON*1.5, 1), 2), c = seg(q, TC_FALL, TC_TON);
+    const ce = c*(2 - c), ar = e*6 + ce*7, lr = e*3*(1 - ce);
+    return { head:{ty:-e*4}, torso:{}, lArm:{r:-ar}, rArm:{r:ar}, lLeg:{r:lr}, rLeg:{r:-lr}, jawClench:0, strain:e }; }
+  if (q < TC_TR) { const k = (q - TC_TON)/(TC_TR - TC_TON), v = Math.sin(t*0.06)*3*k, ar = 13 - 7*k;
+    return { head:{ty:-4}, torso:{}, lArm:{r:-ar + v}, rArm:{r:ar + v}, lLeg:{r:3*k}, rLeg:{r:-3*k}, jawClench:0, strain:1 - k }; }
+  if (q < tcEnd(post)) { const sp = tcJerk(q, durMs, post), cp = (q - TC_TR)/(tcEnd(post) - TC_TR), base = -6*(1 - cp);
+    return { head:{ty:-4*(1 - cp) - sp*4}, torso:{ty:-sp*2}, lArm:{r:base + sp*14, ty:-sp*4}, rArm:{r:-(base + sp*14), ty:-sp*4},
+             lLeg:{r:3 - sp*3}, rLeg:{r:-3 + sp*3}, jawClench:0 }; }
+  return { head:{ty:5, sy:0.96}, torso:{}, lArm:{r:2}, rArm:{r:-2}, lLeg:{}, rLeg:{}, jawClench:0 };
+}
+/* Electroencephalogram for the tonic-clonic part: fast rhythmic activity (tonic), a spike and slow wave with each clonic jerk,
+   then postictal generalised suppression (post only) */
+function tcEEG(q, x, tm, durMs, post) {
+  /* tonic stage: fast rhythmic spikes (sharp negative peaks) (Data S5); the brief rise in amplitude at onset is schematic only */
+  const fastSpikes = (a) => a*(0.35 - 1.6*Math.pow(Math.abs(Math.sin(x*0.675)), 6));
+  if (q < TC_TON) return fastSpikes(3 + 7*Math.min(q/0.15, 1));
+  if (q < TC_TR) return fastSpikes(6);
+  if (q < tcEnd(post)) { const c = tcPhase(q, durMs, post) % 1;
+    return c < 0.14 ? -18*Math.pow(1 - Math.abs(2*((c/0.14*3) % 1) - 1), 2.2) : c < 0.5 ? 10*Math.sin((c - 0.14)/0.36*Math.PI) : eegBg(x, tm)*0.4; }
+  return eegBg(x, tm)*0.12;
+}
+const sawShape = (ph, amp) => ph < 0.07 ? -amp*Math.sin(ph/0.07*Math.PI) : amp*0.55*Math.sin((ph - 0.07)/0.93*Math.PI);
+const frac = v => v - Math.floor(v);
+const GM_J = [0.06,0.19,0.235,0.43,0.61,0.665,0.86], GM_W = 0.028;
+const MTC_J = [0.03,0.085,0.13,0.195,0.235], MTC_W = 0.01;   /* each jerk about 90 ms */
+function jerkAt(p, J, w) { let sp = 0, k = -1; J.forEach((s0,i)=>{ if (p>=s0 && p<s0+w) { const loc=(p-s0)/w; sp = loc<0.4 ? Math.sin(loc/0.4*Math.PI/2) : Math.cos((loc-0.4)/0.6*Math.PI/2); k=i; } }); return {sp, k}; }
+/* Myoclonic jerk of the proximal muscles: shoulders shrug, upper arms fling out, head and hips jolt */
+function proxJerk(sp) {
+  return { head:{ty:-sp*9}, torso:{ty:-sp*4}, lArm:{ty:-sp*12, r:sp*34, tx:-sp*4}, rArm:{ty:-sp*12, r:-sp*34, tx:sp*4},
+           lLeg:{r:sp*4, ty:-sp*2}, rLeg:{r:-sp*4, ty:-sp*2}, jawClench:0 };
+}
+const seg = (p, a, b) => Math.max(0, Math.min((p - a)/(b - a), 1));
+/* Myoclonic-atonic: jerk 0.15–0.17 of the animation (about 90 ms; a myoclonic jerk lasts under 100 ms, Data S5),
+   slight vocalisation 0.15–0.25 (the grunt), atonic fall from 0.17 */
+const GMA_J0 = 0.15, GMA_J1 = 0.17, GMA_V1 = 0.25;
+/* Tonic, obvious form: starts at 0.42 with a brief cry (0.42–0.515), then apnoea */
+const GT_CRY0 = 0.42, GT_CRY1 = 0.515, GT_FALL0 = 0.50, GT_FALL1 = 0.58;
+function jerkPose(sp) {
+  return { head:{ty:-Math.abs(sp)*8}, torso:{ty:-Math.abs(sp)*5}, lArm:{r:sp*32, tx:-sp*6}, rArm:{r:-sp*32, tx:sp*6},
+           lLeg:{ty:-Math.abs(sp)*3}, rLeg:{ty:-Math.abs(sp)*3}, jawClench:Math.abs(sp)*0.4 };
+}
+function getAnim(id, t, dur) {
+  const p = dur>0 ? Math.min(t/dur, 1) : 0;
+  let a;
+  if (MAP[id]) a = baseAnim(MAP[id], t, dur);
+  else switch(id) {
+    case "mtc":   /* sporadic or irregular myoclonic jerks, then a tonic-clonic seizure */
+      if (p < 0.28) a = jerkPose(jerkAt(p, MTC_J, MTC_W).sp);
+      else a = tcPose((p-0.28)/0.72, t, 0.72*dur, false);
+      break;
+    case "atc":   /* an absence seizure, then a tonic-clonic seizure */
+      if (p < 0.3) { a = baseAnim("absence", t*0.9, dur); a.face = "absence"; }
+      else a = tcPose((p-0.3)/0.7, t, 0.7*dur, false);
+      break;
+    case "gm": {
+      /* Generalised myoclonic: brief (under 100 ms), irregular jerks, sometimes stronger on one side */
+      const {sp, k} = jerkAt(p, GM_J, GM_W);
+      a = jerkPose(sp);
+      if (k % 3 === 1) { a.lArm.r *= 0.55; a.lArm.tx *= 0.55; }
+      break;
+    }
+    case "gnm": {
+      const pin = Math.min(p/0.12, 1), e = 1 - Math.pow(1-pin, 2), hold = 50;
+      const lp = gnmLapse(p), d = lp.d, asym = lp.i % 2 ? 0.75 : 1.15;
+      a = { head:{}, torso:{}, lArm:{r:hold*e - d*30*asym, tx:-6*e}, rArm:{r:-(hold*e - d*30*(1.9-asym)), tx:6*e},
+            lLeg:{}, rLeg:{}, jawClench:0 };
+      break;
+    }
+    case "ges": {
+      /* Data S5: a cluster; each spasm about 1 second (median), gradual rise and fall; subtle forms
+         (head nodding, grimacing, smiling, chin movement); motor features more prominent through the cluster;
+         full spasm: abduction and extension of both arms, hip flexion (slight crouch) and nodding */
+      const k = Math.min(Math.floor(t / 2000), 3), ct = t % 2000;
+      const f = ct < 1000 ? Math.sin(ct / 1000 * Math.PI) : 0;
+      const m = [0, 0, 0.55, 1][k], nod = [0.5, 0.3, 0.8, 1][k] * f, D = 10 * m * f;
+      a = { head:{ty:D + nod*14, sy:1 - nod*0.1}, torso:{ty:D},
+            lArm:{ty:D, r:m*f*25}, rArm:{ty:D, r:-m*f*25},
+            lLeg:{ty:D, sy:(214-D)/214}, rLeg:{ty:D, sy:(214-D)/214}, jawClench:0,
+            ex: k===0 ? {grimace:f} : k===1 ? {smile:f, chin:f*(0.5+0.5*Math.sin(t*0.03))} : {} };
+      break;
+    }
+    case "gma": {
+      if (p < GMA_J0) { a = blank(); break; }
+      /* vocal envelope: mouth opens with the jerk and closes as the sound fades */
+      const v = seg(p, GMA_J0, GMA_J0 + 0.006) * (1 - seg(p, GMA_V1 - 0.03, GMA_V1));
+      if (p < GMA_J1) { const loc = (p - GMA_J0)/(GMA_J1 - GMA_J0); const sp = loc<0.3 ? Math.sin(loc/0.3*Math.PI/2) : Math.cos((loc-0.3)/0.7*Math.PI/2);
+        a = proxJerk(sp); }
+      else { const f = seg(p, GMA_J1, 0.31); a = slumpPose(seg(p, GMA_J1, 0.21), f*f, seg(p, 0.55, 0.68), seg(p, 0.31, 0.48)); }
+      if (v > 0) { a.ex = {cry: v*0.6}; a.voc = v; }
+      break;
+    }
+    default: a = blank();
+  }
+  /* consciousness is lost in the tonic-clonic part: vacant stare, as in the bilateral phase of the focal-to-bilateral seizure */
+  if ((id === "gtc" || id === "ubtc") || (id === "mtc" && p >= 0.28) || (id === "atc" && p >= 0.3)) { if (!a.face) a.face = "stare"; }
+  if (FACE[id] && !a.face) a.face = FACE[id];
+  if (id === "upc") { a.heart = true; a.absenceMouth = 0; }
+  return a;
+}
+
+function baseAnim(id, t, dur) {
+  const p = dur>0 ? Math.min(t/dur, 1) : 0;
+  const Z = {head:{},torso:{},lArm:{},rArm:{},lLeg:{},rLeg:{},jawClench:0};
+
+  switch(id) {
+
+    /* TONIC-CLONIC: 
+       Tonic = limbs stiff and extended, arms held in against the body (adduction), neck extended
+       Clonic = bilateral rhythmic jerking that decelerates
+       LEFT ARM OUTWARD = positive r.  RIGHT ARM OUTWARD = negative r. */
+    case "tonic-clonic": return tcPose(p, t, dur, true);
+
+    /* TONIC: subtle form (eyes up, grimace, head flexion), then a separate obvious form (brief cry, apnoea,
+       abduction and elevation of the limbs with a vibratory component, fist clenching, fall) */
+    case "tonic": {
+      /* Two separate illustrative seizures (Data S5 gives the subtle and the obvious forms as alternatives): example 1, subtle form (2–37%);
+         example 2, obvious form (42–100%); thrown off balance by the tonic contraction, falls (50–58%), stiffening continues on the ground */
+      if (p < 0.38) {
+        const e = seg(p, 0.02, 0.14) * (1 - seg(p, 0.30, 0.37));
+        return { head:{ty:e*8, sy:1-e*0.07}, torso:{}, lArm:{}, rArm:{}, lLeg:{}, rLeg:{}, jawClench:0, ex:{eyesUp:e, grimace:e} };
+      }
+      if (p < 0.42) return blank();
+      /* abduction and elevation of the limbs (arms raised outward and forward, so foreshortened), with a fine
+         vibratory component (about 9.5 Hz); bilateral fist clenching; brief cry, then apnoea (silence) */
+      const e = 1 - Math.pow(1 - seg(p, GT_CRY0, 0.50), 3), vib = Math.sin(t*0.06)*2.6*e;
+      const cry = seg(p, GT_CRY0, GT_CRY0 + 0.008) * (1 - seg(p, GT_CRY1 - 0.01, GT_CRY1)), fs = seg(p, GT_FALL0, GT_FALL1);
+      return { head:{ty:-e*4}, torso:{}, lArm:{r:e*50 + vib, tx:-e*2, sy:1 - e*0.1}, rArm:{r:-e*50 + vib, tx:e*2, sy:1 - e*0.1},
+               lLeg:{r:e*6}, rLeg:{r:-e*6}, jawClench:0, fist:e, ex:{cry}, voc:cry, fall:fs*fs, fallY:265 };
+    }
+
+    /* CLONIC: regular, repetitive bilateral jerking at a constant rate */
+    case "clonic": {
+      /* Data S5: myoclonic jerks that are regular and repetitive (about 3 Hz here), same muscle groups,
+         bilateral but not always symmetric (right side drawn slightly weaker) */
+      const c = (t % 333) / 333;
+      const sp = c < 0.12 ? Math.sin(c/0.12*Math.PI/2) : c < 0.35 ? Math.cos((c-0.12)/0.23*Math.PI/2) : 0;
+      const a = jerkPose(sp * 0.6);
+      a.rArm.r *= 0.8; a.rArm.tx *= 0.8;
+      return a;
+    }
+
+    /* MYOCLONIC: Brief shock-like jerks, arms flung OUTWARD suddenly.
+       LEFT ARM OUTWARD = positive r.  RIGHT ARM OUTWARD = negative r. */
+    case "myoclonic": {
+      const cycle = (t % 900) / 900;
+      let sp = 0;
+      if (cycle < 0.08) sp = Math.sin(cycle / 0.08 * Math.PI * 0.5);
+      else if (cycle < 0.15) sp = Math.cos((cycle - 0.08) / 0.07 * Math.PI * 0.5);
+      else if (cycle < 0.22) sp = -Math.sin((cycle - 0.15) / 0.07 * Math.PI) * 0.15;
+      
+      return {
+        head: { ty: -Math.abs(sp)*8, r: sp*3 },
+        torso: { ty: -Math.abs(sp)*5 },
+        lArm: { r: sp*50, tx: -sp*15 },
+        rArm: { r: -sp*50, tx: sp*15 },
+        lLeg: { ty: -Math.abs(sp)*3 },
+        rLeg: { ty: -Math.abs(sp)*3 },
+        jawClench: Math.abs(sp) * 0.4
+      };
+    }
+
+    /* ATONIC: sudden loss of tone: the head drops, then the body slumps to the ground */
+    case "atonic": {
+      /* head drops first, then the body slumps to the ground (legs buckle), then head tone returns */
+      const f = seg(p, 0.08, 0.20);
+      return slumpPose(seg(p, 0.04, 0.10), f*f, seg(p, 0.62, 0.78), seg(p, 0.20, 0.40));
+    }
+
+    /* EPILEPTIC SPASMS: Flexor spasm, trunk curls, arms abduct OUTWARD */
+    case "spasms": {
+      const cycle = (t % 1200) / 1200;
+      let f = 0;
+      if (cycle < 0.12) f = Math.sin(cycle / 0.12 * Math.PI * 0.5);
+      else if (cycle < 0.25) f = Math.cos((cycle - 0.12) / 0.13 * Math.PI * 0.5);
+      
+      return {
+        head: { r: f*20, ty: f*10 },
+        torso: { r: f*18, ty: f*6, sy: 1-f*0.02 },
+        lArm: { r: f*40 },
+        rArm: { r: -f*40 },
+        lLeg: { r: f*14 },
+        rLeg: { r: -f*14 },
+        jawClench: f * 0.5
+      };
+    }
+
+    /* ABSENCE: blank stare, brief upward eye deviation, subtle eyelid movement; head and mouth still */
+    case "absence": {
+      /* behavioural arrest: the body stays still; only the eyes change (Data S5) */
+      const nod = 0;
+      const droop = 0;
+      const mouthSlack = 0;
+      return { 
+        head: { r: nod, ty: Math.abs(nod) * 0.5 },
+        torso: {},
+        lArm: { r: droop },
+        rArm: { r: -droop },
+        lLeg: {}, 
+        rLeg: {}, 
+        jawClench: 0,
+        absenceMouth: mouthSlack,
+        absEye: seg(p, 0, 0.05) * (1 - seg(p, 0.22, 0.32)),
+      };
+    }
+
+    /* FOCAL PRESERVED CONSCIOUSNESS: only the right arm jerks rhythmically */
+    case "focal": {
+      /* rhythmic clonic jerking of one arm (DiPiro, page 9); the rest of the body is still */
+      const c = (t % 350)/350, fj = c < 0.12 ? Math.sin(c/0.12*Math.PI/2) : c < 0.35 ? Math.cos((c-0.12)/0.23*Math.PI/2) : 0;
+      return { ...Z, rArm:{ r:-fj*16, ty:-fj*3 } };
+    }
+
+    /* FOCAL→BILATERAL: Focal right arm → spread → bilateral tonic-clonic */
+    case "focal-btc": {
+      /* focal onset: clonic jerks of one arm (illustrative); spread: jerks spread to both sides and consciousness becomes impaired;
+         then bilateral tonic and clonic phases (jerks become less frequent) */
+      const fj = (() => { const c = (t % 350)/350; return c < 0.12 ? Math.sin(c/0.12*Math.PI/2) : c < 0.35 ? Math.cos((c-0.12)/0.23*Math.PI/2) : 0; })();
+      if (p < 0.3) return { ...Z, rArm:{r:-fj*16, ty:-fj*3} };
+      if (p < 0.45) { const e = (p - 0.3)/0.15;
+        return { head:{}, torso:{}, rArm:{r:-fj*16, ty:-fj*3}, lArm:{r:fj*16*e, ty:-fj*3*e}, lLeg:{r:fj*3*e}, rLeg:{r:-fj*3*e}, jawClench:0, face:"stare" }; }
+      const q = (p - 0.45)/0.55, a2 = tcPose(q, t, 0.55*dur, false); a2.face = "stare"; return a2;
+    }
+
+    /* FOCAL IMPAIRED CONSCIOUSNESS: vacant stare + automatisms (lip smacking, hand fumbling) */
+    case "focal-impaired": {
+      const onset = Math.min(p * 5, 1);
+      const autoRhythm = Math.sin(t * 0.012) * onset;
+      const handFumble = Math.sin(t * 0.02) * 8 * onset;
+      const headTurn = 0;
+      const lipSmack = (Math.sin(t * 0.025) + 1) * 0.3 * onset;
+      return {
+        head: { r: headTurn },
+        torso: {},
+        lArm: { r: -4 * onset + handFumble * 0.6 },
+        rArm: { r: 4 * onset + Math.sin(t * 0.017) * 4 * onset },
+        lLeg: {},
+        rLeg: {},
+        jawClench: 0,
+        absenceMouth: lipSmack,
+      };
+    }
+
+    /* UNKNOWN WHETHER FOCAL OR GENERALISED, PRESERVED CONSCIOUSNESS: body still, patient alert; the heart
+       (ictal tachycardia, illustrative) is drawn in renderFigure */
+    case "focal-nonmotor": {
+      const freeze = Math.min(p * 4, 1);
+      const subtle = Math.sin(t * 0.004) * 1.5 * freeze;
+      const flush = freeze;
+      return { ...Z };
+    }
+
+    /* ATYPICAL ABSENCE: gradual onset; tone change more pronounced than in typical absence (head drop) */
+    case "atypical-absence": {
+      const gradual = Math.min(p * 2.5, 1);
+      const slump = gradual * gradual;
+      const nod = Math.sin(t * 0.004) * 3 * slump;
+      const toneLoss = slump * 10;
+      return {
+        head: { ty: slump * 12 + Math.abs(nod), sy: 1 - slump * 0.1 },
+        torso: {},
+        lArm: {},
+        rArm: {},
+        lLeg: {},
+        rLeg: {},
+        jawClench: 0,
+      };
+    }
+
+    /* MYOCLONIC ABSENCE: Staring + rhythmic arm jerks that elevate arms */
+    case "myoclonic-absence": {
+      /* abrupt onset and offset; rhythmic 3 Hz jerks superimposed on tonic abduction of the arms (ratcheting);
+         if standing, the patient typically bends forward (front view: trunk foreshortens from the hips,
+         shoulders and head come down, head tips forward, knees give slightly); falling is uncommon */
+      const onset = seg(p, 0, 0.03) * (1 - seg(p, 0.95, 0.98));
+      const jerkCycle = Math.sin(t * 0.019);         /* 3 Hz */
+      const jerk = jerkCycle > 0.5 ? (jerkCycle - 0.5) * 2 * onset : 0;
+      const elevation = 20 * onset * Math.min(p * 1.3, 1);
+      const b0 = seg(p, 0.03, 0.35), bend = (1 - Math.pow(1 - b0, 2)) * (1 - seg(p, 0.95, 0.98));
+      const flex = 0.2 * bend, D = 10 * bend, sh = D + 188 * flex;
+      return {
+        head: { ty: sh + 22 * bend - jerk * 2, sy: 1 - 0.2 * bend },
+        torso: { ty: D + 150 * flex + jerk * 2, sy: 1 - flex },
+        lArm: { ty: sh, r: elevation + jerk * 10, tx: -onset * 2 },
+        rArm: { ty: sh, r: -(elevation + jerk * 10), tx: onset * 2 },
+        lLeg: { ty: D, sy: (214 - D) / 214, r: bend * 3 },
+        rLeg: { ty: D, sy: (214 - D) / 214, r: -bend * 3 },
+        jawClench: 0,
+      };
+    }
+
+    /* EYELID MYOCLONIA: Rapid eyelid jerking, slight head extension */
+    case "eyelid-myoclonia": {
+      const onset = Math.min(p * 4, 1);
+      const headExt = -onset * 3;
+      const flicker = Math.sin(t * 0.029) * 2 * onset;
+      return {
+        head: { ty: headExt + flicker * 0.3 },
+        torso: {},
+        lArm: { r: onset * 2 },
+        rArm: { r: -onset * 2 },
+        lLeg: {},
+        rLeg: {},
+        jawClench: 0,
+        eyelidMyoclonia: onset,
+      };
+    }
+
+    /* UNKNOWN TONIC-CLONIC: Same presentation as tonic-clonic, unknown origin */
+    case "unknown-tc": { const a = tcPose(p, t, dur, false); a.fall = 1; return a; }   /* lying throughout: the seizure occurred in bed */
+
+    /* UNKNOWN EPILEPTIC SPASMS: Same as spasms, unknown origin */
+    case "unknown-spasms": {
+      const cycle = (t % 1200) / 1200;
+      let f = 0;
+      if (cycle < 0.12) f = Math.sin(cycle / 0.12 * Math.PI * 0.5);
+      else if (cycle < 0.25) f = Math.cos((cycle - 0.12) / 0.13 * Math.PI * 0.5);
+      return {
+        head: { r: f*20, ty: f*10 },
+        torso: { r: f*18, ty: f*6, sy: 1-f*0.02 },
+        lArm: { r: f*40 },
+        rArm: { r: -f*40 },
+        lLeg: { r: f*14 },
+        rLeg: { r: -f*14 },
+        jawClench: f * 0.5
+      };
+    }
+
+    /* UNKNOWN BEHAVIOUR ARREST: Sudden freeze */
+    case "unknown-arrest": {
+      const freeze = Math.min(p * 5, 1);
+      const microDrift = Math.sin(t * 0.003) * 1 * freeze;
+      return {
+        head: { ty: freeze * 2 },
+        torso: {},
+        lArm: {},
+        rArm: {},
+        lLeg: {},
+        rLeg: {},
+        jawClench: 0,
+      };
+    }
+
+    default: return Z;
+  }
+}
+
+function tf(v) {
+  if(!v) return "";
+  let s = "";
+  if(v.tx) s += `translateX(${v.tx}px) `;
+  if(v.ty) s += `translateY(${v.ty}px) `;
+  if(v.r) s += `rotate(${v.r}deg) `;
+  if(v.sy) s += `scaleY(${v.sy}) `;
+  return s.trim();
+}
+
+const WIDE_VIEW = { gnm:1 };
+/* pages in which the figure falls or lies on the ground get a wider frame */
+const FALL_VIEW = { gtc:1, mtc:1, atc:1, fbtc:1, ubtc:1, gt:1 };
+function renderFigure() {
+  const sz = SZ[sel], on = live(), prog = sz.dur>0?Math.min(elapsed/sz.dur,1):0;
+  const a = on ? getAnim(sz.id, elapsed, sz.dur) : {head:{},torso:{},lArm:{},rArm:{},lLeg:{},rLeg:{},jawClench:0};
+  if (!on && sz.id === "ubtc") a.fall = 1;   /* the bilateral tonic-clonic seizure of unknown origin is shown in bed, lying down */
+  /* fall: rotate the body through 90 degrees about the feet and bring it to the middle of the frame, lying on the ground.
+     The vertical shift follows the rotation (1 - cos), so the head is never lifted above the frame early in the fall */
+  const fl = a.fall || 0, fy = a.fallY || 315, fTx = 258*fl, fTy = (fy - 516)*(1 - Math.cos(fl*Math.PI/2)), fRot = -90*fl + (a.whole || 0);
+  const jawClench = 0; // jaw clenching is not described in the provided sources, so it is not drawn
+  const absenceMouth = a.absenceMouth || 0; // 0=normal, 1=slack
+  const eyelidMyoclonia = a.eyelidMyoclonia || 0; // 0=normal, 1=active
+  const hl = (on && getHL(sz.id, prog)) || {p:[],c:""};
+  const lit = (part) => on && hl.p.includes(part);
+  const glow = (part) => lit(part) ? `drop-shadow(0 0 10px ${hl.c}88)` : "none";
+  const face = a.face || "normal";
+  const isAbsenceFlutter = on && face === "absence";
+  const isVacantStare = on && face === "stare";
+  const isAbsence = isAbsenceFlutter || isVacantStare;
+  const isEyelidMyoclonia = on && face === "eyelid";
+  const isFocalNonmotor = on && !!a.heart;
+  const ex = (on && a.ex) || {}, eu = ex.eyesUp||0, cry = ex.cry||0, gri = ex.grimace||0, smi = ex.smile||0, chin = ex.chin||0;
+  const fist = (on && a.fist) || 0;
+  /* tonic phase: red strain marks beside the limbs, gently pulsing, to show that the muscles stay contracted (illustrative) */
+  const strain = (on && a.strain) || 0, strOp = strain*(0.6 + 0.3*Math.sin(elapsed*0.005));
+  const strainSVG = (pts, dir) => strain > 0.02 ? `<g stroke="#C00000" stroke-width="3.6" stroke-linecap="round" fill="none" opacity="${strOp}">` +
+      pts.map(([x, y]) => `<path d="M${x + dir*6} ${y} L${x + dir*22} ${y - 5}"/>`).join("") + `</g>` : "";
+  const absEye = (a.absEye === undefined ? 1 : a.absEye);
+  const mouthEx = () => {
+    if (cry > 0.05) return `<ellipse cx="130" cy="${79+cry*2}" rx="${6+cry*3}" ry="${1.5+cry*5}" fill="#2a1a1a" opacity="${0.35+cry*0.4}"/>
+      <path d="M121 77 Q130 ${75-cry} 139 77" stroke="${skinM}" stroke-width="1" fill="none" opacity="0.5"/>`;
+    if (gri > 0.05) return `<path d="M${120-gri*4} ${76+gri*2} Q125 78 130 78 Q135 78 ${140+gri*4} ${76+gri*2}" stroke="${skinD}" stroke-width="${1.2+gri*0.6}" fill="none" opacity="${0.4+gri*0.3}"/>
+      <path d="M121 66 Q${117-gri*2} 72 ${117-gri*3} ${77+gri*2}" stroke="${skinM}" stroke-width="0.8" fill="none" opacity="${gri*0.45}"/>
+      <path d="M139 66 Q${143+gri*2} 72 ${143+gri*3} ${77+gri*2}" stroke="${skinM}" stroke-width="0.8" fill="none" opacity="${gri*0.45}"/>`;
+    if (smi > 0.05) return `<path d="M${119-smi*3} ${76-smi*3} Q130 ${80+smi*5} ${141+smi*3} ${76-smi*3}" stroke="${skinD}" stroke-width="1.4" fill="none" opacity="${0.45+smi*0.25}"/>
+      <ellipse cx="111" cy="${66-smi*2}" rx="7" ry="5" fill="#E8A090" opacity="${smi*0.25}"/><ellipse cx="149" cy="${66-smi*2}" rx="7" ry="5" fill="#E8A090" opacity="${smi*0.25}"/>
+      <path d="M123 ${82+chin*3} Q130 ${85+chin*4} 137 ${82+chin*3}" stroke="${skinM}" stroke-width="${0.5+chin*0.6}" fill="none" opacity="${chin*0.5}"/>
+      ${chin>0.05?`<ellipse cx="130" cy="${88+chin*3}" rx="7" ry="3" fill="${skinM}" opacity="${chin*0.3}"/>`:''}`;
+    return `<path d="M120 76 Q125 80 130 80 Q135 80 140 76" stroke="${skinM}" stroke-width="1.2" fill="none" opacity="0.4"/>
+      <path d="M123 ${80+chin*3} Q130 ${83+chin*4} 137 ${80+chin*3}" stroke="${skinM}" stroke-width="${0.5+chin*0.6}" fill="none" opacity="${0.15+chin*0.35}"/>
+      ${chin>0.05?`<ellipse cx="130" cy="${88+chin*3}" rx="7" ry="3" fill="${skinM}" opacity="${chin*0.3}"/>`:''}`;
+  };
+  const fistSVG = (cx) => fist > 0.05 ? `<g opacity="${fist}"><ellipse cx="${cx}" cy="305" rx="14" ry="12" fill="${skin}" stroke="${skinM}" stroke-width="0.6"/>
+      <path d="M${cx-11} 301 Q${cx} 296 ${cx+11} 301" stroke="${skinM}" stroke-width="0.7" fill="none" opacity="0.6"/>
+      <path d="M${cx-10} 307 L${cx+10} 307 M${cx-7} 312 L${cx+7} 312" stroke="${skinM}" stroke-width="0.6" fill="none" opacity="0.5"/></g>` : "";
+
+  const hlOv = (pathD, part) => lit(part) ? `<path d="${pathD}" fill="${hl.c}" opacity="0.15"><animate attributeName="opacity" values="0.08;0.22;0.08" dur="0.7s" repeatCount="indefinite"/></path>` : "";
+
+  const svg = document.getElementById("figure");
+  /* pages whose arms are raised high get a wider frame, so the hands are not cut off */
+  svg.setAttribute("viewBox", FALL_VIEW[sz.id] ? "-160 0 580 530" : WIDE_VIEW[sz.id] ? "-130 0 520 530" : "-80 0 420 530");
+  svg.innerHTML = `
+    <defs>
+      <!-- 3D skin gradients -->
+      <radialGradient id="skinGrad" cx="45%" cy="35%">
+        <stop offset="0%" stop-color="${skinH}"/>
+        <stop offset="60%" stop-color="${skin}"/>
+        <stop offset="100%" stop-color="${skinM}"/>
+      </radialGradient>
+      <radialGradient id="chestGrad" cx="48%" cy="25%">
+        <stop offset="0%" stop-color="${skinH}"/>
+        <stop offset="40%" stop-color="${skinL}"/>
+        <stop offset="85%" stop-color="${skin}"/>
+        <stop offset="100%" stop-color="${skinM}"/>
+      </radialGradient>
+      <radialGradient id="limbGrad" cx="50%" cy="30%">
+        <stop offset="0%" stop-color="${skinL}"/>
+        <stop offset="70%" stop-color="${skin}"/>
+        <stop offset="100%" stop-color="${skinM}"/>
+      </radialGradient>
+      <linearGradient id="limbSide" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="${skinM}"/>
+        <stop offset="30%" stop-color="${skinL}"/>
+        <stop offset="70%" stop-color="${skinL}"/>
+        <stop offset="100%" stop-color="${skinM}"/>
+      </linearGradient>
+      <linearGradient id="legGrad" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="${skinM}"/>
+        <stop offset="35%" stop-color="${skinL}"/>
+        <stop offset="65%" stop-color="${skinL}"/>
+        <stop offset="100%" stop-color="${skinM}"/>
+      </linearGradient>
+      <linearGradient id="shortsGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="${shortsH}"/>
+        <stop offset="100%" stop-color="${shortsC}"/>
+      </linearGradient>
+      <radialGradient id="shortsFold" cx="50%" cy="50%">
+        <stop offset="0%" stop-color="${shortsH}"/>
+        <stop offset="100%" stop-color="${shortsD}"/>
+      </radialGradient>
+      <!-- 3D shadow filters -->
+      <filter id="bodyShadow" x="-20%" y="-5%" width="140%" height="120%">
+        <feDropShadow dx="3" dy="4" stdDeviation="4" flood-color="#00000018"/>
+      </filter>
+      <filter id="limbShadow" x="-20%" y="-10%" width="140%" height="130%">
+        <feDropShadow dx="2" dy="3" stdDeviation="3" flood-color="#00000012"/>
+      </filter>
+      <radialGradient id="floorShadow" cx="50%" cy="50%">
+        <stop offset="0%" stop-color="#000" stop-opacity="0.08"/>
+        <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+
+    <!-- Floor shadow -->
+    <ellipse cx="130" cy="516" rx="55" ry="8" fill="url(#floorShadow)" opacity="${1 - fl}"/>
+    ${fl > 0.05 ? `<ellipse cx="130" cy="${fy + 6}" rx="285" ry="125" fill="url(#floorShadow)" opacity="${fl}"/>` : ""}
+
+    <g style="transform-origin:130px 516px;transform:translate(${fTx}px,${fTy}px) rotate(${fRot}deg)">
+    <!-- LEFT LEG -->
+    <g style="transform-origin:108px 300px;transform:${tf(a.lLeg)};filter:${glow('lLeg')}" filter="url(#limbShadow)">
+      <!-- Thigh skin (hidden under shorts at top) -->
+      <path d="M95 296 Q92 330 91 360 Q90 382 93 400 L123 400 Q126 382 125 360 Q124 330 122 296 Z" fill="url(#legGrad)"/>
+      <path d="M100 310 Q96 335 95 360" stroke="${skinM}" stroke-width="0.8" fill="none" opacity="0.3"/>
+      <path d="M118 310 Q121 335 122 360" stroke="${skinM}" stroke-width="0.6" fill="none" opacity="0.2"/>
+      <!-- Knee -->
+      <ellipse cx="108" cy="400" rx="16" ry="9" fill="${skin}"/>
+      <ellipse cx="108" cy="399" rx="10" ry="5" fill="${skinL}" opacity="0.3"/>
+      <!-- Shin -->
+      <path d="M93 400 Q91 432 90 458 Q89 478 91 494 L121 494 Q123 478 122 458 Q121 432 123 400 Z" fill="url(#legGrad)"/>
+      <path d="M104 410 Q100 440 98 470" stroke="${skinM}" stroke-width="0.6" fill="none" opacity="0.25"/>
+      <path d="M118 415 Q124 435 121 460" stroke="${skinM}" stroke-width="0.7" fill="none" opacity="0.2"/>
+      <g style="transform-origin:106px 503px;transform:scaleY(${1/((a.lLeg&&a.lLeg.sy)||1)})">
+      <!-- Ankle -->
+      <ellipse cx="106" cy="492" rx="13" ry="5" fill="${skinM}" opacity="0.15"/>
+      <!-- Foot -->
+      <path d="M88 492 L85 500 Q84 514 107 514 Q122 514 124 502 L122 492 Z" fill="${skin}"/>
+      <path d="M88 500 Q90 506 107 508 Q120 506 122 500" fill="${skinL}" opacity="0.2"/>
+      <path d="M85 500 Q84 510 95 513" stroke="${skinM}" stroke-width="0.5" fill="none" opacity="0.3"/>
+      </g>
+      ${hlOv("M95 296 Q92 330 91 360 Q90 382 93 400 L123 400 Q126 382 125 360 Q124 330 122 296 Z","lLeg")}
+      ${strainSVG([[92,320],[90,350],[90,380],[90,425],[89,455],[89,480]], -1)}
+    </g>
+
+    <!-- RIGHT LEG -->
+    <g style="transform-origin:152px 300px;transform:${tf(a.rLeg)};filter:${glow('rLeg')}" filter="url(#limbShadow)">
+      <!-- Thigh skin (hidden under shorts at top) -->
+      <path d="M139 296 Q136 330 135 360 Q134 382 137 400 L167 400 Q170 382 169 360 Q168 330 166 296 Z" fill="url(#legGrad)"/>
+      <path d="M144 310 Q140 335 139 360" stroke="${skinM}" stroke-width="0.8" fill="none" opacity="0.3"/>
+      <path d="M162 310 Q165 335 166 360" stroke="${skinM}" stroke-width="0.6" fill="none" opacity="0.2"/>
+      <ellipse cx="152" cy="400" rx="16" ry="9" fill="${skin}"/>
+      <ellipse cx="152" cy="399" rx="10" ry="5" fill="${skinL}" opacity="0.3"/>
+      <path d="M137 400 Q135 432 134 458 Q133 478 135 494 L165 494 Q167 478 166 458 Q165 432 167 400 Z" fill="url(#legGrad)"/>
+      <path d="M148 410 Q144 440 142 470" stroke="${skinM}" stroke-width="0.6" fill="none" opacity="0.25"/>
+      <path d="M162 415 Q168 435 165 460" stroke="${skinM}" stroke-width="0.7" fill="none" opacity="0.2"/>
+      <g style="transform-origin:150px 503px;transform:scaleY(${1/((a.rLeg&&a.rLeg.sy)||1)})">
+      <ellipse cx="150" cy="492" rx="13" ry="5" fill="${skinM}" opacity="0.15"/>
+      <path d="M132 492 L130 500 Q130 514 152 514 Q166 514 168 502 L166 492 Z" fill="${skin}"/>
+      <path d="M132 500 Q134 506 152 508 Q164 506 166 500" fill="${skinL}" opacity="0.2"/>
+      </g>
+      ${hlOv("M139 296 Q136 330 135 360 Q134 382 137 400 L167 400 Q170 382 169 360 Q168 330 166 296 Z","rLeg")}
+      ${strainSVG([[168,320],[170,350],[170,380],[170,425],[171,455],[171,480]], 1)}
+    </g>
+
+    <!-- TORSO -->
+    <g style="transform-origin:130px 150px;transform:${tf(a.torso)};filter:${glow('torso')}" filter="url(#bodyShadow)">
+      <!-- Shoulder bridges, fill gaps between torso and arms -->
+      <ellipse cx="82" cy="112" rx="14" ry="10" fill="${skin}"/>
+      <ellipse cx="178" cy="112" rx="14" ry="10" fill="${skin}"/>
+      <!-- Main torso with 3D gradient -->
+      <path d="M82 110 Q88 104 130 102 Q172 104 178 110 L182 132 Q180 155 178 185 L176 225 Q173 262 171 298 L89 298 Q87 262 84 225 L82 185 Q80 155 78 132 Z" fill="url(#chestGrad)"/>
+      
+      <!-- Chest muscle definition, pectorals -->
+      <path d="M95 118 Q110 132 128 128" stroke="${skinM}" stroke-width="0.9" fill="none" opacity="0.25"/>
+      <path d="M165 118 Q150 132 132 128" stroke="${skinM}" stroke-width="0.9" fill="none" opacity="0.25"/>
+      <!-- Pec shadow -->
+      <ellipse cx="112" cy="128" rx="16" ry="8" fill="${skinM}" opacity="0.06"/>
+      <ellipse cx="148" cy="128" rx="16" ry="8" fill="${skinM}" opacity="0.06"/>
+      
+      <!-- Nipples -->
+      <circle cx="108" cy="140" r="2.5" fill="${skinM}" opacity="0.3"/>
+      <circle cx="152" cy="140" r="2.5" fill="${skinM}" opacity="0.3"/>
+      
+      ${isFocalNonmotor ? (() => {
+        const hb = elapsed / 400; // 150 beats per minute (one beat every 400 ms): ictal tachycardia
+        const beat = (Math.sin(hb * Math.PI * 2) + 1) * 0.5;
+        const sc = 1 + beat * 0.22;
+        const mainFill = beat > 0.5 ? '#f87171' : '#dc2626';
+        const atrFillR = beat > 0.5 ? '#ef4444' : '#dc2626';
+        const atrFillL = beat > 0.5 ? '#dc2626' : '#b91c1c';
+        const pulse1R = 14 + (elapsed % 400) / 400 * 18;
+        const pulse1Op = Math.max(0, 0.35 - (elapsed % 400) / 400 * 0.35);
+        const pulse2R = 14 + ((elapsed + 200) % 400) / 400 * 18;
+        const pulse2Op = Math.max(0, 0.2 - ((elapsed + 200) % 400) / 400 * 0.2);
+        return `
+      <!-- ANATOMICAL HEART, JS-driven pumping (patient's LEFT chest) -->
+      <g transform="translate(145, 162) scale(${sc})">
+        <!-- Aorta arch -->
+        <path d="M-1 -10 C-1 -16, 2 -19, 6 -19 C10 -19, 12 -16, 12 -12 L12 -7" 
+          fill="#b91c1c" stroke="#991b1b" stroke-width="0.5"/>
+        <!-- Superior vena cava -->
+        <path d="M-5 -8 L-5 -17 C-5 -19, -4 -20, -2 -20 L0 -20 L0 -16 L-3 -16 L-3 -8" 
+          fill="#7f1d1d" stroke="#991b1b" stroke-width="0.4"/>
+        <!-- Pulmonary artery -->
+        <path d="M3 -10 C3 -14, 0 -15, -3 -14 L-6 -12 L-5 -10 L-2 -12 C0 -13, 2 -12, 2 -10" 
+          fill="#dc2626" stroke="#991b1b" stroke-width="0.3"/>
+        <!-- Right atrium -->
+        <path d="M-8 -6 C-12 -6, -14 -2, -13 2 L-11 4 L-6 2 L-7 -2 C-7 -4, -6 -5, -5 -5" 
+          fill="${atrFillR}" stroke="#991b1b" stroke-width="0.4"/>
+        <!-- Left atrium -->
+        <path d="M10 -6 C13 -6, 15 -2, 14 2 L12 4 L8 2 L9 -2 C9 -4, 8 -5, 7 -5" 
+          fill="${atrFillL}" stroke="#991b1b" stroke-width="0.4"/>
+        <!-- Main body, ventricles -->
+        <path d="M-11 4 C-13 8, -12 14, -8 18 C-4 22, 0 24, 1 24 C2 24, 6 22, 10 18 C14 14, 15 8, 12 4 L8 2 C5 3, 3 4, 1 4 C-1 4, -3 3, -6 2 Z" 
+          fill="${mainFill}" stroke="#991b1b" stroke-width="0.5"/>
+        <!-- Interventricular septum -->
+        <path d="M1 4 L1 22" stroke="#991b1b" stroke-width="0.6" opacity="0.4"/>
+        <!-- Ventricle contours -->
+        <path d="M3 6 C5 10, 6 14, 5 18" stroke="#991b1b" stroke-width="0.5" fill="none" opacity="0.3"/>
+        <path d="M-3 6 C-5 10, -6 14, -5 18" stroke="#7f1d1d" stroke-width="0.4" fill="none" opacity="0.25"/>
+        <!-- Coronary arteries -->
+        <path d="M-2 2 C-5 6, -8 10, -9 15" stroke="#fca5a5" stroke-width="0.6" fill="none" opacity="0.5"/>
+        <path d="M4 2 C7 6, 9 10, 10 14" stroke="#fca5a5" stroke-width="0.5" fill="none" opacity="0.4"/>
+        <!-- Ventricle highlights -->
+        <ellipse cx="-4" cy="12" rx="4" ry="5" fill="#f87171" opacity="${0.1 + beat * 0.15}"/>
+        <ellipse cx="6" cy="12" rx="3.5" ry="5" fill="#ef4444" opacity="${0.08 + beat * 0.12}"/>
+        <ellipse cx="1" cy="22" rx="3" ry="2" fill="#991b1b" opacity="0.15"/>
+      </g>
+      <!-- Pulse rings -->
+      <circle cx="145" cy="174" r="${pulse1R}" fill="none" stroke="#ef4444" stroke-width="0.8" opacity="${pulse1Op}"/>
+      <circle cx="145" cy="174" r="${pulse2R}" fill="none" stroke="#ef4444" stroke-width="0.5" opacity="${pulse2Op}"/>
+      `;
+      })() : ''}
+      
+      <!-- Sternum line -->
+      <line x1="130" y1="118" x2="130" y2="220" stroke="${skinM}" stroke-width="0.6" opacity="0.12"/>
+      
+      <!-- Rib cage suggestion -->
+      <path d="M110 155 Q120 152 130 153" stroke="${skinM}" stroke-width="0.4" fill="none" opacity="0.1"/>
+      <path d="M150 155 Q140 152 130 153" stroke="${skinM}" stroke-width="0.4" fill="none" opacity="0.1"/>
+      <path d="M112 165 Q122 162 130 163" stroke="${skinM}" stroke-width="0.4" fill="none" opacity="0.08"/>
+      <path d="M148 165 Q138 162 130 163" stroke="${skinM}" stroke-width="0.4" fill="none" opacity="0.08"/>
+      
+      <!-- Abdominal lines -->
+      <path d="M120 175 Q130 173 140 175" stroke="${skinM}" stroke-width="0.4" fill="none" opacity="0.12"/>
+      <path d="M120 190 Q130 188 140 190" stroke="${skinM}" stroke-width="0.4" fill="none" opacity="0.1"/>
+      <path d="M122 205 Q130 203 138 205" stroke="${skinM}" stroke-width="0.4" fill="none" opacity="0.08"/>
+      
+      <!-- Side body contour (3D depth) -->
+      <path d="M82 115 Q80 145 80 175 Q82 200 84 225" stroke="${skinM}" stroke-width="1" fill="none" opacity="0.15"/>
+      <path d="M178 115 Q180 145 180 175 Q178 200 176 225" stroke="${skinM}" stroke-width="1" fill="none" opacity="0.15"/>
+      
+      <!-- Navel -->
+      <ellipse cx="130" cy="228" rx="3.5" ry="4.5" fill="${skinM}" opacity="0.35"/>
+      <ellipse cx="130" cy="227" rx="2" ry="2.5" fill="${skinD}" opacity="0.15"/>
+      
+      <!-- TROUSER SHORTS, straight bottom -->
+      <path d="M80 252 Q130 246 180 252 L180 308 L80 308 Z" fill="url(#shortsGrad)"/>
+      <!-- Waistband with 3D -->
+      <path d="M80 252 Q130 246 180 252 L180 266 Q130 260 80 266 Z" fill="${shortsB}"/>
+      <path d="M80 255 Q130 250 180 255" stroke="${shortsD}" stroke-width="0.6" opacity="0.3"/>
+      <!-- Belt -->
+      <path d="M80 256 Q130 251 180 256 L180 263 Q130 258 80 263 Z" fill="${shortsD}"/>
+      <!-- Belt buckle -->
+      <rect x="126" y="252" width="8" height="7" rx="1.5" fill="#9CA3AF" opacity="0.5"/>
+      <rect x="128" y="254" width="4" height="3" rx="0.5" fill="#B0B8C4" opacity="0.4"/>
+      <!-- Fly -->
+      <line x1="130" y1="263" x2="130" y2="298" stroke="${shortsD}" stroke-width="0.7" opacity="0.2"/>
+      <!-- Pocket outlines -->
+      <path d="M88 268 L88 288 Q90 291 93 291 L112 287 L112 268" stroke="${shortsD}" stroke-width="0.5" fill="none" opacity="0.1"/>
+      <path d="M172 268 L172 288 Q170 291 167 291 L148 287 L148 268" stroke="${shortsD}" stroke-width="0.5" fill="none" opacity="0.1"/>
+      <!-- Side seams -->
+      <path d="M80 258 L80 308" stroke="${shortsD}" stroke-width="0.5" opacity="0.15"/>
+      <path d="M180 258 L180 308" stroke="${shortsD}" stroke-width="0.5" opacity="0.15"/>
+      <!-- Hem line -->
+      <path d="M80 305 L180 305" stroke="${shortsD}" stroke-width="0.8" opacity="0.15"/>
+      <!-- Fabric wrinkle hints -->
+      <path d="M100 275 Q106 278 112 276" stroke="${shortsD}" stroke-width="0.3" fill="none" opacity="0.08"/>
+      <path d="M148 275 Q154 278 160 276" stroke="${shortsD}" stroke-width="0.3" fill="none" opacity="0.08"/>
+      ${hlOv("M82 110 Q88 104 130 102 Q172 104 178 110 L182 132 Q180 155 178 185 L176 225 Q173 262 171 298 L89 298 Q87 262 84 225 L82 185 Q80 155 78 132 Z","torso")}
+    </g>
+
+    <!-- LEFT ARM -->
+    <g style="transform-origin:82px 112px;transform:${tf(a.lArm)};filter:${glow('lArm')}" filter="url(#limbShadow)">
+      <!-- Upper arm (bicep/tricep) -->
+      <path d="M70 118 Q60 130 50 158 Q46 178 44 202 L63 204 Q65 180 69 160 Q74 138 82 122 Z" fill="url(#limbSide)"/>
+      <!-- Bicep contour -->
+      <path d="M72 130 Q64 145 58 165" stroke="${skinM}" stroke-width="0.7" fill="none" opacity="0.2"/>
+      <!-- Tricep shadow -->
+      <path d="M65 128 Q56 148 52 170" stroke="${skinM}" stroke-width="0.5" fill="none" opacity="0.15"/>
+      <!-- Elbow -->
+      <ellipse cx="50" cy="202" rx="11" ry="7" fill="${skinM}" opacity="0.12"/>
+      <!-- Forearm -->
+      <path d="M44 202 Q39 228 36 250 Q34 262 35 274 L55 276 Q56 262 57 250 Q59 228 63 204 Z" fill="url(#limbSide)"/>
+      <!-- Forearm muscle line -->
+      <path d="M48 210 Q43 230 40 255" stroke="${skinM}" stroke-width="0.5" fill="none" opacity="0.15"/>
+      <!-- Wrist -->
+      <ellipse cx="44" cy="274" rx="9" ry="4" fill="${skinM}" opacity="0.1"/>
+      <!-- Hand with 3D form -->
+      <path d="M33 272 Q31 282 29 290 L27 298 Q29 306 40 309 Q49 312 55 307 L57 298 Q57 288 56 280 L55 274 Z" fill="url(#limbGrad)"/>
+      <g opacity="${1-fist}">
+      <!-- Fingers -->
+      <path d="M27 298 Q24 312 27 318 Q29 321 32 318 Q34 310 33 300" fill="${skin}" stroke="${skinM}" stroke-width="0.4"/>
+      <path d="M32 300 Q30 314 32 322 Q34 325 37 322 Q39 314 37 302" fill="${skin}" stroke="${skinM}" stroke-width="0.4"/>
+      <path d="M37 302 Q36 316 38 324 Q40 327 43 324 Q45 316 43 304" fill="${skin}" stroke="${skinM}" stroke-width="0.4"/>
+      <path d="M43 304 Q42 316 43 322 Q45 325 48 322 Q49 315 48 305" fill="${skin}" stroke="${skinM}" stroke-width="0.4"/>
+      <!-- Thumb -->
+      <path d="M55 282 Q59 290 59 298 Q57 305 53 303 Q51 296 53 287" fill="${skin}" stroke="${skinM}" stroke-width="0.4"/>
+      </g>
+      ${fistSVG(42)}
+      ${hlOv("M70 118 Q60 130 50 158 Q46 178 44 202 L63 204 Q65 180 69 160 Q74 138 82 122 Z","lArm")}
+      ${strainSVG([[58,140],[51,163],[46,186],[40,222],[37,245],[35,266]], -1)}
+    </g>
+
+    <!-- RIGHT ARM -->
+    <g style="transform-origin:178px 112px;transform:${tf(a.rArm)};filter:${glow('rArm')}" filter="url(#limbShadow)">
+      <path d="M190 118 Q200 130 210 158 Q214 178 216 202 L197 204 Q195 180 191 160 Q186 138 178 122 Z" fill="url(#limbSide)"/>
+      <path d="M188 130 Q196 145 202 165" stroke="${skinM}" stroke-width="0.7" fill="none" opacity="0.2"/>
+      <path d="M195 128 Q204 148 208 170" stroke="${skinM}" stroke-width="0.5" fill="none" opacity="0.15"/>
+      <ellipse cx="210" cy="202" rx="11" ry="7" fill="${skinM}" opacity="0.12"/>
+      <path d="M216 202 Q221 228 224 250 Q226 262 225 274 L205 276 Q204 262 203 250 Q201 228 197 204 Z" fill="url(#limbSide)"/>
+      <path d="M212 210 Q217 230 220 255" stroke="${skinM}" stroke-width="0.5" fill="none" opacity="0.15"/>
+      <ellipse cx="216" cy="274" rx="9" ry="4" fill="${skinM}" opacity="0.1"/>
+      <path d="M227 272 Q229 282 231 290 L233 298 Q231 306 220 309 Q211 312 205 307 L203 298 Q203 288 204 280 L205 274 Z" fill="url(#limbGrad)"/>
+      <g opacity="${1-fist}">
+      <path d="M233 298 Q236 312 233 318 Q231 321 228 318 Q226 310 227 300" fill="${skin}" stroke="${skinM}" stroke-width="0.4"/>
+      <path d="M228 300 Q230 314 228 322 Q226 325 223 322 Q221 314 223 302" fill="${skin}" stroke="${skinM}" stroke-width="0.4"/>
+      <path d="M223 302 Q224 316 222 324 Q220 327 217 324 Q215 316 217 304" fill="${skin}" stroke="${skinM}" stroke-width="0.4"/>
+      <path d="M217 304 Q218 316 217 322 Q215 325 212 322 Q211 315 212 305" fill="${skin}" stroke="${skinM}" stroke-width="0.4"/>
+      <path d="M205 282 Q201 290 201 298 Q203 305 207 303 Q209 296 207 287" fill="${skin}" stroke="${skinM}" stroke-width="0.4"/>
+      </g>
+      ${fistSVG(218)}
+      ${hlOv("M190 118 Q200 130 210 158 Q214 178 216 202 L197 204 Q195 180 191 160 Q186 138 178 122 Z","rArm")}
+      ${strainSVG([[202,140],[209,163],[214,186],[220,222],[223,245],[225,266]], 1)}
+    </g>
+
+    <!-- NECK with 3D -->
+    <g style="transform-origin:130px 98px;transform:${tf(a.head)}">
+      <path d="M118 90 L116 106 L144 106 L142 90 Z" fill="url(#limbGrad)"/>
+      <!-- Sternocleidomastoid shadows -->
+      <path d="M120 92 L118 104" stroke="${skinM}" stroke-width="0.6" fill="none" opacity="0.2"/>
+      <path d="M140 92 L142 104" stroke="${skinM}" stroke-width="0.6" fill="none" opacity="0.2"/>
+      <!-- Throat highlight -->
+      <path d="M126 94 Q130 96 134 94" stroke="${skinL}" stroke-width="0.5" fill="none" opacity="0.2"/>
+    </g>
+
+    <!-- HEAD with 3D lighting -->
+    <g style="transform-origin:130px 95px;transform:${tf(a.head)};filter:${glow('head')}" filter="url(#bodyShadow)">
+      <!-- Head base -->
+      <ellipse cx="130" cy="56" rx="34" ry="43" fill="url(#skinGrad)"/>
+      <!-- 3D forehead highlight -->
+      <ellipse cx="128" cy="38" rx="18" ry="12" fill="${skinH}" opacity="0.2"/>
+      <!-- Cheek highlights for 3D -->
+      <ellipse cx="112" cy="62" rx="8" ry="6" fill="${skinH}" opacity="0.12"/>
+      <ellipse cx="148" cy="62" rx="8" ry="6" fill="${skinH}" opacity="0.12"/>
+      <!-- Jawline shadow -->
+      <path d="M100 78 Q115 88 130 90 Q145 88 160 78" stroke="${skinM}" stroke-width="0.8" fill="none" opacity="0.15"/>
+
+      <!-- Left ear with 3D -->
+      <ellipse cx="95" cy="58" rx="7" ry="12" fill="${skin}"/>
+      <ellipse cx="95" cy="58" rx="4" ry="8" fill="${skinM}" opacity="0.2"/>
+      <path d="M96 52 Q93 58 96 64" stroke="${skinM}" stroke-width="0.5" fill="none" opacity="0.3"/>
+      <!-- Right ear -->
+      <ellipse cx="165" cy="58" rx="7" ry="12" fill="${skin}"/>
+      <ellipse cx="165" cy="58" rx="4" ry="8" fill="${skinM}" opacity="0.2"/>
+      <path d="M164 52 Q167 58 164 64" stroke="${skinM}" stroke-width="0.5" fill="none" opacity="0.3"/>
+
+      <!-- Hair with volume/3D -->
+      <path d="M99 40 Q99 14 130 11 Q161 14 161 40 Q159 22 130 20 Q101 22 99 40 Z" fill="${hair}"/>
+      <path d="M96 46 Q95 30 99 18 Q110 7 130 5 Q150 7 161 18 Q165 30 164 46 Q159 28 130 25 Q101 28 96 46 Z" fill="${hair}"/>
+      <!-- Hair shine -->
+      <path d="M110 12 Q125 8 140 12" stroke="${hairH}" stroke-width="2" fill="none" opacity="0.3"/>
+      <path d="M105 18 Q125 13 145 18" stroke="${hairH}" stroke-width="1.5" fill="none" opacity="0.15"/>
+      <!-- Side hair -->
+      <path d="M96 46 Q94 38 96 30" fill="${hair}" stroke="${hair}" stroke-width="2.5"/>
+      <path d="M164 46 Q166 38 164 30" fill="${hair}" stroke="${hair}" stroke-width="2.5"/>
+
+      <!-- Eyebrows -->
+      ${isEyelidMyoclonia ? `
+        <!-- Eyelid Myoclonia: eyebrows slightly raised with jerky movement -->
+        <path d="M110 ${43 - Math.abs(Math.sin(elapsed * 0.03)) * 2} Q117 ${40 - Math.abs(Math.sin(elapsed * 0.03)) * 2} 124 ${43 - Math.abs(Math.sin(elapsed * 0.03)) * 2}" stroke="${hair}" stroke-width="1.8" fill="none" opacity="0.5"/>
+        <path d="M136 ${43 - Math.abs(Math.sin(elapsed * 0.032)) * 2} Q143 ${40 - Math.abs(Math.sin(elapsed * 0.032)) * 2} 150 ${43 - Math.abs(Math.sin(elapsed * 0.032)) * 2}" stroke="${hair}" stroke-width="1.8" fill="none" opacity="0.5"/>
+      ` : isAbsence ? `
+        <!-- Absence: eyebrows relax/flatten, vacant expression -->
+        <path d="M111 45 Q117 44 124 45" stroke="${hair}" stroke-width="1.6" fill="none" opacity="0.35"/>
+        <path d="M136 45 Q143 44 149 45" stroke="${hair}" stroke-width="1.6" fill="none" opacity="0.35"/>
+      ` : `
+        <path d="M110 44 Q117 ${41+gri*1.5} 124 ${43+gri*3}" stroke="${hair}" stroke-width="2" fill="none" opacity="0.55"/>
+        <path d="M136 ${43+gri*3} Q143 ${41+gri*1.5} 150 44" stroke="${hair}" stroke-width="2" fill="none" opacity="0.55"/>
+        ${gri>0.05?`<path d="M127 ${42} L128 ${47} M133 ${42} L132 ${47}" stroke="${skinM}" stroke-width="0.7" opacity="${gri*0.5}"/>`:''}
+      `}
+
+      <!-- Eyes -->
+      ${isEyelidMyoclonia ? `
+        <!-- EYELID MYOCLONIA: Rapid lid jerking, eyes deviate upward -->
+        <ellipse cx="118" cy="51" rx="6.5" ry="5" fill="white"/>
+        <ellipse cx="142" cy="51" rx="6.5" ry="5" fill="white"/>
+        <!-- Upward deviated iris -->
+        <circle cx="118" cy="${49 - eyelidMyoclonia * 2}" r="3.2" fill="#3B2506"/>
+        <circle cx="142" cy="${49 - eyelidMyoclonia * 2}" r="3.2" fill="#3B2506"/>
+        <circle cx="118" cy="${49 - eyelidMyoclonia * 2}" r="1.8" fill="#1a1a1a"/>
+        <circle cx="142" cy="${49 - eyelidMyoclonia * 2}" r="1.8" fill="#1a1a1a"/>
+        <!-- Rapid eyelid flutter, more intense than absence -->
+        <ellipse cx="118" cy="${47 + Math.sin(elapsed * 0.03) * 2 + (Math.sin(elapsed * 0.029) > 0.3 ? 4 : 0)}" 
+          rx="7.5" ry="${3 + (Math.sin(elapsed * 0.029) > 0.3 ? 3 : 0)}" fill="${skin}" opacity="${0.4 + (Math.sin(elapsed * 0.029) > 0.3 ? 0.55 : 0)}"/>
+        <ellipse cx="142" cy="${47 + Math.sin(elapsed * 0.03) * 2 + (Math.sin(elapsed * 0.029) > 0.3 ? 4 : 0)}" 
+          rx="7.5" ry="${3 + (Math.sin(elapsed * 0.029) > 0.3 ? 3 : 0)}" fill="${skin}" opacity="${0.4 + (Math.sin(elapsed * 0.029) > 0.3 ? 0.55 : 0)}"/>
+        <path d="M112 ${46 + Math.sin(elapsed * 0.03) * 1.5} Q118 ${44 + Math.sin(elapsed * 0.03) * 2} 124 ${46 + Math.sin(elapsed * 0.03) * 1.5}" 
+          stroke="${skinM}" stroke-width="0.8" fill="none" opacity="0.4"/>
+        <path d="M136 ${46 + Math.sin(elapsed * 0.032) * 1.5} Q142 ${44 + Math.sin(elapsed * 0.032) * 2} 148 ${46 + Math.sin(elapsed * 0.032) * 1.5}" 
+          stroke="${skinM}" stroke-width="0.8" fill="none" opacity="0.4"/>
+      ` : isVacantStare ? `
+        <!-- VACANT STARE ONLY, no eyelid flutter, just glazed open eyes -->
+        <ellipse cx="118" cy="51" rx="6.5" ry="5.5" fill="white"/>
+        <ellipse cx="142" cy="51" rx="6.5" ry="5.5" fill="white"/>
+        <!-- Glazed unfocused iris -->
+        <circle cx="118" cy="51" r="3.8" fill="#6B5A3E" opacity="0.7"/>
+        <circle cx="142" cy="51" r="3.8" fill="#6B5A3E" opacity="0.7"/>
+        <!-- Pupils (normal size; pupil size is not described in the sources) -->
+        <circle cx="118" cy="51" r="1.8" fill="#1a1a1a" opacity="0.6"/>
+        <circle cx="142" cy="51" r="1.8" fill="#1a1a1a" opacity="0.6"/>
+        <!-- Glazed sheen, no highlights, vacant look -->
+        <ellipse cx="118" cy="50" rx="5" ry="3.5" fill="white" opacity="0.12"/>
+        <ellipse cx="142" cy="50" rx="5" ry="3.5" fill="white" opacity="0.12"/>
+        <!-- Static upper eyelid crease (no flutter) -->
+        <path d="M112 47 Q118 45 124 47" stroke="${skinM}" stroke-width="0.6" fill="none" opacity="0.3"/>
+        <path d="M136 47 Q142 45 148 47" stroke="${skinM}" stroke-width="0.6" fill="none" opacity="0.3"/>
+      ` : isAbsenceFlutter ? `
+        <!-- ABSENCE: UPWARD EYE ROTATION with subtle lid flutter -->
+        <!-- Wide open eyes showing whites below iris -->
+        <ellipse cx="118" cy="51" rx="6.5" ry="5.5" fill="white"/>
+        <ellipse cx="142" cy="51" rx="6.5" ry="5.5" fill="white"/>
+        <!-- Iris rotated UPWARD, positioned higher in eye socket -->
+        <circle cx="118" cy="${51 - 4*absEye}" r="3.8" fill="#6B5A3E" opacity="0.8"/>
+        <circle cx="142" cy="${51 - 4*absEye}" r="3.8" fill="#6B5A3E" opacity="0.8"/>
+        <!-- Pupil also rotated upward -->
+        <circle cx="118" cy="${51 - 4*absEye}" r="2" fill="#1a1a1a"/>
+        <circle cx="142" cy="${51 - 4*absEye}" r="2" fill="#1a1a1a"/>
+        <!-- More sclera (white) visible BELOW the iris due to upward rotation -->
+        <ellipse cx="118" cy="54" rx="4.5" ry="2" fill="white" opacity="${0.95*absEye}"/>
+        <ellipse cx="142" cy="54" rx="4.5" ry="2" fill="white" opacity="${0.95*absEye}"/>
+        <!-- SUBTLE eyelid flutter (not closing) -->
+        <ellipse cx="118" cy="${46.5 + Math.sin(elapsed * 0.025) * 0.8}" 
+          rx="7" ry="${2 + Math.sin(elapsed * 0.04) * 0.5}" fill="${skin}" opacity="${0.25 + Math.sin(elapsed * 0.04) * 0.15}"/>
+        <ellipse cx="142" cy="${46.5 + Math.sin(elapsed * 0.027) * 0.8}" 
+          rx="7" ry="${2 + Math.sin(elapsed * 0.038) * 0.5}" fill="${skin}" opacity="${0.25 + Math.sin(elapsed * 0.038) * 0.15}"/>
+        <!-- Upper eyelid crease -->
+        <path d="M112 ${46 + Math.sin(elapsed * 0.018) * 0.6} Q118 ${44 + Math.sin(elapsed * 0.018) * 0.8} 124 ${46 + Math.sin(elapsed * 0.018) * 0.6}" 
+          stroke="${skinM}" stroke-width="0.8" fill="none" opacity="0.4"/>
+        <path d="M136 ${46 + Math.sin(elapsed * 0.019) * 0.6} Q142 ${44 + Math.sin(elapsed * 0.019) * 0.8} 148 ${46 + Math.sin(elapsed * 0.019) * 0.6}" 
+          stroke="${skinM}" stroke-width="0.8" fill="none" opacity="0.4"/>
+      ` : `
+        <!-- Normal eyes with 3D -->
+        <ellipse cx="118" cy="51" rx="6" ry="${4+eu*1.2}" fill="white"/>
+        <ellipse cx="142" cy="51" rx="6" ry="${4+eu*1.2}" fill="white"/>
+        <!-- Iris -->
+        <circle cx="118" cy="${51-eu*3.5}" r="3.2" fill="#3B2506"/>
+        <circle cx="142" cy="${51-eu*3.5}" r="3.2" fill="#3B2506"/>
+        <!-- Pupil -->
+        <circle cx="118" cy="${51-eu*3.5}" r="1.8" fill="#1a1a1a"/>
+        <circle cx="142" cy="${51-eu*3.5}" r="1.8" fill="#1a1a1a"/>
+        <!-- Eye highlights -->
+        <circle cx="116.5" cy="${49.5-eu*3.5}" r="1" fill="white" opacity="0.9"/>
+        <circle cx="140.5" cy="${49.5-eu*3.5}" r="1" fill="white" opacity="0.9"/>
+        <circle cx="119.5" cy="52" r="0.5" fill="white" opacity="0.5"/>
+        <circle cx="143.5" cy="52" r="0.5" fill="white" opacity="0.5"/>
+        <!-- Upper eyelid crease -->
+        <path d="M112 47 Q118 45 124 47" stroke="${skinM}" stroke-width="0.6" fill="none" opacity="0.3"/>
+        <path d="M136 47 Q142 45 148 47" stroke="${skinM}" stroke-width="0.6" fill="none" opacity="0.3"/>
+        <!-- Lower lash line -->
+        <path d="M113 54 Q118 56 123 54" stroke="${skinM}" stroke-width="0.3" fill="none" opacity="0.2"/>
+        <path d="M137 54 Q142 56 147 54" stroke="${skinM}" stroke-width="0.3" fill="none" opacity="0.2"/>
+      `}
+
+      <!-- Nose with 3D -->
+      <path d="M128 54 Q130 63 127 68 Q130 70 133 68 Q130 63 132 54" stroke="${skinM}" stroke-width="0.8" fill="none" opacity="0.4"/>
+      <!-- Nose bridge highlight -->
+      <path d="M129 55 L129 62" stroke="${skinL}" stroke-width="0.8" fill="none" opacity="0.15"/>
+      <!-- Nostrils -->
+      <ellipse cx="127" cy="68" rx="2" ry="1.2" fill="${skinM}" opacity="0.15"/>
+      <ellipse cx="133" cy="68" rx="2" ry="1.2" fill="${skinM}" opacity="0.15"/>
+
+      <!-- Mouth / Jaw -->
+      ${jawClench > 0.1 ? `
+        <!-- JAW CLENCHING: masseter muscles bulge, teeth visible, mouth tight -->
+        <!-- Masseter muscle bulge on both sides of jaw -->
+        <ellipse cx="104" cy="72" rx="${3 + jawClench*4}" ry="${2 + jawClench*3}" fill="${skinM}" opacity="${jawClench*0.35}"/>
+        <ellipse cx="156" cy="72" rx="${3 + jawClench*4}" ry="${2 + jawClench*3}" fill="${skinM}" opacity="${jawClench*0.35}"/>
+        <!-- Jaw tension lines -->
+        <path d="M104 68 Q106 72 104 76" stroke="${skinD}" stroke-width="${0.3 + jawClench*0.6}" fill="none" opacity="${jawClench*0.3}"/>
+        <path d="M156 68 Q154 72 156 76" stroke="${skinD}" stroke-width="${0.3 + jawClench*0.6}" fill="none" opacity="${jawClench*0.3}"/>
+        <!-- Clenched mouth, tight horizontal line -->
+        <path d="M118 77 L142 77" stroke="${skinD}" stroke-width="${1.0 + jawClench*0.8}" fill="none" opacity="${0.3 + jawClench*0.4}"/>
+        <!-- Upper teeth row visible through tight lips -->
+        <rect x="119" y="${77 - jawClench*2.5}" width="22" height="${jawClench*3}" rx="1" fill="white" opacity="${jawClench*0.6}"/>
+        <!-- Lower teeth row -->
+        <rect x="119" y="77" width="22" height="${jawClench*2.5}" rx="1" fill="#f0f0f0" opacity="${jawClench*0.5}"/>
+        <!-- Individual tooth lines -->
+        ${jawClench > 0.4 ? `
+          <line x1="123" y1="${77 - jawClench*2}" x2="123" y2="${77 + jawClench*2}" stroke="${skinM}" stroke-width="0.3" opacity="${jawClench*0.35}"/>
+          <line x1="127" y1="${77 - jawClench*2}" x2="127" y2="${77 + jawClench*2}" stroke="${skinM}" stroke-width="0.3" opacity="${jawClench*0.35}"/>
+          <line x1="130" y1="${77 - jawClench*2}" x2="130" y2="${77 + jawClench*2}" stroke="${skinM}" stroke-width="0.3" opacity="${jawClench*0.35}"/>
+          <line x1="133" y1="${77 - jawClench*2}" x2="133" y2="${77 + jawClench*2}" stroke="${skinM}" stroke-width="0.3" opacity="${jawClench*0.35}"/>
+          <line x1="137" y1="${77 - jawClench*2}" x2="137" y2="${77 + jawClench*2}" stroke="${skinM}" stroke-width="0.3" opacity="${jawClench*0.35}"/>
+        ` : ''}
+        <!-- Lip compression lines -->
+        <path d="M120 ${76 - jawClench*1} Q130 ${75 - jawClench*1.5} 140 ${76 - jawClench*1}" stroke="${skinM}" stroke-width="0.4" fill="none" opacity="${jawClench*0.3}"/>
+        <path d="M120 ${78 + jawClench*1} Q130 ${79 + jawClench*1.5} 140 ${78 + jawClench*1}" stroke="${skinM}" stroke-width="0.4" fill="none" opacity="${jawClench*0.3}"/>
+        <!-- Chin dimple from tension -->
+        <ellipse cx="130" cy="${83 + jawClench*1}" rx="3" ry="${1 + jawClench}" fill="${skinM}" opacity="${jawClench*0.15}"/>
+      ` : isAbsence && absenceMouth > 0.1 ? `
+        <!-- ABSENCE: Mouth goes slightly slack/open, vacant expression -->
+        <!-- Slightly open mouth, jaw drops a bit -->
+        <ellipse cx="130" cy="${78 + absenceMouth*2}" rx="${6 + absenceMouth*2}" ry="${1.5 + absenceMouth*2.5}" fill="#2a1a1a" opacity="${0.15 + absenceMouth*0.2}"/>
+        <!-- Upper lip -->
+        <path d="M121 ${77 + absenceMouth*0.5} Q126 ${76} 130 ${76} Q134 ${76} 139 ${77 + absenceMouth*0.5}" stroke="${skinM}" stroke-width="1" fill="none" opacity="0.4"/>
+        <!-- Lower lip slightly dropped -->
+        <path d="M123 ${79 + absenceMouth*3} Q130 ${81 + absenceMouth*3.5} 137 ${79 + absenceMouth*3}" stroke="${skinM}" stroke-width="0.8" fill="none" opacity="0.3"/>
+        <!-- Drool-line shadow inside mouth -->
+        <ellipse cx="130" cy="${78 + absenceMouth*2}" rx="${4 + absenceMouth*1}" ry="${0.5 + absenceMouth*1.2}" fill="#1a0a0a" opacity="${absenceMouth*0.1}"/>
+      ` : `
+        <!-- Normal mouth, or expression (cry, grimace, smile, chin movement) -->
+        ${mouthEx()}
+      `}
+      
+      <!-- Philtrum -->
+      <path d="M128.5 70 L128 75" stroke="${skinM}" stroke-width="0.3" fill="none" opacity="0.1"/>
+      <path d="M131.5 70 L132 75" stroke="${skinM}" stroke-width="0.3" fill="none" opacity="0.1"/>
+
+      ${(on && a.voc > 0.1) ? `<g stroke="#C55A11" stroke-width="2" fill="none" stroke-linecap="round" opacity="${Math.min(a.voc*1.4,1)}">
+        <path d="M170 72 Q176 79 170 86"/><path d="M178 66 Q187 79 178 92"/><path d="M186 60 Q198 79 186 98"/></g>` : ""}
+      ${hlOv("M96 15 Q130 4 164 15 L165 58 Q165 96 130 98 Q95 96 95 58 Z","head")}
+    </g>
+    </g>
+  `;
+}
+
+/* ---------- Schematic electroencephalogram ---------- */
+const EEGP = { fpc:"fpcE", fic:"ficE", fbtc:"fbtcE", upc:"undet", uic:"undet", ubtc:"undet", ta:"sw3", aa:"swslow", ma:"swmyo", ema:"emapoly",
+  gtc:"tc", mtc:"mtc", atc:"atc", gm:"polyspike", gc:"gc", gnm:"gnm", ges:"ges", gt:"tonic", ga:"gaE", gma:"gma", uncl:"none" };
+function eegBg(x, tm) { return Math.sin(x*0.09+tm*6)*2.2 + Math.sin(x*0.23+tm*9)*1.3; }
+function eegSW(x, tm, period, amp) {
+  const ph = (((x + tm*period*3) % period) + period) % period / period;
+  if (ph < 0.07) return -amp * Math.sin(ph/0.07*Math.PI);
+  return amp*0.55 * Math.sin((ph-0.07)/0.93*Math.PI);
+}
+function eegPoly(x, tm, period, amp) {
+  const ph = (((x + tm*period*1.5) % period) + period) % period / period;
+  if (ph < 0.25) return -amp * Math.abs(Math.sin(ph/0.25*Math.PI*4)) * (1 - ph*2);
+  if (ph < 0.45) return amp*0.45 * Math.sin((ph-0.25)/0.2*Math.PI);
+  return eegBg(x, tm)*0.6;
+}
+function eegTonic(x, tm) { return Math.sin(x*0.75+tm*45)*8*(0.65+0.35*Math.sin(x*0.04)); }
+function eegClonic(x, tm) {
+  const period = 46, ph = (((x + tm*60) % period) + period) % period / period;
+  if (ph < 0.35) return -16*Math.abs(Math.sin(ph/0.35*Math.PI*3));
+  return 4*Math.sin((ph-0.35)/0.65*Math.PI);
+}
+function eegTC(x, tm, p) { return p < 0.35 ? eegTonic(x, tm) : p < 0.42 ? eegTonic(x, tm)*0.6 + eegClonic(x, tm)*0.5 : p < 0.93 ? eegClonic(x, tm) : eegBg(x, tm)*0.15; }
+function drawEEG(id, isPlaying, el, prog, color) {
+  const c = document.getElementById("eegCanvas"), pat = EEGP[id] || "unknown", two = pat === "fbtcE";
+  /* the two-channel tracing needs a taller canvas */
+  const onTop = eegOnTop(), hh = two ? (onTop ? 170 : 124) : (onTop ? 110 : 80);
+  if (c.height !== hh) c.height = hh;
+  c.style.height = "";   /* keep the canvas in proportion on every screen, so the tracing and its labels are not squashed */
+  const ctx = c.getContext("2d"), W = c.width, H = c.height, mid = H/2;
+  ctx.clearRect(0,0,W,H);
+  const tm = el*0.001, DUR = SZ[sel].dur;
+  if (pat === "none" || pat === "notdesc" || pat === "undet" || pat === "notspec") {
+    ctx.setLineDash([6,6]); ctx.strokeStyle="#7F7F7F"; ctx.lineWidth=1.5; ctx.beginPath(); ctx.moveTo(0,mid); ctx.lineTo(W,mid); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle="#000000"; ctx.font=(onTop ? "26px" : "20px") + " Calibri, Carlito, sans-serif"; ctx.fillText(pat === "none" ? "No information available" : pat === "undet" ? "Focal or generalised not determined" : pat === "notspec" ? "Pattern not specified in the provided sources" : "Not described in Data S5 (Beniczky et al., 2025a)", 14, mid-10);
+    return;
+  }
+  if (pat === "fbtcE") {
+    /* two channels: involved region (top) and opposite hemisphere (bottom).
+       Focal onset: an evolving ictal rhythm over the involved region only (Beniczky et al., 2025b); frequency slows and amplitude grows.
+       Spread (30–45%): the activity propagates to the opposite hemisphere.
+       Bilateral phase (45–100%): both channels, schematic tonic and clonic pattern, time-locked to the figure. */
+    /* sizes for the taller strip above the figure (phones and tablets) or the original strip beside it (computers) */
+    const mids = onTop ? [52, 132] : [38, 100], clampH = onTop ? 27 : 19, gain2 = onTop ? 1.1 : 0.8;
+    ctx.fillStyle = "#000000"; ctx.font = (onTop ? "19px" : "15px") + " Calibri, Carlito, sans-serif";
+    ctx.fillText("Involved region", 4, onTop ? 18 : 14); ctx.fillText("Opposite hemisphere", 4, onTop ? 98 : 76);
+    const sepY = onTop ? 82 : 62;
+    ctx.strokeStyle = "#E6E6E6"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(0, sepY); ctx.lineTo(W, sepY); ctx.stroke();
+    const foc = (u, x) => { const T = 0.45*DUR/1000, tt = u*DUR/1000, r = Math.max(0, (u - 0.03)/0.42);
+      return Math.sin(2*Math.PI*(7*tt - 1.6*tt*tt/T))*(3 + 15*r); };
+    for (let ch = 0; ch < 2; ch++) {
+      ctx.beginPath(); ctx.strokeStyle = color; ctx.lineWidth = onTop ? 2.4 : 1.6;
+      for (let x = 0; x < W; x++) {
+        const u = x / W; let y;
+        if (!isPlaying) y = eegBg(x, tm);
+        else { if (u > prog) break;
+          if (u < 0.03) y = eegBg(x, tm);
+          else if (u < 0.3) y = ch === 0 ? foc(u, x) : eegBg(x, tm);
+          else if (u < 0.45) { const e = (u - 0.3)/0.15; y = ch === 0 ? foc(u, x) : eegBg(x, tm)*(1 - e) + foc(u, x)*e; }
+          else y = tcEEG((u - 0.45)/0.55, x, tm, 0.55*DUR, false); }
+        const yy = Math.max(mids[ch] - clampH, Math.min(mids[ch] + clampH, mids[ch] + y*gain2));
+        x === 0 ? ctx.moveTo(x, yy) : ctx.lineTo(x, yy);
+      }
+      ctx.stroke();
+    }
+    return;
+  }
+  ctx.beginPath(); ctx.strokeStyle = color; ctx.lineWidth = onTop ? 2.6 : 1.8;
+  for (let x=0; x<W; x++) {
+    let y;
+    if (!isPlaying) y = eegBg(x, tm);
+    else switch(pat) {
+      case "tc": case "mtc": case "atc": case "sw3": case "swslow": case "emapoly": case "swmyo": case "polyspike": {
+        const u = x / W; if (u > prog) { x = W; continue; }
+        const tt = u * DUR;
+        if (pat === "tc") y = tcEEG(u, x, tm, DUR, true);
+        else if (pat === "mtc") { if (u < 0.28) { const j = MTC_J.find(s0 => u >= s0 - 0.002 && u < s0 + 0.03);
+            y = j === undefined ? eegBg(x, tm) : (u < j + 0.012 ? -20*Math.pow(1 - Math.abs(2*(((u - j + 0.002)/0.014*2) % 1) - 1), 2.2) : 9*Math.sin((u - j - 0.012)/0.018*Math.PI)); }
+          else y = tcEEG((u - 0.28)/0.72, x, tm, 0.72*DUR, false); }
+        else if (pat === "atc") y = u < 0.3 ? sawShape(frac(tt*3/1000), 22) : tcEEG((u - 0.3)/0.7, x, tm, 0.7*DUR, false);
+        else if (pat === "sw3") y = sawShape(frac(tt*3/1000), 24);                                  /* regular 3 Hz */
+        else if (pat === "swslow") { const g = Math.min(u/0.4, 1);                                   /* gradual onset, about 2 Hz, irregular */
+          y = g < 0.05 ? eegBg(x, tm) : sawShape(frac(tt*2/1000 + 0.08*Math.sin(tt*0.0011)), (14 + 6*Math.sin(tt*0.0017))*g) + Math.sin(x*1.4)*1.5*g; }
+        else if (pat === "swmyo") y = u < 0.03 || u >= 0.97 ? eegBg(x, tm) : sawShape(frac((tt*0.019 - Math.PI/6)/(2*Math.PI)), 24); /* 3 Hz, locked to the jerks */
+        else if (pat === "emapoly") { const ph = frac(tt*0.029/(2*Math.PI)), g = Math.min(u*4, 1);   /* about 4.6 Hz, with the eyelid jerks */
+          y = ph < 0.3 ? -20*g*Math.pow(1 - Math.abs(2*((ph/0.3*2) % 1) - 1), 2.2) : 9*g*Math.sin((ph - 0.3)/0.7*Math.PI); }
+        else { const j = GM_J.filter(s0 => u >= s0 - 0.002 && u < s0 + 0.07).pop();                 /* myoclonic: with each jerk (latest jerk wins) */
+          y = j === undefined ? eegBg(x, tm) : (u < j + GM_W ? -22*Math.pow(1 - Math.abs(2*(((u - j + 0.002)/(GM_W + 0.002)*3) % 1) - 1), 2.2) : 10*Math.sin((u - j - GM_W)/(0.07 - GM_W)*Math.PI)); }
+        break; }
+      case "gc": { const u = x / W;
+        /* one spike-and-wave complex per clonic jerk (every 333 ms), time-locked to the figure */
+        if (u > prog) { x = W; continue; }
+        const cy = ((u * 4500) % 333) / 333;
+        y = cy < 0.16 ? -18 * Math.pow(1 - Math.abs(2*((cy/0.16*2) % 1) - 1), 2.2)
+          : cy < 0.6 ? 12 * Math.sin((cy-0.16)/0.44*Math.PI)
+          : eegBg(x, tm)*0.5;
+        break; }
+      case "fpcE": { const u = x / W; if (u > prog) { x = W; continue; }
+        /* regional epileptiform activity (schematic, one channel over the involved region) */
+        const ph = frac(u * DUR / 350);   /* one discharge per arm jerk (every 350 ms), time-locked to the figure */
+        y = u < 0.04 ? eegBg(x, tm) : ph < 0.12 ? -18*Math.sin(ph/0.12*Math.PI) : ph < 0.5 ? 7*Math.sin((ph - 0.12)/0.38*Math.PI) : eegBg(x, tm)*0.6;
+        break; }
+      case "ficE": { const u = x / W; if (u > prog) { x = W; continue; }
+        /* evolving ictal rhythm: frequency slows and amplitude grows over the seizure (schematic, one channel) */
+        const r = Math.max(0, (u - 0.06)/0.94), tt = u * DUR / 1000;
+        y = u < 0.06 ? eegBg(x, tm) : Math.sin(2*Math.PI*(7*tt - 1.6*tt*tt/ (DUR/1000)))*(3 + 15*r);
+        break; }
+      case "gaE": { const u = x / W; if (u > prog) { x = W; continue; }
+        /* generalised slow wave with the loss of tone (head drop and fall, 4–20% of the animation) */
+        y = u < 0.04 || u > 0.24 ? eegBg(x, tm) : 22 * Math.sin((u - 0.04)/0.20*Math.PI);
+        break; }
+      case "gma": { const u = x / W;
+        if (u > prog) { x = W; continue; }
+        /* polyspikes with the myoclonic jerk, then a high-voltage slow wave with the atonic component */
+        y = u < GMA_J0 ? eegBg(x, tm)
+          : u < GMA_J1 ? -24 * Math.pow(1 - Math.abs(2*(((u-GMA_J0)/(GMA_J1-GMA_J0)*3) % 1) - 1), 1.6)
+          : u < 0.40 ? 26 * Math.sin((u-GMA_J1)/(0.40-GMA_J1)*Math.PI)
+          : eegBg(x, tm)*0.8;
+        break; }
+      case "clonic": y = eegClonic(x, tm); break;
+      case "tonic": { const u = x / W; if (u > prog) { x = W; continue; }
+        /* each form: initial diffuse decrement, then fast activity (10 Hz or more) with gradually increasing amplitude */
+        const inA = u >= 0.02 && u < 0.37, inB = u >= 0.42;
+        if (inA || inB) { const s0 = inA ? 0.02 : 0.42, s1 = inA ? 0.37 : 1.0, r = (u - s0)/(s1 - s0);
+          y = r < 0.08 ? eegBg(x, tm)*0.15 : Math.sin(x*1.35)*(2 + 9*Math.min((r - 0.08)/0.4, 1)); }
+        else y = eegBg(x, tm);
+        break; }
+      case "gnm": { const u = x / W; if (u > prog) { x = W; continue; }
+        /* spike (negative component) at the onset of each lapse, then the slow wave */
+        y = eegBg(x, tm);
+        for (const l of [0.22,0.33,0.45,0.56,0.68,0.79,0.9]) { const q = u - l;
+          if (q > -0.006 && q < 0.004) { y = -20 * Math.pow(1 - Math.abs((q + 0.001)/0.005), 2); break; }
+          if (q >= 0.004 && q < 0.04) { y = 10 * Math.sin((q - 0.004)/0.036*Math.PI); break; } }
+        break; }
+      case "ges": { const u = x / W; if (u > prog) { x = W; continue; }
+        /* each spasm: high-amplitude generalised slow wave, then low-amplitude fast activity */
+        const ct = (u * 8000) % 2000;
+        y = ct < 350 ? -24 * Math.sin(ct/350*Math.PI) : ct < 900 ? Math.sin(x*1.6)*2 : eegBg(x, tm);
+        break; }
+      default: y = Math.sin(x*0.08+tm*2)*6 + Math.sin(x*0.27+tm*5)*3;
+    }
+    const yy = Math.max(3, Math.min(H-3, mid + y*(onTop ? 1.9 : 1.4)));
+    x===0 ? ctx.moveTo(x,yy) : ctx.lineTo(x,yy);
+  }
+  ctx.stroke();
+}
+
+/* ---------- Figure wrapper ---------- */
+function render() {
+  renderFigure();
+  if (SZ[sel].id === "uncl") {
+    const svg = document.getElementById("figure");
+    svg.innerHTML += `<rect x="-80" y="0" width="420" height="530" fill="#FFFFFF" opacity="0.65"/>
+      <text x="130" y="330" text-anchor="middle" font-size="150" font-weight="700" fill="#3A7D22" font-family="Calibri, Carlito, sans-serif">?</text>`;
+  }
+}
+
+/* ---------- Start ---------- */
+placeEEG(); render(); updateUI(); route();
+</script>
+</body>
+</html>
